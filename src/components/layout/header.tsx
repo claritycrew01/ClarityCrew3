@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, Sparkles, ChevronRight } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, Sparkles, ChevronRight, LogOut, User } from "lucide-react";
 import { useUIStore } from "@/lib/store/ui-store";
+import { useAuthStore } from "@/lib/store/auth-store";
 import { cn } from "@/lib/utils/cn";
 
 function generateBreadcrumbs(pathname: string) {
@@ -26,9 +27,17 @@ function generateBreadcrumbs(pathname: string) {
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const toggleSidebar = useUIStore((s) => s.toggleSidebar);
   const toggleRightPanel = useUIStore((s) => s.toggleRightPanel);
+  const user = useAuthStore((s) => s.user);
+  const logout = useAuthStore((s) => s.logout);
   const breadcrumbs = generateBreadcrumbs(pathname);
+
+  function handleLogout() {
+    logout();
+    router.push("/login/");
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex h-16 items-center justify-between border-b border-border bg-background px-4">
@@ -71,7 +80,7 @@ export function Header() {
         </nav>
       </div>
 
-      {/* Right side: AI tutor quick access + CTA */}
+      {/* Right side: AI tutor + user / CTA */}
       <div className="flex items-center gap-2">
         <button
           onClick={toggleRightPanel}
@@ -80,12 +89,29 @@ export function Header() {
         >
           <Sparkles className="h-5 w-5" />
         </button>
-        <Link
-          href="/home/"
-          className="rounded-full bg-cta-orange px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-cta-orange-hover"
-        >
-          Get Started
-        </Link>
+
+        {user ? (
+          <div className="flex items-center gap-2">
+            <span className="hidden text-sm font-medium text-foreground sm:inline">
+              {user.firstName || user.email}
+            </span>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label="Log out"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
+          </div>
+        ) : (
+          <Link
+            href="/login/"
+            className="rounded-full bg-cta-orange px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-cta-orange-hover"
+          >
+            Get Started
+          </Link>
+        )}
       </div>
     </header>
   );

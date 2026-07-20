@@ -1,6 +1,36 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/lib/store/auth-store";
 
 export default function SignupPage() {
+  const router = useRouter();
+  const signup = useAuthStore((s) => s.signup);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    setTimeout(() => {
+      const result = signup(firstName, lastName, email, password);
+      if (result.success) {
+        router.push("/home/");
+      } else {
+        setError(result.error ?? "Signup failed.");
+        setLoading(false);
+      }
+    }, 400);
+  }
+
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       {/* Left branding pane */}
@@ -35,7 +65,13 @@ export default function SignupPage() {
             Create your account
           </p>
 
-          <form className="mt-6 space-y-4">
+          {error && (
+            <div className="mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label htmlFor="firstName" className="mb-1.5 block text-sm font-medium text-foreground">
@@ -44,6 +80,9 @@ export default function SignupPage() {
                 <input
                   id="firstName"
                   type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
                   className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
                 />
               </div>
@@ -54,6 +93,8 @@ export default function SignupPage() {
                 <input
                   id="lastName"
                   type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
                 />
               </div>
@@ -65,7 +106,10 @@ export default function SignupPage() {
               <input
                 id="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
+                required
                 className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
               />
             </div>
@@ -76,15 +120,27 @@ export default function SignupPage() {
               <input
                 id="password"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                required
+                minLength={6}
                 className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
               />
             </div>
             <button
               type="submit"
-              className="w-full rounded-lg bg-cta-orange py-2.5 text-sm font-bold text-white transition-colors hover:bg-cta-orange-hover"
+              disabled={loading}
+              className="w-full rounded-lg bg-cta-orange py-2.5 text-sm font-bold text-white transition-colors hover:bg-cta-orange-hover disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Create Account
+              {loading ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  Creating account...
+                </span>
+              ) : (
+                "Create Account"
+              )}
             </button>
           </form>
 
