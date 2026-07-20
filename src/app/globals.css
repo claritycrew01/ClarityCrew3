@@ -1,0 +1,313 @@
+@import "tailwindcss";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/outfit/400.css";
+@import "@fontsource/outfit/500.css";
+@import "@fontsource/outfit/600.css";
+@import "@fontsource/outfit/700.css";
+@import "@fontsource/opendyslexic/400.css";
+@import "@fontsource/opendyslexic/700.css";
+
+@theme {
+  /* === Miyagi Labs Semantic Colors (OKLCH) === */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0.053 260);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.145 0.053 260);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0.053 260);
+  --color-primary: oklch(0.145 0.053 260);
+  --color-primary-foreground: oklch(0.985 0 0);
+  --color-secondary: oklch(0.965 0.006 260);
+  --color-secondary-foreground: oklch(0.145 0.053 260);
+  --color-muted: oklch(0.965 0.006 260);
+  --color-muted-foreground: oklch(0.556 0.024 260);
+  --color-accent: oklch(0.965 0.006 260);
+  --color-accent-foreground: oklch(0.145 0.053 260);
+  --color-destructive: oklch(0.577 0.245 27);
+  --color-destructive-foreground: oklch(0.985 0 0);
+  --color-border: oklch(0.922 0.007 260);
+  --color-input: oklch(0.922 0.007 260);
+  --color-ring: oklch(0.708 0.044 260);
+
+  /* === Miyagi Brand Colors === */
+  --color-cta-orange: oklch(0.675 0.194 38);
+  --color-cta-orange-hover: oklch(0.6 0.194 38);
+  --color-skill-blue: oklch(0.546 0.245 262);
+  --color-skill-blue-light: oklch(0.93 0.05 262);
+  --color-success-green: oklch(0.627 0.194 142);
+  --color-success-green-light: oklch(0.93 0.05 142);
+  --color-premium-amber: oklch(0.769 0.188 70);
+  --color-premium-amber-light: oklch(0.95 0.04 70);
+
+  /* === Sidebar === */
+  --color-sidebar-bg: oklch(0.13 0.005 260);
+  --color-sidebar-foreground: oklch(0.708 0.044 260);
+  --color-sidebar-border: oklch(0.23 0.005 260);
+  --color-sidebar-ring: oklch(0.25 0.005 260);
+  --color-sidebar-accent: oklch(0.2 0.005 260);
+  --color-sidebar-accent-foreground: oklch(0.93 0.007 260);
+
+  /* === Accessibility Tokens === */
+  --color-calm-bg: oklch(0.95 0.003 260);
+  --color-calm-card: oklch(0.93 0.003 260);
+  --color-calm-foreground: oklch(0.35 0.01 260);
+  --color-calm-border: oklch(0.88 0.003 260);
+
+  /* === Typography === */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-dyslexic: "OpenDyslexic", sans-serif;
+
+  /* === Spacing & Radius === */
+  --radius: 0.5rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* === Layout Dimensions === */
+  --sidebar-width: 14rem;
+  --right-panel-width-collapsed: 3rem;
+  --right-panel-width-expanded: 20rem;
+  --header-height: 4rem;
+}
+
+/* === Dark Mode Overrides === */
+.dark {
+  --color-background: oklch(0.12 0.015 260);
+  --color-foreground: oklch(0.93 0.007 260);
+  --color-card: oklch(0.15 0.01 260);
+  --color-card-foreground: oklch(0.93 0.007 260);
+  --color-popover: oklch(0.15 0.01 260);
+  --color-popover-foreground: oklch(0.93 0.007 260);
+  --color-primary: oklch(0.985 0 0);
+  --color-primary-foreground: oklch(0.145 0.053 260);
+  --color-secondary: oklch(0.18 0.01 260);
+  --color-secondary-foreground: oklch(0.93 0.007 260);
+  --color-muted: oklch(0.18 0.01 260);
+  --color-muted-foreground: oklch(0.556 0.024 260);
+  --color-accent: oklch(0.18 0.01 260);
+  --color-accent-foreground: oklch(0.93 0.007 260);
+  --color-destructive: oklch(0.577 0.245 27);
+  --color-destructive-foreground: oklch(0.985 0 0);
+  --color-border: oklch(0.25 0.008 260);
+  --color-input: oklch(0.25 0.008 260);
+  --color-ring: oklch(0.556 0.024 260);
+
+  --color-sidebar-bg: oklch(0.08 0.005 260);
+  --color-sidebar-foreground: oklch(0.556 0.024 260);
+  --color-sidebar-border: oklch(0.18 0.005 260);
+  --color-sidebar-ring: oklch(0.2 0.005 260);
+  --color-sidebar-accent: oklch(0.16 0.005 260);
+  --color-sidebar-accent-foreground: oklch(0.93 0.007 260);
+}
+
+/* === Base Styles === */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+/* === Dyslexia Font Override === */
+.font-dyslexic,
+.font-dyslexic * {
+  font-family: var(--font-dyslexic) !important;
+}
+
+/* === Calm Reader Mode (Autism / Sensory Processing) === */
+.calm-reader {
+  --color-background: oklch(0.95 0.003 260) !important;
+  --color-foreground: oklch(0.35 0.01 260) !important;
+  --color-card: oklch(0.93 0.003 260) !important;
+  --color-card-foreground: oklch(0.35 0.01 260) !important;
+  --color-border: oklch(0.88 0.003 260) !important;
+  --color-muted: oklch(0.91 0.003 260) !important;
+  --color-muted-foreground: oklch(0.45 0.01 260) !important;
+  --color-skill-blue: oklch(0.546 0.15 262) !important;
+  --color-cta-orange: oklch(0.675 0.12 38) !important;
+  --color-success-green: oklch(0.627 0.12 142) !important;
+}
+
+.calm-reader *,
+.calm-reader *::before,
+.calm-reader *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.15s !important;
+  transition-property: opacity !important;
+}
+
+/* No hover transforms in calm mode */
+.calm-reader *:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* === High Contrast Mode (Low Vision / Dyslexia) === */
+.high-contrast {
+  --color-background: oklch(1 0 0) !important;
+  --color-foreground: oklch(0.1 0 0) !important;
+  --color-card: oklch(1 0 0) !important;
+  --color-card-foreground: oklch(0.1 0 0) !important;
+  --color-border: oklch(0.2 0 0) !important;
+  --color-muted: oklch(0.95 0 0) !important;
+  --color-muted-foreground: oklch(0.3 0 0) !important;
+  --color-skill-blue: oklch(0.4 0.245 262) !important;
+  --color-cta-orange: oklch(0.55 0.194 38) !important;
+  --color-success-green: oklch(0.5 0.194 142) !important;
+  --color-destructive: oklch(0.45 0.245 27) !important;
+}
+
+.high-contrast * {
+  border-color: oklch(0.2 0 0) !important;
+}
+
+.dark .high-contrast {
+  --color-background: oklch(0.05 0 0) !important;
+  --color-foreground: oklch(0.95 0 0) !important;
+  --color-card: oklch(0.08 0 0) !important;
+  --color-card-foreground: oklch(0.95 0 0) !important;
+  --color-border: oklch(0.7 0 0) !important;
+  --color-muted: oklch(0.12 0 0) !important;
+  --color-muted-foreground: oklch(0.8 0 0) !important;
+  --color-skill-blue: oklch(0.7 0.245 262) !important;
+  --color-cta-orange: oklch(0.8 0.194 38) !important;
+  --color-success-green: oklch(0.75 0.194 142) !important;
+  --color-destructive: oklch(0.7 0.245 27) !important;
+}
+
+/* === Reading Ruler (Dyslexia aid) === */
+.reading-ruler {
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 2.5rem;
+  background: oklch(0.546 0.245 262 / 0.12);
+  border-top: 1px solid oklch(0.546 0.245 262 / 0.3);
+  border-bottom: 1px solid oklch(0.546 0.245 262 / 0.3);
+  z-index: 9999;
+  transition: top 0.05s linear;
+}
+
+/* === Custom Utility Animations === */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
+@keyframes progress-fill {
+  from { stroke-dashoffset: var(--circumference, 100); }
+  to { stroke-dashoffset: var(--target-offset, 0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.3s ease-out;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === Smooth Card Flip === */
+.card-flip {
+  perspective: 1000px;
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.card-flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-flip-back {
+  transform: rotateY(180deg);
+}
+
+/* === Smooth Tab Transitions === */
+.tab-content-enter {
+  animation: tab-fade-in 0.2s ease-out;
+}
+
+@keyframes tab-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Toggle Switch Smooth === */
+.toggle-switch {
+  transition: background-color 0.2s ease;
+}
+
+.toggle-switch .toggle-knob {
+  transition: transform 0.2s ease;
+}
