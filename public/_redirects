@@ -1,1 +1,3 @@
-/* /index.html 200
+# SPA fallback — only for truly unmatched routes.
+# With trailingSlash: true, each page has its own index.html
+# so Cloudflare Pages serves them correctly natively.
