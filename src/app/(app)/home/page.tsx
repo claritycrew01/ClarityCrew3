@@ -2,8 +2,10 @@
 
 import { BookOpen, Brain, Timer, BarChart3, Target, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils/cn";
 import { SUBJECTS, getAllLessons } from "@/data";
 import { useProgressStore } from "@/lib/store/progress-store";
+import { usePreferencesStore } from "@/lib/preferences";
 
 const QUICK_ACTIONS = [
   {
@@ -50,6 +52,7 @@ export default function DashboardPage() {
   const sessions = useProgressStore((s) => s.sessions);
   const totalLessonsCompleted = useProgressStore((s) => s.totalLessonsCompleted);
   const streak = useProgressStore((s) => s.streak);
+  const navigationDensity = usePreferencesStore((s) => s.navigationDensity);
 
   const allLessons = getAllLessons();
   const totalLessons = allLessons.length;
@@ -156,7 +159,7 @@ export default function DashboardPage() {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className={cn("grid gap-3", navigationDensity === "reduced" ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-4")}>
         {QUICK_ACTIONS.map((action) => (
           <Link
             key={action.href}

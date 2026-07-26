@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Volume2, VolumeX, FileText, BookOpen } from "luc
 import { cn } from "@/lib/utils/cn";
 import { getLessonById, getVideoByLessonId } from "@/data";
 import { useTTS } from "@/hooks/use-tts";
+import { usePreferencesStore } from "@/lib/preferences";
 import { VideoPlayer } from "@/components/video/video-player";
 
 export function LessonClient({ subjectId, lessonId }: { subjectId: string; lessonId: string }) {
@@ -13,6 +14,7 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
   const video = getVideoByLessonId(lessonId);
   const [showSimplified, setShowSimplified] = useState(false);
   const { toggle, speaking, supported } = useTTS();
+  const prefs = usePreferencesStore();
 
   if (!lesson) {
     return (
@@ -110,7 +112,14 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
         </button>
       </div>
 
-      <article className="prose prose-sm max-w-none text-foreground tab-content-enter">
+      <article
+        className="prose prose-sm max-w-none text-foreground tab-content-enter"
+        style={{
+          letterSpacing: `${prefs.letterSpacing}em`,
+          wordSpacing: `${prefs.wordSpacing}em`,
+          lineHeight: prefs.lineSpacing,
+        }}
+      >
         {paragraphs.map((paragraph, i) => (
           <p key={i} className="mb-4 text-sm leading-relaxed text-foreground/90">
             {paragraph}

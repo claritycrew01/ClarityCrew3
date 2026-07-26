@@ -1,9 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Settings as SettingsIcon, Accessibility, Palette, Bell, ChevronRight } from "lucide-react";
+import { Settings as SettingsIcon, Accessibility, Palette, Sparkles, ChevronRight } from "lucide-react";
 
 const SETTINGS_ITEMS = [
+  {
+    href: "/settings/personalization/",
+    label: "Personalization",
+    description: "Theme, font, spacing, navigation, input preferences",
+    icon: Sparkles,
+  },
   {
     href: "/settings/accessibility/",
     label: "Accessibility",
@@ -12,15 +18,9 @@ const SETTINGS_ITEMS = [
   },
   {
     href: "#",
-    label: "Appearance",
-    description: "Theme, colors, display preferences",
-    icon: Palette,
-  },
-  {
-    href: "#",
     label: "Notifications",
     description: "Focus reminders, streak alerts",
-    icon: Bell,
+    icon: SettingsIcon,
   },
 ];
 

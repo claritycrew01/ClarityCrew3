@@ -20,15 +20,15 @@ export default function SignupPage() {
     setError("");
     setLoading(true);
 
-    setTimeout(() => {
-      const result = signup(firstName, lastName, email, password);
-      if (result.success) {
-        router.push("/home/");
-      } else {
-        setError(result.error ?? "Signup failed.");
-        setLoading(false);
-      }
-    }, 400);
+      setTimeout(() => {
+        const result = signup(firstName, lastName, email, password);
+        if (result.success) {
+          router.push("/onboarding/");
+        } else {
+          setError(result.error ?? "Signup failed.");
+          setLoading(false);
+        }
+      }, 400);
   }
 
   return (

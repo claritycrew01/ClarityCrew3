@@ -41,6 +41,9 @@ function HydrationGate({ children }: { children: ReactNode }) {
     import("@/lib/store/auth-store").then(({ useAuthStore }) =>
       useAuthStore.persist.rehydrate()
     );
+    import("@/lib/preferences/store").then(({ usePreferencesStore }) =>
+      usePreferencesStore.persist.rehydrate()
+    );
   }, [setHasHydrated]);
 
   return <>{children}</>;

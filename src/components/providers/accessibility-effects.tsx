@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from "react";
 import { useUIStore } from "@/lib/store/ui-store";
+import { usePreferencesStore } from "@/lib/preferences";
 
 export function AccessibilityEffects({ children }: { children: ReactNode }) {
   const hasHydrated = useUIStore((s) => s.hasHydrated);
@@ -11,10 +12,14 @@ export function AccessibilityEffects({ children }: { children: ReactNode }) {
   const letterSpacing = useUIStore((s) => s.letterSpacing);
   const lineHeight = useUIStore((s) => s.lineHeight);
 
+  const prefsHydrated = usePreferencesStore((s) => s.hasHydrated);
+  const prefs = usePreferencesStore();
+
   useEffect(() => {
-    if (!hasHydrated) return;
+    if (!hasHydrated || !prefsHydrated) return;
     const root = document.documentElement;
 
+    // Legacy ui-store effects (kept for backward compat)
     if (dyslexiaFont) {
       root.classList.add("font-dyslexic");
     } else {
@@ -35,7 +40,80 @@ export function AccessibilityEffects({ children }: { children: ReactNode }) {
 
     root.style.setProperty("--a11y-letter-spacing", `${letterSpacing}em`);
     root.style.setProperty("--a11y-line-height", lineHeight.toString());
-  }, [hasHydrated, dyslexiaFont, calmReaderMode, highContrastMode, letterSpacing, lineHeight]);
+
+    // ── New preferences system ──
+
+    // Theme
+    if (prefs.theme === "dark") {
+      root.classList.add("dark");
+    } else if (prefs.theme === "light") {
+      root.classList.remove("dark");
+    }
+    // "system" is handled by next-themes
+
+    // Font family
+    root.classList.remove("font-dyslexic", "font-high-legibility");
+    if (prefs.fontFamily === "dyslexia-friendly") {
+      root.classList.add("font-dyslexic");
+    } else if (prefs.fontFamily === "high-legibility") {
+      root.classList.add("font-high-legibility");
+    }
+
+    // Text size
+    root.style.setProperty("--a11y-text-size", `${prefs.textSize}px`);
+    root.style.fontSize = `${prefs.textSize}px`;
+
+    // Line spacing
+    root.style.setProperty("--a11y-line-height", prefs.lineSpacing.toString());
+
+    // Letter spacing
+    root.style.setProperty("--a11y-letter-spacing", `${prefs.letterSpacing}em`);
+
+    // Word spacing
+    root.style.setProperty("--a11y-word-spacing", `${prefs.wordSpacing}em`);
+
+    // Background tone
+    if (prefs.backgroundTone === "off-white") {
+      root.classList.add("off-white-bg");
+    } else {
+      root.classList.remove("off-white-bg");
+    }
+
+    // Reduce motion
+    if (prefs.reduceMotion) {
+      root.classList.add("reduce-motion");
+    } else {
+      root.classList.remove("reduce-motion");
+    }
+
+    // Literal language mode
+    if (prefs.literalLanguageMode) {
+      root.classList.add("literal-language");
+    } else {
+      root.classList.remove("literal-language");
+    }
+
+    return () => {
+      root.style.fontSize = "";
+    };
+  }, [
+    hasHydrated,
+    prefsHydrated,
+    dyslexiaFont,
+    calmReaderMode,
+    highContrastMode,
+    letterSpacing,
+    lineHeight,
+    prefs.theme,
+    prefs.fontFamily,
+    prefs.textSize,
+    prefs.lineSpacing,
+    prefs.letterSpacing,
+    prefs.wordSpacing,
+    prefs.backgroundTone,
+    prefs.reduceMotion,
+    prefs.literalLanguageMode,
+  ]);
 
   return <>{children}</>;
 }
