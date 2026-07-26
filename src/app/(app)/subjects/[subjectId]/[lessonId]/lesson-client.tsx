@@ -4,11 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Volume2, VolumeX, FileText, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import { getLessonById } from "@/data";
+import { getLessonById, getVideoByLessonId } from "@/data";
 import { useTTS } from "@/hooks/use-tts";
+import { VideoPlayer } from "@/components/video/video-player";
 
 export function LessonClient({ subjectId, lessonId }: { subjectId: string; lessonId: string }) {
   const lesson = getLessonById(lessonId);
+  const video = getVideoByLessonId(lessonId);
   const [showSimplified, setShowSimplified] = useState(false);
   const { toggle, speaking, supported } = useTTS();
 
@@ -68,6 +70,17 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
           )}
         </div>
       </div>
+
+      {/* Video — only if a video is linked to this lesson */}
+      {video && (
+        <div className="mb-8">
+          <VideoPlayer
+            youtubeId={video.youtubeId}
+            title={video.title}
+            channel={video.channel}
+          />
+        </div>
+      )}
 
       {/* View Toggle */}
       <div className="mb-6 flex items-center gap-2 rounded-xl border border-border bg-muted/50 p-1">

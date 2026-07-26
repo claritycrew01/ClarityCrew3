@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { Play } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import { getSubjectById, getSubjectSkillStatus } from "@/data";
+import { getSubjectById, getSubjectSkillStatus, getVideosBySubjectId } from "@/data";
+import { VideoPlayer } from "@/components/video/video-player";
 
 const STATUS_STYLES: Record<string, string> = {
   mastered: "border-success-green/40 bg-success-green/5 text-success-green",
@@ -16,7 +19,10 @@ const STATUS_LABELS: Record<string, string> = {
   "not-started": "Not Started",
 };
 
+type Tab = "skills" | "videos";
+
 export function SubjectClient({ subjectId }: { subjectId: string }) {
+  const [tab, setTab] = useState<Tab>("skills");
   const subject = getSubjectById(subjectId);
 
   if (!subject) {
@@ -29,6 +35,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
   }
 
   const skills = getSubjectSkillStatus(subjectId, []);
+  const videos = getVideosBySubjectId(subjectId);
 
   return (
     <div className="animate-fade-in">
@@ -39,35 +46,70 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
         {subject.description}
       </p>
 
+      {/* Tabs */}
       <div className="mt-6 flex gap-4 border-b border-border">
-        <button className="border-b-2 border-skill-blue pb-2 text-sm font-semibold text-skill-blue">
+        <button
+          onClick={() => setTab("skills")}
+          className={cn(
+            "border-b-2 pb-2 text-sm font-semibold transition-colors",
+            tab === "skills"
+              ? "border-skill-blue text-skill-blue"
+              : "border-transparent text-muted-foreground hover:text-foreground"
+          )}
+        >
           Skills
         </button>
-        <button className="border-b-2 border-transparent pb-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+        <button
+          onClick={() => setTab("videos")}
+          className={cn(
+            "border-b-2 pb-2 text-sm font-semibold transition-colors",
+            tab === "videos"
+              ? "border-skill-blue text-skill-blue"
+              : "border-transparent text-muted-foreground hover:text-foreground"
+          )}
+        >
           Videos
         </button>
       </div>
 
-      <div className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3.5">
-        {skills.map((skill) => (
-          <Link
-            key={skill.id}
-            href={`/subjects/${subjectId}/${skill.id}/`}
-            className={cn(
-              "group relative flex min-h-[88px] flex-col items-center justify-between rounded-xl border-[1.5px] px-3 py-4 text-center transition-all",
-              "hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]",
-              STATUS_STYLES[skill.status]
-            )}
-          >
-            <span className="text-[13px] font-semibold text-foreground">
-              {skill.name}
-            </span>
-            <span className="mt-2 text-[10px] font-semibold uppercase tracking-wide">
-              {STATUS_LABELS[skill.status]}
-            </span>
-          </Link>
-        ))}
-      </div>
+      {/* Tab content */}
+      {tab === "skills" ? (
+        <div className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3.5">
+          {skills.map((skill) => (
+            <Link
+              key={skill.id}
+              href={`/subjects/${subjectId}/${skill.id}/`}
+              className={cn(
+                "group relative flex min-h-[88px] flex-col items-center justify-between rounded-xl border-[1.5px] px-3 py-4 text-center transition-all",
+                "hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]",
+                STATUS_STYLES[skill.status]
+              )}
+            >
+              <span className="text-[13px] font-semibold text-foreground">
+                {skill.name}
+              </span>
+              <span className="mt-2 text-[10px] font-semibold uppercase tracking-wide">
+                {STATUS_LABELS[skill.status]}
+              </span>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-6 space-y-4">
+          {videos.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No videos available for this subject yet.</p>
+          ) : (
+            videos.map((video) => (
+              <VideoPlayer
+                key={video.id}
+                youtubeId={video.youtubeId}
+                title={video.title}
+                channel={video.channel}
+              />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

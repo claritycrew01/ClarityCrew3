@@ -30,3 +30,12 @@ export {
 } from "./flashcards";
 
 export type { FlashcardData, FlashcardDeckData } from "./flashcards";
+
+export {
+  VIDEOS,
+  getVideoByLessonId,
+  getVideosBySubjectId,
+  getAllVideoIds,
+} from "./videos";
+
+export type { VideoEntry } from "./videos";

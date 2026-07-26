@@ -18,4 +18,6 @@ export interface VideoContent {
   assetPath: string;
   thumbnailPath: string;
   linkedLessonId?: string;
+  youtubeId?: string;
+  source?: string;
 }
