@@ -260,9 +260,15 @@ Changes:
    exits 1 on any failure.
 3. Class swaps only in 1B, no structural edits: `text-white` on brand solids to the paired
    `on-solid` token, tinted brand text on `/10` backgrounds to the `-text` tokens, failing opacity
-   text to a full-opacity token. Landing hero gradient text at `src/app/page.tsx:77` becomes solid
-   `text-foreground`. Landing CTA gradient block at line 256 becomes a solid brand background if
-   the script shows white text failing on any stop.
+   text to a full-opacity token, progress-fill `bg-skill-blue`/`bg-success-green`/
+   `bg-premium-amber` divs (quiz and home progress bars, the only fills that use the token as a
+   lone state indicator) to the matching `-solid` tokens, and `ring-skill-blue` focus classes to
+   `ring-focus-ring` where the script shows them failing (dark modes). Landing hero gradient text
+   at `src/app/page.tsx:77` becomes solid `text-foreground`. Landing CTA gradient block at line
+   256 becomes a solid `bg-cta-orange` background with `text-white` (the white/80 line becomes
+   full `text-white`), since the script shows white text failing on both gradient stops.
+   As swaps land, delete the corresponding "remove this pair in 1B-2" entries from
+   `scripts/check-contrast.mjs` so the gate ends Phase 1 at 721/721.
 4. Do not rename existing tokens.
 
 Risks: tokens and class strings only, no store reads, no window access, no hydration impact.
@@ -588,3 +594,17 @@ No axe runner (Q5). The user runs a manual axe extension pass.
 - Phase 0: DONE. Branch `a11y-overhaul`. Build exit 0 (51 static pages), tsc exit 0, lint config
   added with `eslint src`, lint reports 5 errors (recorded in `docs/baseline-audit.md`, deferred to
   Phases 4, 5A, and 7). Plan saved to `docs/a11y-overhaul-plan.md`.
+- Phase 1A: DONE. `src/app/globals.css` retuned (muted-foreground 0.556 to 0.47; ring 0.708 to
+  0.55 0.17 260; new `--color-focus-ring`; brands cta-orange 0.675 to 0.46, skill-blue 0.546 to
+  0.48, success-green 0.627 to 0.4, premium-amber 0.769 to 0.43, destructive 0.577 to 0.48, each
+  with `-text`, `-solid`, `-on-solid` companions; dark gets brighter `-solid` fills plus bright
+  `-text` values, dark muted-foreground 0.74, dark destructive 0.83, dark ring/focus-ring 0.62;
+  calm, high-contrast, and dark-high-contrast blocks updated with matching companions). New
+  `scripts/check-contrast.mjs` (zero deps): parses globals.css, OKLCH to sRGB with chroma
+  reduction for gamut, 7 modes (light, dark, calm-reader, high-contrast, off-white-bg,
+  dark-high-contrast, dark-off-white-bg), 721 explicit pairs, 4.5 text / 3.0 UI thresholds.
+  Result: 633/721 pass, 88 fails, all 88 deferred class-usage pairs (each marked
+  "remove this pair in 1B-2 ..." in the script), zero non-deferred failures. Build exit 0, tsc
+  exit 0, lint unchanged at the 5 known errors. 1B-2 must also delete those marked pairs from the
+  script list as it performs the swaps.
+

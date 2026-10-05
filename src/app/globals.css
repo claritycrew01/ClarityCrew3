@@ -25,23 +25,41 @@
   --color-secondary: oklch(0.965 0.006 260);
   --color-secondary-foreground: oklch(0.145 0.053 260);
   --color-muted: oklch(0.965 0.006 260);
-  --color-muted-foreground: oklch(0.556 0.024 260);
+  --color-muted-foreground: oklch(0.47 0.024 260);
   --color-accent: oklch(0.965 0.006 260);
   --color-accent-foreground: oklch(0.145 0.053 260);
-  --color-destructive: oklch(0.577 0.245 27);
+  --color-destructive: oklch(0.48 0.245 27);
   --color-destructive-foreground: oklch(0.985 0 0);
   --color-border: oklch(0.922 0.007 260);
   --color-input: oklch(0.922 0.007 260);
-  --color-ring: oklch(0.708 0.044 260);
+  --color-ring: oklch(0.55 0.17 260);
+  --color-focus-ring: oklch(0.55 0.17 260);
 
-  /* === Miyagi Brand Colors === */
-  --color-cta-orange: oklch(0.675 0.194 38);
-  --color-cta-orange-hover: oklch(0.6 0.194 38);
-  --color-skill-blue: oklch(0.546 0.245 262);
+  /* === Miyagi Brand Colors ===
+     Each brand ships four tokens: the base color (fill, and light-mode text),
+     -text (text and icons on surfaces), -solid (fill alias for -on-solid
+     pairing), -on-solid (text on the fill), and -hover (darker fill for hover
+     states). Light-mode values are identical across the set; dark and
+     accessibility modes override -text, -solid, and the base where needed. */
+  --color-cta-orange: oklch(0.46 0.194 38);
+  --color-cta-orange-text: oklch(0.46 0.194 38);
+  --color-cta-orange-solid: oklch(0.46 0.194 38);
+  --color-cta-orange-on-solid: oklch(1 0 0);
+  --color-cta-orange-hover: oklch(0.41 0.194 38);
+  --color-skill-blue: oklch(0.48 0.245 262);
+  --color-skill-blue-text: oklch(0.48 0.245 262);
+  --color-skill-blue-solid: oklch(0.48 0.245 262);
+  --color-skill-blue-on-solid: oklch(1 0 0);
+  --color-success-green: oklch(0.4 0.194 142);
+  --color-success-green-text: oklch(0.4 0.194 142);
+  --color-success-green-solid: oklch(0.4 0.194 142);
+  --color-success-green-on-solid: oklch(1 0 0);
+  --color-premium-amber: oklch(0.43 0.188 70);
+  --color-premium-amber-text: oklch(0.43 0.188 70);
+  --color-premium-amber-solid: oklch(0.43 0.188 70);
+  --color-premium-amber-on-solid: oklch(1 0 0);
   --color-skill-blue-light: oklch(0.93 0.05 262);
-  --color-success-green: oklch(0.627 0.194 142);
   --color-success-green-light: oklch(0.93 0.05 142);
-  --color-premium-amber: oklch(0.769 0.188 70);
   --color-premium-amber-light: oklch(0.95 0.04 70);
 
   /* === Sidebar === */
@@ -93,17 +111,31 @@
   --color-secondary: oklch(0.18 0.01 260);
   --color-secondary-foreground: oklch(0.93 0.007 260);
   --color-muted: oklch(0.18 0.01 260);
-  --color-muted-foreground: oklch(0.556 0.024 260);
+  --color-muted-foreground: oklch(0.74 0.024 260);
   --color-accent: oklch(0.18 0.01 260);
   --color-accent-foreground: oklch(0.93 0.007 260);
-  --color-destructive: oklch(0.577 0.245 27);
+  --color-destructive: oklch(0.83 0.16 27);
   --color-destructive-foreground: oklch(0.985 0 0);
   --color-border: oklch(0.25 0.008 260);
   --color-input: oklch(0.25 0.008 260);
-  --color-ring: oklch(0.556 0.024 260);
+  --color-ring: oklch(0.62 0.17 260);
+  --color-focus-ring: oklch(0.62 0.17 260);
+
+  /* Brand text on dark surfaces; fills keep their light-mode values so
+     white text on brand buttons stays compliant in both themes. */
+  --color-cta-orange-text: oklch(0.8 0.16 38);
+  --color-skill-blue-text: oklch(0.8 0.14 262);
+  --color-success-green-text: oklch(0.82 0.15 142);
+  --color-premium-amber-text: oklch(0.82 0.16 70);
+
+  /* Brighter solid fills for dark surfaces (progress bars, tracks). */
+  --color-cta-orange-solid: oklch(0.55 0.194 38);
+  --color-skill-blue-solid: oklch(0.54 0.2 262);
+  --color-success-green-solid: oklch(0.55 0.17 142);
+  --color-premium-amber-solid: oklch(0.52 0.17 70);
 
   --color-sidebar-bg: oklch(0.08 0.005 260);
-  --color-sidebar-foreground: oklch(0.556 0.024 260);
+  --color-sidebar-foreground: oklch(0.74 0.044 260);
   --color-sidebar-border: oklch(0.18 0.005 260);
   --color-sidebar-ring: oklch(0.2 0.005 260);
   --color-sidebar-accent: oklch(0.16 0.005 260);
@@ -148,9 +180,19 @@
   --color-border: oklch(0.88 0.003 260) !important;
   --color-muted: oklch(0.91 0.003 260) !important;
   --color-muted-foreground: oklch(0.45 0.01 260) !important;
-  --color-skill-blue: oklch(0.546 0.15 262) !important;
-  --color-cta-orange: oklch(0.675 0.12 38) !important;
-  --color-success-green: oklch(0.627 0.12 142) !important;
+  --color-destructive: oklch(0.46 0.2 27) !important;
+  --color-cta-orange: oklch(0.46 0.1 38) !important;
+  --color-cta-orange-text: oklch(0.46 0.1 38) !important;
+  --color-cta-orange-solid: oklch(0.46 0.1 38) !important;
+  --color-skill-blue: oklch(0.47 0.15 262) !important;
+  --color-skill-blue-text: oklch(0.47 0.15 262) !important;
+  --color-skill-blue-solid: oklch(0.47 0.15 262) !important;
+  --color-success-green: oklch(0.4 0.12 142) !important;
+  --color-success-green-text: oklch(0.4 0.12 142) !important;
+  --color-success-green-solid: oklch(0.4 0.12 142) !important;
+  --color-premium-amber: oklch(0.43 0.12 70) !important;
+  --color-premium-amber-text: oklch(0.43 0.12 70) !important;
+  --color-premium-amber-solid: oklch(0.43 0.12 70) !important;
 }
 
 .calm-reader *,
@@ -177,10 +219,16 @@
   --color-border: oklch(0.2 0 0) !important;
   --color-muted: oklch(0.95 0 0) !important;
   --color-muted-foreground: oklch(0.3 0 0) !important;
-  --color-skill-blue: oklch(0.4 0.245 262) !important;
-  --color-cta-orange: oklch(0.55 0.194 38) !important;
-  --color-success-green: oklch(0.5 0.194 142) !important;
-  --color-destructive: oklch(0.45 0.245 27) !important;
+  --color-skill-blue: oklch(0.38 0.245 262) !important;
+  --color-skill-blue-text: oklch(0.38 0.245 262) !important;
+  --color-skill-blue-solid: oklch(0.38 0.245 262) !important;
+  --color-cta-orange: oklch(0.44 0.194 38) !important;
+  --color-cta-orange-text: oklch(0.44 0.194 38) !important;
+  --color-cta-orange-solid: oklch(0.44 0.194 38) !important;
+  --color-success-green: oklch(0.36 0.194 142) !important;
+  --color-success-green-text: oklch(0.36 0.194 142) !important;
+  --color-success-green-solid: oklch(0.36 0.194 142) !important;
+  --color-destructive: oklch(0.42 0.245 27) !important;
 }
 
 .high-contrast * {
@@ -195,10 +243,17 @@
   --color-border: oklch(0.7 0 0) !important;
   --color-muted: oklch(0.12 0 0) !important;
   --color-muted-foreground: oklch(0.8 0 0) !important;
-  --color-skill-blue: oklch(0.7 0.245 262) !important;
-  --color-cta-orange: oklch(0.8 0.194 38) !important;
-  --color-success-green: oklch(0.75 0.194 142) !important;
-  --color-destructive: oklch(0.7 0.245 27) !important;
+  --color-skill-blue: oklch(0.5 0.2 262) !important;
+  --color-skill-blue-solid: oklch(0.5 0.2 262) !important;
+  --color-skill-blue-text: oklch(0.8 0.14 262) !important;
+  --color-cta-orange: oklch(0.53 0.17 38) !important;
+  --color-cta-orange-solid: oklch(0.53 0.17 38) !important;
+  --color-cta-orange-text: oklch(0.8 0.16 38) !important;
+  --color-success-green: oklch(0.47 0.17 142) !important;
+  --color-success-green-solid: oklch(0.47 0.17 142) !important;
+  --color-success-green-text: oklch(0.82 0.15 142) !important;
+  --color-premium-amber-text: oklch(0.82 0.16 70) !important;
+  --color-destructive: oklch(0.84 0.16 27) !important;
 }
 
 /* === Reading Ruler (Dyslexia aid) === */
