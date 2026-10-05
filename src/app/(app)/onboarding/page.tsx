@@ -31,7 +31,12 @@ export default function OnboardingPage() {
   if (!hydrated || hasCompletedOnboarding) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-skill-blue/30 border-t-skill-blue-solid" />
+        <div
+          className="h-8 w-8 animate-spin rounded-full border-2 border-skill-blue/30 border-t-skill-blue-solid"
+          role="status"
+        >
+          <span className="sr-only">Loading</span>
+        </div>
       </div>
     );
   }
@@ -205,7 +210,7 @@ export default function OnboardingPage() {
               <div className="mt-6 rounded-xl border border-border bg-card p-4" role="list" aria-label="Settings that will be applied">
                 <ul className="space-y-2">
                   {previewChanges.map((change) => (
-                    <li key={change} className="flex items-center gap-2 text-sm text-foreground" role="listitem">
+                    <li key={change} className="flex items-center gap-2 text-sm text-foreground">
                       <Check className="h-4 w-4 text-success-green-text" aria-hidden="true" />
                       {change}
                     </li>

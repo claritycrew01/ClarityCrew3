@@ -57,12 +57,17 @@ export default function FlashcardsPage() {
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (!deck) return;
-      if (e.key === "ArrowLeft") goPrev();
-      else if (e.key === "ArrowRight") goNext();
-      else if (e.key === " " || e.key === "Enter") {
+      const target = e.target as HTMLElement | null;
+      const isCardControl =
+        target instanceof HTMLElement &&
+        (target.tagName === "BUTTON" || target === cardRef.current);
+      if (e.key === " " || e.key === "Enter") {
+        if (isCardControl) return;
         e.preventDefault();
         setFlipped((f) => !f);
       }
+      else if (e.key === "ArrowLeft") goPrev();
+      else if (e.key === "ArrowRight") goNext();
       else if (e.key === "1") handleUnknown();
       else if (e.key === "2") handleKnown();
     }
@@ -113,7 +118,7 @@ export default function FlashcardsPage() {
         ← All Decks
       </button>
       <h1 className="mb-1 font-display text-2xl font-bold text-foreground">{deck.title}</h1>
-      <p className="mb-4 text-sm text-muted-foreground">
+      <p className="mb-4 text-sm text-muted-foreground" aria-live="polite">
         {currentIndex + 1} of {cards.length} · {known.size} known · {unknown.size} learning
       </p>
 
@@ -121,20 +126,33 @@ export default function FlashcardsPage() {
         <div
           ref={cardRef}
           onClick={() => setFlipped(!flipped)}
+          onKeyDown={(e) => {
+            if (e.key === " " || e.key === "Enter") {
+              e.preventDefault();
+              setFlipped((f) => !f);
+            }
+          }}
           className={cn(
             "card-flip-inner cursor-pointer",
             flipped && "flipped"
           )}
           role="button"
           tabIndex={0}
-          aria-label={flipped ? "Show front" : "Show back"}
+          aria-pressed={flipped}
+          aria-label="Flip card"
         >
-          <div className="card-flip-face flex items-center justify-center rounded-2xl border border-border bg-card p-8 text-center shadow-sm transition-shadow hover:shadow-md">
+          <div
+            className="card-flip-face flex items-center justify-center rounded-2xl border border-border bg-card p-8 text-center shadow-sm transition-shadow hover:shadow-md"
+            aria-hidden={flipped}
+          >
             <p className="text-lg font-semibold text-foreground">
               {card.front}
             </p>
           </div>
-          <div className="card-flip-face card-flip-back flex items-center justify-center rounded-2xl border border-skill-blue/30 bg-skill-blue/5 p-8 text-center shadow-sm">
+          <div
+            className="card-flip-face card-flip-back flex items-center justify-center rounded-2xl border border-skill-blue/30 bg-skill-blue/5 p-8 text-center shadow-sm"
+            aria-hidden={!flipped}
+          >
             <p className="text-lg font-semibold text-foreground">
               {card.back}
             </p>

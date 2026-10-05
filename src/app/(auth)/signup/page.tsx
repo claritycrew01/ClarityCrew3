@@ -37,22 +37,7 @@ export default function SignupPage() {
         Skip to main content
       </a>
       <main id="main-content" tabIndex={-1} className="grid min-h-screen lg:grid-cols-2">
-      {/* Left branding pane */}
-      <div className="hidden lg:flex flex-col items-center justify-center bg-muted/30 p-12">
-        <div className="max-w-md text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-2xl">
-            C
-          </div>
-          <h2 className="font-display text-3xl font-bold text-foreground">
-            Start your learning journey
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            Join thousands of learners who study with clarity and confidence.
-          </p>
-        </div>
-      </div>
-
-      {/* Right form pane */}
+      {/* Sign-up form pane (DOM first so the h1 precedes the branding h2; lg:order-first keeps the branding pane visually left) */}
       <div className="flex flex-col justify-center p-6 sm:p-10">
         <div className="mx-auto w-full max-w-[400px]">
           <Link href="/" className="mb-8 inline-flex items-center gap-2">
@@ -70,10 +55,14 @@ export default function SignupPage() {
           </p>
 
           {error && (
-            <div className="mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            <div role="alert" className="mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
               {error}
             </div>
           )}
+
+          <span role="status" className="sr-only">
+            {loading ? "Creating account..." : ""}
+          </span>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div className="grid grid-cols-2 gap-3">
@@ -153,6 +142,21 @@ export default function SignupPage() {
             <Link href="/login/" className="font-semibold text-skill-blue-text hover:underline">
               Log in
             </Link>
+          </p>
+        </div>
+      </div>
+
+      {/* Left branding pane */}
+      <div className="hidden lg:flex lg:order-first flex-col items-center justify-center bg-muted/30 p-12">
+        <div className="max-w-md text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-2xl">
+            C
+          </div>
+          <h2 className="font-display text-3xl font-bold text-foreground">
+            Start your learning journey
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            Join thousands of learners who study with clarity and confidence.
           </p>
         </div>
       </div>

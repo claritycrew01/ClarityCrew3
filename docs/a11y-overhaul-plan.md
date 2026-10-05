@@ -688,5 +688,43 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   duration buttons `aria-pressed`. Verified: tsc exit 0, contrast 609/609 exit 0, lint at the
   5 known errors with 0 warnings, build exit 0; exported HTML probes confirm the progressbars,
   `aria-controls`/`aria-expanded` pairs, accessibility labels and `aria-valuetext`, `aria-current`
-  on prerendered lesson routes, `tree-group-` ids, and subject toggle attributes.
+   on prerendered lesson routes, `tree-group-` ids, and subject toggle attributes.
+
+- Phase 4: DONE. Nine files: the eight listed plus the new `status-message.tsx`. Quiz: one
+  always-mounted `role="status"` region rendered first in all four return paths (list, results,
+  missing question, quiz view) so the DOM node persists across state branches; `Question N:
+  Correct/Incorrect` set in `handleAnswer`, final score text set in `handleNext` (deps extended
+  with `score` and `totalQuestions` to avoid stale closure); quiz progress bar gets
+  `role="progressbar"` with label and valuenow/min/max; digit keys 1 to 4 select options in the
+  window keydown handler, guarded by tagName INPUT/TEXTAREA/SELECT and `answerState === "idle"`.
+  Focus page: `role="timer"` on the time span, `aria-hidden` on the progress svg, one sr-only
+  status region fed by two effects (minute-boundary announcement via a prev-minutes ref, and a
+  completion announcement via a prev-sessions ref declared second so its text wins the same-batch
+  update); never per-second. Tutor drawer: document capture-phase click listener records the last
+  opener into a ref by aria-label, close-return effect guarded by a had-open ref skips first
+  mount and focuses the opener if still connected else the rail fallback; document keydown effect
+  while open closes on Escape; message stream wrapped in `aria-live="polite"`; always-mounted
+  sr-only `role="status"` reports typing while the visual dots get `aria-hidden`. New
+  `status-message.tsx` is a hook-free `role="status"` `aria-live="polite"` `aria-atomic` div used
+  by personalization (always mounted, `mb-6` applied only when non-empty so empty renders add no
+  spacing) with `Presets applied.` set in `applyPresets`. Flashcards: counter `aria-live`, flip
+  element gets `aria-pressed` with stable `aria-label="Flip card"` plus an element-level
+  Space/Enter handler, faces get `aria-hidden` by state so card content is not announced on
+  flip, and the window handler returns early for Space/Enter when the target is a BUTTON or the
+  flip element (arrows and 1/2 stay global); this clears the jsx-a11y click-events error.
+  Login and signup: `role="alert"` on error, always-mounted sr-only `role="status"` with the
+  loading text outside the button, and the branding pane moved after the form pane in the DOM
+  with `lg:order-first` so the h1 precedes the h2 while the visual layout is unchanged (mobile
+  shows only the form pane, unchanged). Onboarding: spinner gets `role="status"` with sr-only
+  `Loading` (present in static HTML because `hydrated` starts false) and the redundant
+  `role="listitem"` was removed, clearing that lint error. The file-level `type KeyboardEvent`
+  React import in right-panel required structurally typing the Escape listener param as
+  `{ key: string }`. Verified: tsc exit 0, contrast 609/609 exit 0, lint at the 3 known errors
+  (onboarding set-state-in-effect for 5A, right-panel purity for 7, video-player
+  set-state-in-effect for 7) with 0 warnings, build exit 0; exported HTML probes confirm the quiz
+  status region, focus timer/svg/status attributes, onboarding status and the absence of
+  `role="listitem"`, h1-before-h2 ordering plus `lg:order-first` and status spans on both auth
+  pages, and the personalization status region. Quiz progressbar, flashcards counter/flip, and
+  the tutor drawer regions are runtime-only in exported HTML (rendered after hydration), which
+  matches the Phase 3 pattern.
 

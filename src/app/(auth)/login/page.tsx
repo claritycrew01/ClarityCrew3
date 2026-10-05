@@ -35,22 +35,7 @@ export default function LoginPage() {
         Skip to main content
       </a>
       <main id="main-content" tabIndex={-1} className="grid min-h-screen lg:grid-cols-2">
-      {/* Left branding pane */}
-      <div className="hidden lg:flex flex-col items-center justify-center bg-muted/30 p-12">
-        <div className="max-w-md text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-2xl">
-            C
-          </div>
-          <h2 className="font-display text-3xl font-bold text-foreground">
-            Welcome to ClarityCrew
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            An academic study platform designed around how you learn, not the other way around.
-          </p>
-        </div>
-      </div>
-
-      {/* Right form pane */}
+      {/* Sign-in form pane (DOM first so the h1 precedes the branding h2; lg:order-first keeps the branding pane visually left) */}
       <div className="flex flex-col justify-center p-6 sm:p-10">
         <div className="mx-auto w-full max-w-[400px]">
           <Link href="/" className="mb-8 inline-flex items-center gap-2">
@@ -68,10 +53,14 @@ export default function LoginPage() {
           </p>
 
           {error && (
-            <div className="mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            <div role="alert" className="mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
               {error}
             </div>
           )}
+
+          <span role="status" className="sr-only">
+            {loading ? "Signing in..." : ""}
+          </span>
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div>
@@ -127,6 +116,21 @@ export default function LoginPage() {
 
           <p className="mt-8 text-center text-xs text-muted-foreground">
             By continuing, you agree to our Terms of Service and Privacy Policy.
+          </p>
+        </div>
+      </div>
+
+      {/* Left branding pane */}
+      <div className="hidden lg:flex lg:order-first flex-col items-center justify-center bg-muted/30 p-12">
+        <div className="max-w-md text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-2xl">
+            C
+          </div>
+          <h2 className="font-display text-3xl font-bold text-foreground">
+            Welcome to ClarityCrew
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            An academic study platform designed around how you learn, not the other way around.
           </p>
         </div>
       </div>

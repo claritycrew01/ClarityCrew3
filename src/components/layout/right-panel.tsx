@@ -132,6 +132,46 @@ export function RightPanel({ open }: { open: boolean }) {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+  const hadOpenRef = useRef(false);
+
+  useEffect(() => {
+    const recordOpener = (event: Event) => {
+      const target = event.target as Element | null;
+      const opener = target?.closest<HTMLElement>(
+        '[aria-label="Toggle AI tutor"], [aria-label="Open AI tutor"], [aria-label="Chat with tutor"]'
+      );
+      if (opener) openerRef.current = opener;
+    };
+    document.addEventListener("click", recordOpener, true);
+    return () => document.removeEventListener("click", recordOpener, true);
+  }, []);
+
+  useEffect(() => {
+    if (open) {
+      hadOpenRef.current = true;
+      return;
+    }
+    if (!hadOpenRef.current) return;
+    hadOpenRef.current = false;
+    const opener = openerRef.current;
+    if (opener && opener.isConnected) {
+      opener.focus();
+      return;
+    }
+    document
+      .querySelector<HTMLElement>('#tutor-panel [aria-label="Open AI tutor"]')
+      ?.focus();
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: { key: string }) => {
+      if (event.key === "Escape") toggleRightPanel();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, toggleRightPanel]);
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -253,22 +293,31 @@ export function RightPanel({ open }: { open: boolean }) {
               </div>
             )}
 
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={cn(
-                  "max-w-[90%] rounded-xl px-3 py-2 text-sm animate-fade-in",
-                  msg.role === "user"
-                    ? "ml-auto bg-skill-blue-solid text-skill-blue-on-solid rounded-br-sm"
-                    : "bg-muted text-foreground rounded-bl-sm"
-                )}
-              >
-                {msg.text}
-              </div>
-            ))}
+            <div aria-live="polite">
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={cn(
+                    "max-w-[90%] rounded-xl px-3 py-2 text-sm animate-fade-in",
+                    msg.role === "user"
+                      ? "ml-auto bg-skill-blue-solid text-skill-blue-on-solid rounded-br-sm"
+                      : "bg-muted text-foreground rounded-bl-sm"
+                  )}
+                >
+                  {msg.text}
+                </div>
+              ))}
+            </div>
+
+            <div role="status" className="sr-only">
+              {isTyping ? "Tutor is typing" : ""}
+            </div>
 
             {isTyping && (
-              <div className="max-w-[90%] rounded-xl bg-muted px-3 py-2 text-sm rounded-bl-sm">
+              <div
+                aria-hidden="true"
+                className="max-w-[90%] rounded-xl bg-muted px-3 py-2 text-sm rounded-bl-sm"
+              >
                 <div className="flex items-center gap-1">
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-muted-foreground/40" style={{ animation: "typing-dot 1s infinite 0s" }} />
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-muted-foreground/40" style={{ animation: "typing-dot 1s infinite 0.2s" }} />

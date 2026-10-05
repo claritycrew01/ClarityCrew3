@@ -6,6 +6,7 @@ import type { DisabilityPreset, ThemePreference, FontFamilyPreference, Backgroun
 import { cn } from "@/lib/utils/cn";
 import { Check, RotateCcw, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { StatusMessage } from "@/components/a11y/status-message";
 
 function Toggle({
   checked,
@@ -136,6 +137,7 @@ export default function PersonalizationPage() {
   const resetToDefaults = usePreferencesStore((s) => s.resetToDefaults);
   const [showPresetPicker, setShowPresetPicker] = useState(false);
   const [presetSelections, setPresetSelections] = useState<string[]>(prefs.onboardingSelections);
+  const [presetsMessage, setPresetsMessage] = useState("");
   const presetButtonRef = useRef<HTMLButtonElement>(null);
   const presetPanelRef = useRef<HTMLDivElement>(null);
 
@@ -187,6 +189,7 @@ export default function PersonalizationPage() {
   function applyPresets() {
     const presets = applyDisabilityPresets(presetSelections);
     setPreferences({ ...presets, onboardingSelections: presetSelections });
+    setPresetsMessage("Presets applied.");
     setShowPresetPicker(false);
   }
 
@@ -210,6 +213,12 @@ export default function PersonalizationPage() {
           Disability presets
         </button>
       </div>
+
+      <StatusMessage
+        className={cn("text-sm text-success-green-text", presetsMessage && "mb-6")}
+      >
+        {presetsMessage}
+      </StatusMessage>
 
       {/* Preset picker modal */}
       {showPresetPicker && (

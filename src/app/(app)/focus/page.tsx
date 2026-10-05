@@ -18,8 +18,11 @@ export default function FocusPage() {
   const [isRunning, setIsRunning] = useState(false);
   const [sessionsCompleted, setSessionsCompleted] = useState(0);
   const [totalFocusSeconds, setTotalFocusSeconds] = useState(0);
+  const [timerAnnouncement, setTimerAnnouncement] = useState("");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const startRef = useRef<number | null>(null);
+  const prevMinutesRef = useRef(Math.ceil(1500 / 60));
+  const prevSessionsRef = useRef(0);
   const addSession = useProgressStore((s) => s.addSession);
   const incrementStreak = useProgressStore((s) => s.incrementStreak);
 
@@ -84,6 +87,23 @@ export default function FocusPage() {
     };
   }, [isRunning, remaining, completeSession]);
 
+  useEffect(() => {
+    const minutes = Math.ceil(remaining / 60);
+    if (minutes !== prevMinutesRef.current) {
+      prevMinutesRef.current = minutes;
+      setTimerAnnouncement(
+        `${minutes} minute${minutes === 1 ? "" : "s"} remaining`
+      );
+    }
+  }, [remaining]);
+
+  useEffect(() => {
+    if (sessionsCompleted !== prevSessionsRef.current) {
+      prevSessionsRef.current = sessionsCompleted;
+      setTimerAnnouncement("Focus session complete");
+    }
+  }, [sessionsCompleted]);
+
   const circumference = 2 * Math.PI * 120;
   const offset = circumference * (1 - progress);
 
@@ -95,8 +115,12 @@ export default function FocusPage() {
         {Math.floor(totalFocusSeconds / 60)}m total focus
       </p>
 
+      <div role="status" aria-live="polite" className="sr-only">
+        {timerAnnouncement}
+      </div>
+
       <div className="relative mb-8">
-        <svg width="260" height="260">
+        <svg width="260" height="260" aria-hidden="true">
           <circle
             cx="130"
             cy="130"
@@ -121,7 +145,7 @@ export default function FocusPage() {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="font-display text-5xl font-bold tabular-nums text-foreground">
+          <span role="timer" className="font-display text-5xl font-bold tabular-nums text-foreground">
             {formatTimerDisplay(remaining)}
           </span>
           <span className="text-sm text-muted-foreground">

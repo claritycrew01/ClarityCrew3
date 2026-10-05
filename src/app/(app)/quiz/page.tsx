@@ -17,6 +17,7 @@ export default function QuizPage() {
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState<(string | null)[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
   const { toggle: toggleTTS, speaking, supported: ttsSupported } = useTTS();
 
   const quiz: QuizData | null = selectedQuizId ? getQuizById(selectedQuizId) ?? null : null;
@@ -40,6 +41,9 @@ export default function QuizPage() {
     const correct = question.options.find((o) => o.isCorrect);
     const isCorrect = selectedOptionId === correct?.id;
     setAnswerState(isCorrect ? "correct" : "incorrect");
+    setAnnouncement(
+      `Question ${currentQuestionIndex + 1}: ${isCorrect ? "Correct" : "Incorrect"}`
+    );
     if (isCorrect) setScore((s) => s + 1);
     setAnswers((prev) => {
       const next = [...prev];
@@ -55,13 +59,29 @@ export default function QuizPage() {
       setSelectedOptionId(null);
       setAnswerState("idle");
     } else {
+      const percentage =
+        totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+      setAnnouncement(
+        `Quiz complete. ${score} of ${totalQuestions} correct, ${percentage} percent.`
+      );
       setShowResults(true);
     }
-  }, [quiz, currentQuestionIndex]);
+  }, [quiz, currentQuestionIndex, score, totalQuestions]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (!quiz || showResults) return;
+      const target = e.target as HTMLElement | null;
+      const tagName = target?.tagName;
+      if (tagName === "INPUT" || tagName === "TEXTAREA" || tagName === "SELECT") return;
+      if (answerState === "idle" && ["1", "2", "3", "4"].includes(e.key)) {
+        const option = question?.options[Number(e.key) - 1];
+        if (option) {
+          e.preventDefault();
+          setSelectedOptionId(option.id);
+        }
+        return;
+      }
       if (answerState === "idle" && selectedOptionId) {
         if (e.key === "Enter") {
           e.preventDefault();
@@ -76,7 +96,7 @@ export default function QuizPage() {
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [quiz, showResults, answerState, selectedOptionId, handleAnswer, handleNext]);
+  }, [quiz, showResults, answerState, selectedOptionId, question, handleAnswer, handleNext]);
 
   function resetQuiz() {
     if (!quiz) return;
@@ -88,9 +108,17 @@ export default function QuizPage() {
     setShowResults(false);
   }
 
+  const liveRegion = (
+    <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+      {announcement}
+    </div>
+  );
+
   if (!quiz) {
     return (
-      <div className="animate-fade-in">
+      <>
+        {liveRegion}
+        <div className="animate-fade-in">
         <h1 className="mb-2 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Quizzes
         </h1>
@@ -110,14 +138,17 @@ export default function QuizPage() {
             </button>
           ))}
         </div>
-      </div>
+        </div>
+      </>
     );
   }
 
   if (showResults) {
     const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center animate-fade-in">
+      <>
+        {liveRegion}
+        <div className="flex min-h-[60vh] flex-col items-center justify-center animate-fade-in">
         <Trophy className="mb-4 h-12 w-12 text-premium-amber-text" />
         <h1 className="mb-1 font-display text-3xl font-bold text-foreground">Quiz Complete</h1>
         <p className="mb-6 text-muted-foreground">{quiz.title}</p>
@@ -174,14 +205,17 @@ export default function QuizPage() {
             );
           })}
         </div>
-      </div>
+        </div>
+      </>
     );
   }
 
-  if (!question) return null;
+  if (!question) return <>{liveRegion}</>;
 
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center animate-fade-in">
+    <>
+      {liveRegion}
+      <div className="flex min-h-[60vh] flex-col items-center justify-center animate-fade-in">
       <button
         onClick={() => {
           setSelectedQuizId(null);
@@ -196,7 +230,14 @@ export default function QuizPage() {
         Question {currentQuestionIndex + 1} of {totalQuestions}
       </p>
 
-      <div className="mb-4 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-muted">
+      <div
+        className="mb-4 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-muted"
+        role="progressbar"
+        aria-label="Quiz progress"
+        aria-valuenow={currentQuestionIndex + 1}
+        aria-valuemin={0}
+        aria-valuemax={totalQuestions}
+      >
         <div
           className="h-full rounded-full bg-skill-blue-solid transition-all duration-300"
           style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
@@ -289,6 +330,7 @@ export default function QuizPage() {
       <p className="mt-4 text-[10px] text-muted-foreground">
         Keyboard: 1-4 select · Enter check/next
       </p>
-    </div>
+      </div>
+    </>
   );
 }
