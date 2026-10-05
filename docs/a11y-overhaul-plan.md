@@ -317,7 +317,9 @@ Files: `src/app/(app)/settings/accessibility/page.tsx`,
 `src/components/a11y/accessibility-toolbar.tsx`, `src/components/layout/right-panel.tsx`,
 `src/components/layout/mobile-nav.tsx`,
 `src/app/(app)/subjects/[subjectId]/subject-client.tsx`, `src/app/(app)/flashcards/page.tsx`,
-`src/app/(app)/focus/page.tsx`, `src/app/(app)/settings/personalization/page.tsx`.
+`src/app/(app)/focus/page.tsx`, `src/app/(app)/settings/personalization/page.tsx`,
+`src/app/(app)/home/page.tsx` and `src/app/(app)/progress/page.tsx` (change 9 only, added by
+user approval because the change named them but the list omitted them).
 
 Changes:
 
@@ -660,4 +662,31 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   609/609 exit 0, lint unchanged at 5, build exit 0; generated CSS contains the skip-link,
   focus-visible, and forced-colors rules; exported HTML contains the skip link and
   `main-content` on index, home, login, onboarding, and 404.
+- Phase 3: DONE. Twelve files: the ten listed plus home and progress for change 9 (added by
+  user approval because the change named them but the Files list omitted them). Accessibility
+  page: `Toggle` takes a `labelledBy` prop naming four new label paragraph ids, `Slider` takes an
+  `id` bound by real `<label for>` elements and sets `aria-valuetext` to `displayValue`, trait
+  buttons get `aria-pressed`. Course tree: aside gets `aria-label="Course tree"`, disclosure
+  buttons get `aria-expanded` and `aria-controls="tree-group-<id>"` with matching group container
+  ids, lesson links get `aria-current="page"` from a normalized `usePathname()` comparison, the
+  locked link gets `aria-disabled`, subject icons, chevrons, locks, and the `ProgressRing` svg get
+  `aria-hidden`. Header: sidebar toggle `aria-expanded` plus `aria-controls="course-tree"`, tutor
+  toggle `aria-expanded` plus `aria-controls="tutor-panel"`, last breadcrumb `aria-current="page"`,
+  icons `aria-hidden`. Quick settings toolbar: four rows `aria-pressed`, close button labelled
+  `Close quick settings`, launcher `aria-expanded` plus `aria-controls`, panel gets an id,
+  `role="dialog"`, `aria-modal`, `aria-labelledby`, document-level Escape close, and a Tab focus
+  trap that returns focus to the launcher. Right panel: aside `aria-label="AI tutor"`, chat input
+  labelled `Ask the AI tutor a question`, both collapsed buttons `aria-expanded={false}`. Mobile
+  nav active link `aria-current="page"`. Subject client: skills and videos buttons `aria-pressed`
+  with `<section aria-label>` panels, no `role=tab`. Personalization preset picker: `role="dialog"`,
+  `aria-modal`, `aria-labelledby` on the heading, focus trap, Escape to close, focus returns to the
+  opener (lint ref-in-cleanup warning fixed by capturing the ref inside the effect). Home: overall
+  and per-subject bars get `role="progressbar"` with `aria-valuenow`/`min`/`max` and labels; the
+  progress page contains no progressbar element (text stats only), so it was left unchanged. Flashcards:
+  known and unknown buttons `aria-pressed`, TTS button gets a stable name plus `aria-pressed`
+  (the deck renders after hydration, so these are runtime-only in exported HTML). Focus page:
+  duration buttons `aria-pressed`. Verified: tsc exit 0, contrast 609/609 exit 0, lint at the
+  5 known errors with 0 warnings, build exit 0; exported HTML probes confirm the progressbars,
+  `aria-controls`/`aria-expanded` pairs, accessibility labels and `aria-valuetext`, `aria-current`
+  on prerendered lesson routes, `tree-group-` ids, and subject toggle attributes.
 

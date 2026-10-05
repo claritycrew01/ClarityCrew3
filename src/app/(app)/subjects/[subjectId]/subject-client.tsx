@@ -50,6 +50,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
       <div className="mt-6 flex gap-4 border-b border-border">
         <button
           onClick={() => setTab("skills")}
+          aria-pressed={tab === "skills"}
           className={cn(
             "border-b-2 pb-2 text-sm font-semibold transition-colors",
             tab === "skills"
@@ -61,6 +62,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
         </button>
         <button
           onClick={() => setTab("videos")}
+          aria-pressed={tab === "videos"}
           className={cn(
             "border-b-2 pb-2 text-sm font-semibold transition-colors",
             tab === "videos"
@@ -74,7 +76,10 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
 
       {/* Tab content */}
       {tab === "skills" ? (
-        <div className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3.5">
+        <section
+          aria-label="Skills"
+          className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3.5"
+        >
           {skills.map((skill) => (
             <Link
               key={skill.id}
@@ -93,9 +98,9 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
               </span>
             </Link>
           ))}
-        </div>
+        </section>
       ) : (
-        <div className="mt-6 space-y-4">
+        <section aria-label="Videos" className="mt-6 space-y-4">
           {videos.length === 0 ? (
             <p className="text-sm text-muted-foreground">No videos available for this subject yet.</p>
           ) : (
@@ -108,7 +113,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
               />
             ))
           )}
-        </div>
+        </section>
       )}
     </div>
   );

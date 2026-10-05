@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { ChevronRight, BookOpen, Beaker, Trophy, Lock } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { SUBJECTS } from "@/data";
@@ -18,15 +19,15 @@ interface TreeNode {
 function buildTreeFromData(): TreeNode[] {
   return SUBJECTS.map((subject) => {
     const iconMap: Record<string, ReactNode> = {
-      math: <BookOpen className="h-4 w-4" />,
-      science: <Beaker className="h-4 w-4" />,
-      english: <Trophy className="h-4 w-4" />,
+      math: <BookOpen className="h-4 w-4" aria-hidden="true" />,
+      science: <Beaker className="h-4 w-4" aria-hidden="true" />,
+      english: <Trophy className="h-4 w-4" aria-hidden="true" />,
     };
 
     return {
       id: subject.id,
       label: subject.name,
-      icon: iconMap[subject.id] ?? <BookOpen className="h-4 w-4" />,
+      icon: iconMap[subject.id] ?? <BookOpen className="h-4 w-4" aria-hidden="true" />,
       children: subject.chapters.map((chapter) => ({
         id: chapter.id,
         label: chapter.title,
@@ -56,7 +57,7 @@ function ProgressRing({ progress, size = 28 }: { progress: number; size?: number
         : "oklch(0.556 0.024 260 / 0.3)";
 
   return (
-    <svg width={size} height={size} className="shrink-0">
+    <svg width={size} height={size} className="shrink-0" aria-hidden="true">
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -85,13 +86,17 @@ function ProgressRing({ progress, size = 28 }: { progress: number; size?: number
 
 function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
   const [expanded, setExpanded] = useState(depth < 1);
+  const pathname = usePathname();
   const hasChildren = node.children && node.children.length > 0;
+  const currentPath = pathname.replace(/\/$/, "");
 
   return (
     <div>
       {node.href && !hasChildren ? (
         <a
           href={node.href}
+          aria-current={currentPath === node.href.replace(/\/$/, "") ? "page" : undefined}
+          aria-disabled={node.locked || undefined}
           className={cn(
             "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
             "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -106,7 +111,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
           {node.icon && <span className="shrink-0 text-sidebar-foreground">{node.icon}</span>}
           <span className="flex-1 truncate">{node.label}</span>
           {node.locked ? (
-            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground" />
+            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground" aria-hidden="true" />
           ) : (
             node.progress !== undefined && (
               <ProgressRing progress={node.progress} size={22} />
@@ -116,6 +121,8 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
       ) : (
         <button
           onClick={() => hasChildren && setExpanded(!expanded)}
+          aria-expanded={hasChildren ? expanded : undefined}
+          aria-controls={hasChildren ? `tree-group-${node.id}` : undefined}
           className={cn(
             "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
             "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -129,6 +136,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
         >
           {hasChildren ? (
             <ChevronRight
+              aria-hidden="true"
               className={cn(
                 "h-3.5 w-3.5 shrink-0 text-sidebar-foreground transition-transform duration-200",
                 expanded && "rotate-90"
@@ -143,7 +151,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
           <span className="flex-1 truncate">{node.label}</span>
 
           {node.locked ? (
-            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground" />
+            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground" aria-hidden="true" />
           ) : (
             node.progress !== undefined && (
               <ProgressRing progress={node.progress} size={22} />
@@ -153,7 +161,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
       )}
 
       {hasChildren && expanded && (
-        <div className="animate-fade-in">
+        <div className="animate-fade-in" id={`tree-group-${node.id}`}>
           {node.children!.map((child) => (
             <TreeItem key={child.id} node={child} depth={depth + 1} />
           ))}
@@ -169,6 +177,7 @@ export function CourseTree({ collapsed }: { collapsed: boolean }) {
   return (
     <aside
       id="course-tree"
+      aria-label="Course tree"
       className={cn(
         "fixed top-[calc(var(--header-height)+0.5rem)] bottom-2 left-2 z-40",
         "flex flex-col rounded-2xl bg-sidebar-bg text-sidebar-foreground",

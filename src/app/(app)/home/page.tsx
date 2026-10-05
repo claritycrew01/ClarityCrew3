@@ -149,7 +149,14 @@ export default function DashboardPage() {
               <span className="text-[10px] text-muted-foreground">Overall Progress</span>
               <span className="text-[10px] font-semibold text-foreground">{completionPct}%</span>
             </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            <div
+              className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
+              role="progressbar"
+              aria-label="Overall progress"
+              aria-valuenow={completionPct}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
               <div
                 className="h-full rounded-full bg-skill-blue-solid transition-all duration-500"
                 style={{ width: `${completionPct}%` }}
@@ -205,7 +212,14 @@ export default function DashboardPage() {
                 <p className="text-xs text-muted-foreground">
                   {subject.completed}/{subject.total} lessons completed
                 </p>
-                <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-muted"
+                  role="progressbar"
+                  aria-label={`${subject.name} progress`}
+                  aria-valuenow={subject.pct}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                >
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       subject.color === "skill-blue"

@@ -155,7 +155,8 @@ export default function FlashcardsPage() {
                 ? "border-skill-blue-solid bg-skill-blue/10 text-skill-blue-text"
                 : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
-            aria-label={speaking ? "Stop reading" : "Read card aloud"}
+            aria-label="Read card aloud"
+            aria-pressed={speaking}
           >
             {speaking ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
           </button>
@@ -176,6 +177,7 @@ export default function FlashcardsPage() {
               : "border-destructive/30 bg-destructive/5 text-destructive hover:bg-destructive/10"
           )}
           aria-label="Don't know"
+          aria-pressed={unknown.has(currentIndex)}
         >
           <X className="h-5 w-5" />
         </button>
@@ -188,6 +190,7 @@ export default function FlashcardsPage() {
               : "border-success-green/30 bg-success-green/5 text-success-green-text hover:bg-success-green/10"
           )}
           aria-label="Know it"
+          aria-pressed={known.has(currentIndex)}
         >
           <Check className="h-5 w-5" />
         </button>

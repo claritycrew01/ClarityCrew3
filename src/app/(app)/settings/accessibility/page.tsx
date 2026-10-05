@@ -19,9 +19,11 @@ const TRAITS: { value: NeurodivergentTrait; label: string; description: string }
 function Toggle({
   checked,
   onToggle,
+  labelledBy,
 }: {
   checked: boolean;
   onToggle: () => void;
+  labelledBy: string;
 }) {
   return (
     <button
@@ -32,6 +34,7 @@ function Toggle({
       )}
       role="switch"
       aria-checked={checked}
+      aria-labelledby={labelledBy}
     >
       <span
         className={cn(
@@ -50,6 +53,7 @@ function Slider({
   max,
   step,
   displayValue,
+  id,
 }: {
   value: number;
   onChange: (v: number) => void;
@@ -57,16 +61,19 @@ function Slider({
   max: number;
   step: number;
   displayValue: string;
+  id: string;
 }) {
   return (
     <div className="flex items-center gap-3">
       <input
+        id={id}
         type="range"
         min={min}
         max={max}
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
+        aria-valuetext={displayValue}
         className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-muted accent-skill-blue-solid"
       />
       <span className="min-w-[3rem] text-right text-xs font-semibold text-foreground tabular-nums">
@@ -126,6 +133,7 @@ export default function AccessibilitySettingsPage() {
             <button
               key={trait.value}
               onClick={() => toggle(trait.value)}
+              aria-pressed={selected.includes(trait.value)}
               className={cn(
                 "flex flex-col items-start rounded-xl border-[1.5px] p-4 text-left transition-all",
                 selected.includes(trait.value)
@@ -146,34 +154,34 @@ export default function AccessibilitySettingsPage() {
         <div className="space-y-2">
           <div className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3">
             <div>
-              <p className="text-sm font-semibold text-foreground">Dyslexia-Friendly Font</p>
+              <p id="toggle-dyslexia-font-label" className="text-sm font-semibold text-foreground">Dyslexia-Friendly Font</p>
               <p className="text-xs text-muted-foreground">Switch to OpenDyslexic</p>
             </div>
-            <Toggle checked={dyslexiaFont} onToggle={() => setDyslexiaFont(!dyslexiaFont)} />
+            <Toggle checked={dyslexiaFont} onToggle={() => setDyslexiaFont(!dyslexiaFont)} labelledBy="toggle-dyslexia-font-label" />
           </div>
 
           <div className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3">
             <div>
-              <p className="text-sm font-semibold text-foreground">High Contrast Mode</p>
+              <p id="toggle-high-contrast-label" className="text-sm font-semibold text-foreground">High Contrast Mode</p>
               <p className="text-xs text-muted-foreground">Enhanced visibility for low vision</p>
             </div>
-            <Toggle checked={highContrastMode} onToggle={() => setHighContrastMode(!highContrastMode)} />
+            <Toggle checked={highContrastMode} onToggle={() => setHighContrastMode(!highContrastMode)} labelledBy="toggle-high-contrast-label" />
           </div>
 
           <div className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3">
             <div>
-              <p className="text-sm font-semibold text-foreground">Calm Reader Mode</p>
+              <p id="toggle-calm-reader-label" className="text-sm font-semibold text-foreground">Calm Reader Mode</p>
               <p className="text-xs text-muted-foreground">Flat, muted colors with no animations</p>
             </div>
-            <Toggle checked={calmReaderMode} onToggle={() => setCalmReaderMode(!calmReaderMode)} />
+            <Toggle checked={calmReaderMode} onToggle={() => setCalmReaderMode(!calmReaderMode)} labelledBy="toggle-calm-reader-label" />
           </div>
 
           <div className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3">
             <div>
-              <p className="text-sm font-semibold text-foreground">Reading Ruler</p>
+              <p id="toggle-reading-ruler-label" className="text-sm font-semibold text-foreground">Reading Ruler</p>
               <p className="text-xs text-muted-foreground">Horizontal bar follows your cursor</p>
             </div>
-            <Toggle checked={readingRuler} onToggle={() => setReadingRuler(!readingRuler)} />
+            <Toggle checked={readingRuler} onToggle={() => setReadingRuler(!readingRuler)} labelledBy="toggle-reading-ruler-label" />
           </div>
         </div>
       </section>
@@ -184,9 +192,10 @@ export default function AccessibilitySettingsPage() {
         <div className="space-y-4">
           <div className="rounded-xl border border-border bg-card px-4 py-3">
             <div className="mb-2 flex items-center justify-between">
-              <p className="text-sm font-semibold text-foreground">Letter Spacing</p>
+              <label htmlFor="letter-spacing-slider" className="text-sm font-semibold text-foreground">Letter Spacing</label>
             </div>
             <Slider
+              id="letter-spacing-slider"
               value={letterSpacing}
               onChange={setLetterSpacing}
               min={0}
@@ -198,9 +207,10 @@ export default function AccessibilitySettingsPage() {
 
           <div className="rounded-xl border border-border bg-card px-4 py-3">
             <div className="mb-2 flex items-center justify-between">
-              <p className="text-sm font-semibold text-foreground">Line Height</p>
+              <label htmlFor="line-height-slider" className="text-sm font-semibold text-foreground">Line Height</label>
             </div>
             <Slider
+              id="line-height-slider"
               value={lineHeight}
               onChange={setLineHeight}
               min={1}
@@ -212,9 +222,10 @@ export default function AccessibilitySettingsPage() {
 
           <div className="rounded-xl border border-border bg-card px-4 py-3">
             <div className="mb-2 flex items-center justify-between">
-              <p className="text-sm font-semibold text-foreground">Text-to-Speech Speed</p>
+              <label htmlFor="tts-rate-slider" className="text-sm font-semibold text-foreground">Text-to-Speech Speed</label>
             </div>
             <Slider
+              id="tts-rate-slider"
               value={ttsRate}
               onChange={setTtsRate}
               min={0.5}

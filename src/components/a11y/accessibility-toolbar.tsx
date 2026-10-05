@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Accessibility,
   Eye,
@@ -17,6 +17,8 @@ import Link from "next/link";
 
 export function AccessibilityToolbar() {
   const [open, setOpen] = useState(false);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const dyslexiaFont = useUIStore((s) => s.dyslexiaFont);
   const setDyslexiaFont = useUIStore((s) => s.setDyslexiaFont);
   const calmReaderMode = useUIStore((s) => s.calmReaderMode);
@@ -53,14 +55,60 @@ export function AccessibilityToolbar() {
     },
   ];
 
+  useEffect(() => {
+    if (!open) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+    panel.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        launcherRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusables = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey) {
+        if (active === first || !panel.contains(active)) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (active === last || !panel.contains(active)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   return (
     <div className="fixed bottom-20 right-4 z-50 sm:bottom-6">
       {open && (
-        <div className="mb-3 w-56 rounded-2xl border border-border bg-background p-3 shadow-xl animate-fade-in">
+        <div
+          ref={panelRef}
+          id="quick-settings-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quick-settings-title"
+          tabIndex={-1}
+          className="mb-3 w-56 rounded-2xl border border-border bg-background p-3 shadow-xl animate-fade-in"
+        >
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-xs font-semibold text-foreground">Quick Settings</span>
+            <span id="quick-settings-title" className="text-xs font-semibold text-foreground">
+              Quick Settings
+            </span>
             <button
               onClick={() => setOpen(false)}
+              aria-label="Close quick settings"
               className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             >
               <X className="h-3 w-3" />
@@ -71,6 +119,7 @@ export function AccessibilityToolbar() {
               <button
                 key={toggle.label}
                 onClick={toggle.onClick}
+                aria-pressed={toggle.active}
                 className={cn(
                   "flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs transition-colors",
                   toggle.active
@@ -94,6 +143,7 @@ export function AccessibilityToolbar() {
       )}
 
       <button
+        ref={launcherRef}
         onClick={() => setOpen(!open)}
         className={cn(
           "flex h-11 w-11 items-center justify-center rounded-full border border-border shadow-lg transition-all",
@@ -102,6 +152,8 @@ export function AccessibilityToolbar() {
             : "bg-background text-muted-foreground hover:bg-muted hover:text-foreground"
         )}
         aria-label="Accessibility settings"
+        aria-expanded={open}
+        aria-controls="quick-settings-panel"
       >
         <Accessibility className="h-5 w-5" />
       </button>

@@ -140,6 +140,7 @@ export default function FocusPage() {
               stopTimer();
               startRef.current = null;
             }}
+            aria-pressed={duration === d.seconds}
             className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
               duration === d.seconds
                 ? "bg-skill-blue-solid text-skill-blue-on-solid"

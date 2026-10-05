@@ -173,6 +173,7 @@ export function RightPanel({ open }: { open: boolean }) {
   return (
     <aside
       id="tutor-panel"
+      aria-label="AI tutor"
       className={cn(
         "fixed top-[calc(var(--header-height)+0.5rem)] bottom-2 right-2 z-40",
         "flex flex-col rounded-2xl bg-background border border-border",
@@ -188,6 +189,7 @@ export function RightPanel({ open }: { open: boolean }) {
             onClick={toggleRightPanel}
             className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Open AI tutor"
+            aria-expanded={false}
           >
             <PanelRightOpen className="h-5 w-5" />
           </button>
@@ -195,6 +197,7 @@ export function RightPanel({ open }: { open: boolean }) {
             onClick={toggleRightPanel}
             className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Chat with tutor"
+            aria-expanded={false}
           >
             <Sparkles className="h-5 w-5" />
           </button>
@@ -286,6 +289,7 @@ export function RightPanel({ open }: { open: boolean }) {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask a question..."
+                aria-label="Ask the AI tutor a question"
                 className="flex-1 rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
               <button

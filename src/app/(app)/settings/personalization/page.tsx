@@ -5,7 +5,7 @@ import { DISABILITY_OPTIONS, getDisabilityPreview, applyDisabilityPresets } from
 import type { DisabilityPreset, ThemePreference, FontFamilyPreference, BackgroundTone } from "@/lib/preferences";
 import { cn } from "@/lib/utils/cn";
 import { Check, RotateCcw, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Toggle({
   checked,
@@ -136,6 +136,45 @@ export default function PersonalizationPage() {
   const resetToDefaults = usePreferencesStore((s) => s.resetToDefaults);
   const [showPresetPicker, setShowPresetPicker] = useState(false);
   const [presetSelections, setPresetSelections] = useState<string[]>(prefs.onboardingSelections);
+  const presetButtonRef = useRef<HTMLButtonElement>(null);
+  const presetPanelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showPresetPicker) return;
+    const panel = presetPanelRef.current;
+    const opener = presetButtonRef.current;
+    panel?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowPresetPicker(false);
+        return;
+      }
+      if (event.key !== "Tab" || !panel) return;
+      const focusables = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey) {
+        if (active === first || !panel.contains(active)) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (active === last || !panel.contains(active)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      opener?.focus();
+    };
+  }, [showPresetPicker]);
 
   const previewChanges = getDisabilityPreview(presetSelections);
 
@@ -163,6 +202,7 @@ export default function PersonalizationPage() {
           </p>
         </div>
         <button
+          ref={presetButtonRef}
           onClick={() => setShowPresetPicker(true)}
           className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
         >
@@ -174,8 +214,15 @@ export default function PersonalizationPage() {
       {/* Preset picker modal */}
       {showPresetPicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-6">
-          <div className="w-full max-w-lg rounded-2xl bg-background p-6 shadow-xl animate-fade-in">
-            <h2 className="font-display text-xl font-bold text-foreground">
+          <div
+            ref={presetPanelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="preset-picker-title"
+            tabIndex={-1}
+            className="w-full max-w-lg rounded-2xl bg-background p-6 shadow-xl animate-fade-in"
+          >
+            <h2 id="preset-picker-title" className="font-display text-xl font-bold text-foreground">
               Choose disability presets
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">

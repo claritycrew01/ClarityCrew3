@@ -30,6 +30,8 @@ export function Header() {
   const router = useRouter();
   const toggleSidebar = useUIStore((s) => s.toggleSidebar);
   const toggleRightPanel = useUIStore((s) => s.toggleRightPanel);
+  const sidebarCollapsed = useUIStore((s) => s.sidebarCollapsed);
+  const rightPanelOpen = useUIStore((s) => s.rightPanelOpen);
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const breadcrumbs = generateBreadcrumbs(pathname);
@@ -47,8 +49,10 @@ export function Header() {
           onClick={toggleSidebar}
           className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
           aria-label="Toggle sidebar"
+          aria-expanded={!sidebarCollapsed}
+          aria-controls="course-tree"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="h-5 w-5" aria-hidden="true" />
         </button>
 
         <Link href="/home/" className="flex items-center gap-2">
@@ -64,9 +68,11 @@ export function Header() {
         <nav className="hidden items-center gap-1 text-sm md:flex" aria-label="Breadcrumb">
           {breadcrumbs.map((crumb) => (
             <span key={crumb.href} className="flex items-center gap-1">
-              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
               {crumb.isLast ? (
-                <span className="font-medium text-foreground">{crumb.label}</span>
+                <span className="font-medium text-foreground" aria-current="page">
+                  {crumb.label}
+                </span>
               ) : (
                 <Link
                   href={crumb.href}
@@ -86,8 +92,10 @@ export function Header() {
           onClick={toggleRightPanel}
           className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label="Toggle AI tutor"
+          aria-expanded={rightPanelOpen}
+          aria-controls="tutor-panel"
         >
-          <Sparkles className="h-5 w-5" />
+          <Sparkles className="h-5 w-5" aria-hidden="true" />
         </button>
 
         {user ? (
@@ -100,7 +108,7 @@ export function Header() {
               className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label="Log out"
             >
-              <LogOut className="h-3.5 w-3.5" />
+              <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
               <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
