@@ -20,13 +20,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <Header />
 
-      {/* Left Sidebar — Course Tree */}
+      {/* Left Sidebar: Course Tree */}
       <CourseTree collapsed={sidebarCollapsed} />
 
-      {/* Right Panel — AI Tutor Drawer */}
+      {/* Right Panel: AI Tutor Drawer */}
       <RightPanel open={rightPanelOpen} />
 
-      {/* Reading Ruler — follows cursor for dyslexia aid */}
+      {/* Reading Ruler follows the cursor for dyslexia aid */}
       <ReadingRuler />
 
       {/* Floating Accessibility Toolbar */}

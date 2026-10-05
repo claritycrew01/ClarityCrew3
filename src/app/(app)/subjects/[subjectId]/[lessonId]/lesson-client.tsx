@@ -141,7 +141,7 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
         </div>
       )}
 
-      {/* Video — only if a video is linked to this lesson */}
+      {/* Video: only if a video is linked to this lesson */}
       {video && (
         <div className="mb-8">
           <VideoPlayer

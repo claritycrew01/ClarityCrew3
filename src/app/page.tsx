@@ -9,6 +9,7 @@ import {
   Zap,
   ChevronRight,
 } from "lucide-react";
+import { SUBJECTS, QUIZZES, FLASHCARD_DECKS, VIDEOS } from "@/data";
 
 const FEATURES = [
   {
@@ -55,11 +56,18 @@ const FEATURES = [
   },
 ];
 
-const SUBJECTS = [
-  { name: "Mathematics", lessons: 8, color: "skill-blue" },
-  { name: "Science", lessons: 6, color: "success-green" },
-  { name: "English", lessons: 4, color: "premium-amber" },
-];
+const SUBJECT_COUNTS = SUBJECTS.map((subject) => ({
+  id: subject.id,
+  name: subject.name,
+  color: subject.color,
+  lessons: subject.chapters.reduce((total, chapter) => total + chapter.lessons.length, 0),
+}));
+
+const TOTAL_LESSONS = SUBJECT_COUNTS.reduce((total, subject) => total + subject.lessons, 0);
+const TOTAL_CHAPTERS = SUBJECTS.reduce((total, subject) => total + subject.chapters.length, 0);
+const TOTAL_QUIZZES = QUIZZES.length;
+const TOTAL_DECKS = FLASHCARD_DECKS.length;
+const TOTAL_VIDEOS = VIDEOS.length;
 
 function HeroSection() {
   return (
@@ -72,9 +80,9 @@ function HeroSection() {
           </div>
 
           <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
-            Learning designed for{" "}
+            Lessons, quizzes, flashcards, and focus tools{" "}
             <span className="text-foreground">
-              every mind
+              in one place
             </span>
           </h1>
 
@@ -110,10 +118,10 @@ function FeaturesSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Everything you need to learn with clarity
+            Tools for studying, focus, and accessibility
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            A complete toolkit designed around how your brain actually works.
+            Tutoring, practice, a focus timer, accessibility controls, privacy, and offline use.
           </p>
         </div>
 
@@ -149,12 +157,14 @@ function SubjectsSection() {
             Comprehensive curriculum
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            18 interactive lessons across three core subjects, with quizzes and flashcards for every topic.
+            {TOTAL_LESSONS} interactive lessons across {SUBJECTS.length} core subjects, with{" "}
+            {TOTAL_CHAPTERS} chapters, {TOTAL_QUIZZES} quizzes, {TOTAL_DECKS} flashcard decks,
+            and {TOTAL_VIDEOS} videos.
           </p>
         </div>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          {SUBJECTS.map((subject) => (
+          {SUBJECT_COUNTS.map((subject) => (
             <div
               key={subject.name}
               className="rounded-md border border-border bg-card p-6"
@@ -166,10 +176,10 @@ function SubjectsSection() {
                 {subject.name}
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                {subject.lessons} interactive lessons with quizzes and flashcards
+                {subject.lessons} lessons with quizzes and flashcards
               </p>
               <Link
-                href={`/subjects/${subject.name.toLowerCase()}/`}
+                href={`/subjects/${subject.id}/`}
                 className={`mt-4 inline-flex items-center gap-1 text-sm font-semibold text-${subject.color}-text transition-colors hover:underline`}
               >
                 Start Learning
@@ -193,7 +203,8 @@ function AccessibilitySection() {
               Accessibility at the core
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Every feature is designed to support neurodivergent learners. Not as an afterthought — as the foundation.
+              Every feature is designed to support neurodivergent learners from the start, not
+              added later.
             </p>
             <div className="mt-8 space-y-4">
               {[
@@ -254,10 +265,10 @@ function CTASection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-md bg-cta-orange p-12 text-center sm:p-16">
           <h2 className="font-display text-3xl font-bold tracking-tight text-cta-orange-on-solid sm:text-4xl">
-            Ready to learn differently?
+            Get started with ClarityCrew
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-cta-orange-on-solid">
-            Join ClarityCrew and experience a learning platform designed for how your brain actually works.
+            Sign up to use quizzes, flashcards, a focus timer, and text to speech.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Link
@@ -292,7 +303,7 @@ function Footer() {
             <span className="font-display text-lg font-bold text-foreground">ClarityCrew</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            Built for neurodivergent learners. Open source, privacy-first.
+            Built for neurodivergent learners. Privacy-first.
           </p>
         </div>
       </div>

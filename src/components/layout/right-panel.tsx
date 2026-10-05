@@ -96,10 +96,10 @@ function generateTutorResponse(userMessage: string, pathname: string): string {
     return "Cells are the building blocks of life. Eukaryotic cells have a nucleus and organelles like mitochondria (energy), ribosomes (protein), and Golgi apparatus (processing).";
   }
   if (lower.includes("dna") || lower.includes("gene") || lower.includes("genetic")) {
-    return "DNA uses four bases: A, T, G, C. Genes code for proteins. You inherit two copies per gene — dominant traits mask recessive ones.";
+    return "DNA uses four bases: A, T, G, C. Genes code for proteins. You inherit two copies per gene, and dominant traits mask recessive ones.";
   }
   if (lower.includes("force") || lower.includes("newton") || lower.includes("motion")) {
-    return "Newton's laws: 1) Inertia — objects resist change, 2) F = ma, 3) Every action has equal opposite reaction. Gravity ≈ 9.8 m/s² near Earth.";
+    return "Newton's laws: 1) Inertia: objects resist change, 2) F = ma, 3) Every action has equal opposite reaction. Gravity ≈ 9.8 m/s² near Earth.";
   }
   if (lower.includes("grammar") || lower.includes("noun") || lower.includes("verb")) {
     return "Eight parts of speech: nouns name things, pronouns replace nouns, verbs show actions, adjectives describe nouns, adverbs modify verbs, conjunctions connect, prepositions show relationships, interjections express emotion.";
@@ -111,7 +111,7 @@ function generateTutorResponse(userMessage: string, pathname: string): string {
     return "I can help you prepare! Try the Quiz section for your current topic, or use flashcards for active recall. Focus on understanding explanations, not just memorizing.";
   }
   if (lower.includes("flashcard") || lower.includes("study") || lower.includes("review")) {
-    return "Flashcards work best for active recall. Keyboard shortcuts: Space to flip, 1 for unknown, 2 for known. Focus on cards you get wrong — that's where learning happens.";
+    return "Flashcards work best for active recall. Keyboard shortcuts: Space to flip, 1 for unknown, 2 for known. Focus on cards you get wrong, because that's where learning happens.";
   }
   if (lower.includes("focus") || lower.includes("concentrate") || lower.includes("timer")) {
     return "The Focus Mode uses Pomodoro technique: study for a set period, then break. Start with shorter sessions and build up. Consistency beats duration.";

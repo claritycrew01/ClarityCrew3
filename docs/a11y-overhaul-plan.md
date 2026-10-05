@@ -874,3 +874,38 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   (zero `rounded-2xl`/`rounded-3xl`, zero `hover:-translate`/`hover:shadow`, zero `gradient`
   strings, no `rounded-full` on any button or link element); dash scan unchanged at 156 em/en
   dashes in the same 8 pre-existing files, all already deferred to Phases 8 and 8B.
+- Phase 8: DONE. Files: `src/app/page.tsx`, `src/app/(app)/settings/page.tsx`,
+  `src/components/layout/right-panel.tsx`, `src/components/layout/app-shell.tsx`, and
+  `lesson-client.tsx` (comment dash only), matching the plan scope of page.tsx plus app source
+  string rewrites. Landing stats are now derived at module scope from `@/data` in the server
+  component and baked into the export: `SUBJECT_COUNTS` sums each subject's chapter lessons
+  (Mathematics 12, Science 10, English 10), and `TOTAL_LESSONS` 32, `TOTAL_CHAPTERS` 9,
+  `TOTAL_QUIZZES` 32, `TOTAL_DECKS` 30, `TOTAL_VIDEOS` 32 feed the subjects intro sentence. The
+  old hard-coded `SUBJECTS` array (8/6/4 lessons) and the `18 interactive lessons` sentence are
+  gone, so no hard-coded numbers remain. Subject cards now link by `subject.id`
+  (`/subjects/math/`), replacing `subject.name.toLowerCase()`, which produced the dead
+  `/subjects/mathematics/` route. Interpretation logged: the plan verification pattern forbids
+  `12 interactive`, which would otherwise render legitimately on the Mathematics card, so the card
+  copy reads `12 lessons with quizzes and flashcards` (the word "interactive" stays only in the
+  intro sentence); the checks then run against tag-stripped text because React injects
+  `<!-- -->` separators between interpolated text nodes in the exported HTML. Copy rewrites: H1
+  to "Lessons, quizzes, flashcards, and focus tools in one place", features heading to "Tools for
+  studying, focus, and accessibility" with a six item enumeration subtitle, CTA heading to "Get
+  started with ClarityCrew" with a factual subtitle, and the accessibility paragraph rewritten to
+  remove its em dash; the hero subtitle was left unchanged because it is already plain and
+  factual. Q11: the dead `href="#"` Notifications entry was removed from the settings page along
+  with the `Settings as SettingsIcon` import it used. Q12 findings: no LICENSE file in the repo,
+  git remote `origin` is `https://github.com/claritycrew01/ClarityCrew3.git`, and greps for
+  `fetch(`, `XMLHttpRequest`, and `gtag`/analytics in `src` return zero matches; "Open source" was
+  removed from the footer while "privacy-first" was kept because no network calls exist (the
+  "Private & Secure" feature card stays accurate for the same reason). Q7 em dash rewrites: three
+  right-panel tutor responses (gene dominance phrased with ", and", Newton's laws using a colon
+  after Inertia while keeping the `≈` and `²` characters, flashcard advice using ", because"),
+  three app-shell JSX comments rephrased with a colon or plain words, and one lesson-client
+  comment. Verification: tsc exit 0, lint exit 0, contrast 609/609 exit 0, build exit 0; export
+  probes on tag-stripped `out/index.html` text pass: the intro renders "32 interactive lessons
+  across 3 core subjects, with 9 chapters, 32 quizzes, 30 flashcard decks, and 32 videos.", cards
+  render 12/10/10 lessons, no `18 interactive` or `12 interactive` anywhere, all four old
+  headlines absent, all four new headlines present, no `/subjects/mathematics/` link, no
+  Notifications entry in the settings export, and no "Open source" in the footer. The src dash
+  inventory is now 148 occurrences confined to the four `src/data` files reserved for Phase 8B.

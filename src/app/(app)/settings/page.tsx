@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Settings as SettingsIcon, Accessibility, Palette, Sparkles, ChevronRight } from "lucide-react";
+import { Accessibility, Palette, Sparkles, ChevronRight } from "lucide-react";
 
 const SETTINGS_ITEMS = [
   {
@@ -15,12 +15,6 @@ const SETTINGS_ITEMS = [
     label: "Accessibility",
     description: "Dyslexia fonts, spacing, calm reader, cognitive load",
     icon: Accessibility,
-  },
-  {
-    href: "#",
-    label: "Notifications",
-    description: "Focus reminders, streak alerts",
-    icon: SettingsIcon,
   },
 ];
 
