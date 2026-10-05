@@ -8,6 +8,8 @@ export interface LessonData {
   duration: string;
   durationMinutes: number;
   cognitiveLoad: "low" | "medium" | "high";
+  scaffold?: { steps?: string[]; keyTerms?: { term: string; meaning: string }[] };
+  literalBody?: string;
 }
 
 export interface ChapterData {

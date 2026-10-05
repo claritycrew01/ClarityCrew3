@@ -2,21 +2,19 @@
 
 import { useEffect, type ReactNode } from "react";
 import { useUIStore } from "@/lib/store/ui-store";
-import { usePreferencesStore } from "@/lib/preferences";
+import { usePreferencesApplied } from "@/hooks/use-preferences-applied";
 
 export function AccessibilityEffects({ children }: { children: ReactNode }) {
-  const hasHydrated = useUIStore((s) => s.hasHydrated);
   const dyslexiaFont = useUIStore((s) => s.dyslexiaFont);
   const calmReaderMode = useUIStore((s) => s.calmReaderMode);
   const highContrastMode = useUIStore((s) => s.highContrastMode);
   const letterSpacing = useUIStore((s) => s.letterSpacing);
   const lineHeight = useUIStore((s) => s.lineHeight);
 
-  const prefsHydrated = usePreferencesStore((s) => s.hasHydrated);
-  const prefs = usePreferencesStore();
+  const { hydrated, prefs } = usePreferencesApplied();
 
   useEffect(() => {
-    if (!hasHydrated || !prefsHydrated) return;
+    if (!hydrated) return;
     const root = document.documentElement;
 
     // Legacy ui-store effects (kept for backward compat)
@@ -88,17 +86,16 @@ export function AccessibilityEffects({ children }: { children: ReactNode }) {
 
     // Literal language mode
     if (prefs.literalLanguageMode) {
-      root.classList.add("literal-language");
+      root.setAttribute("data-literal", "true");
     } else {
-      root.classList.remove("literal-language");
+      root.removeAttribute("data-literal");
     }
 
     return () => {
       root.style.fontSize = "";
     };
   }, [
-    hasHydrated,
-    prefsHydrated,
+    hydrated,
     dyslexiaFont,
     calmReaderMode,
     highContrastMode,

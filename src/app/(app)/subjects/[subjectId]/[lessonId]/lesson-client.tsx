@@ -5,16 +5,21 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, Volume2, VolumeX, FileText, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { getLessonById, getVideoByLessonId } from "@/data";
+import { reportLiteralCoverage } from "@/data/lesson-content-report";
 import { useTTS } from "@/hooks/use-tts";
-import { usePreferencesStore } from "@/lib/preferences";
+import { usePreferencesApplied } from "@/hooks/use-preferences-applied";
 import { VideoPlayer } from "@/components/video/video-player";
+
+if (process.env.NODE_ENV !== "production") {
+  reportLiteralCoverage();
+}
 
 export function LessonClient({ subjectId, lessonId }: { subjectId: string; lessonId: string }) {
   const lesson = getLessonById(lessonId);
   const video = getVideoByLessonId(lessonId);
   const [showSimplified, setShowSimplified] = useState(false);
   const { toggle, speaking, supported } = useTTS();
-  const prefs = usePreferencesStore();
+  const { hydrated, prefs } = usePreferencesApplied();
 
   if (!lesson) {
     return (
@@ -28,8 +33,19 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
     );
   }
 
-  const activeText = showSimplified ? lesson.simplifiedBody : lesson.body;
+  let activeText = showSimplified ? lesson.simplifiedBody : lesson.body;
+  if (!showSimplified && hydrated && prefs.literalLanguageMode && lesson.literalBody) {
+    activeText = lesson.literalBody;
+  }
   const paragraphs = activeText.split("\n\n");
+  const showScaffold = hydrated && prefs.showVisualScaffolds && !!lesson.scaffold;
+  const articleStyle = hydrated
+    ? {
+        letterSpacing: `${prefs.letterSpacing}em`,
+        wordSpacing: `${prefs.wordSpacing}em`,
+        lineHeight: prefs.lineSpacing,
+      }
+    : undefined;
 
   return (
     <div className="animate-fade-in max-w-3xl mx-auto">
@@ -114,11 +130,7 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
 
       <article
         className="prose prose-sm max-w-none text-foreground tab-content-enter"
-        style={{
-          letterSpacing: `${prefs.letterSpacing}em`,
-          wordSpacing: `${prefs.wordSpacing}em`,
-          lineHeight: prefs.lineSpacing,
-        }}
+        style={articleStyle}
       >
         {paragraphs.map((paragraph, i) => (
           <p key={i} className="mb-4 text-sm leading-relaxed text-foreground/90">
@@ -126,6 +138,34 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
           </p>
         ))}
       </article>
+
+      {showScaffold && lesson.scaffold && (
+        <section aria-label="Visual scaffolds" className="mt-8 rounded-md border border-border bg-card p-5">
+          {lesson.scaffold.steps && lesson.scaffold.steps.length > 0 && (
+            <div className="mb-4">
+              <h2 className="font-display text-sm font-semibold text-foreground">Steps</h2>
+              <ol className="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-foreground/90">
+                {lesson.scaffold.steps.map((step, i) => (
+                  <li key={i}>{step}</li>
+                ))}
+              </ol>
+            </div>
+          )}
+          {lesson.scaffold.keyTerms && lesson.scaffold.keyTerms.length > 0 && (
+            <div>
+              <h2 className="font-display text-sm font-semibold text-foreground">Key terms</h2>
+              <dl className="mt-2 space-y-2 text-sm">
+                {lesson.scaffold.keyTerms.map((keyTerm) => (
+                  <div key={keyTerm.term}>
+                    <dt className="font-semibold text-foreground">{keyTerm.term}</dt>
+                    <dd className="text-foreground/90">{keyTerm.meaning}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+        </section>
+      )}
 
       <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
         <Link

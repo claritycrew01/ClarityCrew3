@@ -748,3 +748,27 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   `>Welcome</h1>` with no time-based greeting or hint text, and onboarding still prerenders the
   spinner.
 
+- Phase 5B: DONE. Five files: the three listed plus two new modules. `use-preferences-applied.ts`
+  returns `{ hydrated, prefs }` where `hydrated` is true only after both
+  `usePreferencesStore.hasHydrated` and `useUIStore.hasHydrated` flip. `accessibility-effects.tsx`
+  now gates through that hook (replacing its two direct flag selectors) and sets
+  `data-literal="true"` on `document.documentElement` in the effect when `literalLanguageMode` is
+  on, removing it when off; the `literal-language` class was removed and has zero references left
+  in source or shipped JS/CSS (it never had CSS rules). `LessonData` gained optional `scaffold`
+  (with optional `steps` and `keyTerms` arrays) and optional `literalBody`, type only with no
+  content written. `lesson-client.tsx` reads preferences through the hook: the article renders no
+  inline letter/word/line spacing style until `hydrated`, the full text uses `literalBody` when
+  literal mode is on and the field exists (otherwise `body` unchanged, `simplifiedBody` behavior
+  untouched), and a scaffold section renders after the article only when `hydrated`,
+  `showVisualScaffolds`, and the field exists, labelled `Visual scaffolds` with h2 Steps and Key
+  terms blocks. The dev-only report lives in `src/data/lesson-content-report.ts`, is guarded by
+  `process.env.NODE_ENV === "production"` with a once-per-session flag, and is invoked from
+  `lesson-client.tsx` behind a `NODE_ENV !== "production"` check. Verified: tsc exit 0, contrast
+  609/609 exit 0, lint at the 2 known Phase 7 errors with 0 warnings, build exit 0 with no report
+  output; exported HTML contains no `data-literal`, no report text, and no scaffold section, and
+  shipped JS/CSS contain no `[lesson-content]` or `literal-language` strings. Manual dev run:
+  `npm run dev` printed `[lesson-content] 32 lesson(s) missing literalBody: ...` and the rendered
+  lesson HTML contained no `data-literal`. Deferred: 105 em/en dashes inside `subjects.ts` body
+  content (Phase 8B, approval required first) and the pre-existing `Video` comment dash in
+  `lesson-client.tsx` (Phase 8).
+
