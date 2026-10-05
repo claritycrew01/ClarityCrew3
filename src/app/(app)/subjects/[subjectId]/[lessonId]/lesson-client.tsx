@@ -27,7 +27,7 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
     return (
       <div className="animate-fade-in max-w-3xl mx-auto">
         <Link href={`/subjects/${subjectId}/`} className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="h-4 w-4" /> Back
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back
         </Link>
         <h1 className="font-display text-2xl font-bold text-foreground">Lesson Not Found</h1>
         <p className="mt-2 text-muted-foreground">This lesson content is not yet available.</p>
@@ -55,7 +55,7 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
         href={`/subjects/${subjectId}/`}
         className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back
       </Link>
 
@@ -65,10 +65,10 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
             {lesson.title}
           </h1>
           <div className="mt-2 flex items-center gap-3">
-            <span className="rounded-full bg-skill-blue/10 px-2.5 py-0.5 text-xs font-semibold text-skill-blue-text">
+            <span className="rounded-md bg-skill-blue/10 px-2.5 py-0.5 text-xs font-semibold text-skill-blue-text">
               {lesson.duration}
             </span>
-            <span className="rounded-full bg-premium-amber/10 px-2.5 py-0.5 text-xs font-semibold text-premium-amber-text capitalize">
+            <span className="rounded-md bg-premium-amber/10 px-2.5 py-0.5 text-xs font-semibold text-premium-amber-text capitalize">
               {lesson.cognitiveLoad} Load
             </span>
           </div>
@@ -78,14 +78,14 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
             <button
               onClick={() => toggle(activeText)}
               className={cn(
-                "rounded-lg border border-border p-2 transition-colors",
+                "inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-border p-2 transition-colors",
                 speaking
                   ? "bg-skill-blue/10 text-skill-blue-text border-skill-blue/30"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
               aria-label={speaking ? "Stop reading" : "Read lesson aloud"}
             >
-              {speaking ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+              {speaking ? <VolumeX className="h-5 w-5" aria-hidden="true" /> : <Volume2 className="h-5 w-5" aria-hidden="true" />}
             </button>
           )}
         </div>
@@ -102,7 +102,7 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
             <button
               type="button"
               onClick={aloud.play}
-              className="rounded-lg bg-skill-blue-solid px-3 py-1.5 text-xs font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+              className="inline-flex min-h-11 items-center rounded-lg bg-skill-blue-solid px-3 py-1.5 text-xs font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
             >
               Play lesson audio
             </button>
@@ -111,14 +111,14 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
             type="button"
             onClick={aloud.paused ? aloud.resume : aloud.pause}
             aria-pressed={aloud.paused}
-            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
+            className="inline-flex min-h-11 items-center rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
           >
             {aloud.paused ? "Resume" : "Pause"}
           </button>
           <button
             type="button"
             onClick={aloud.stop}
-            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
+            className="inline-flex min-h-11 items-center rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
           >
             Stop
           </button>
@@ -157,25 +157,25 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
         <button
           onClick={() => setShowSimplified(false)}
           className={cn(
-            "flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors",
+            "flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors",
             !showSimplified
               ? "bg-background text-foreground shadow-sm"
               : "text-muted-foreground hover:text-foreground"
           )}
         >
-          <BookOpen className="h-3.5 w-3.5" />
+          <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
           Full Lesson
         </button>
         <button
           onClick={() => setShowSimplified(true)}
           className={cn(
-            "flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors",
+            "flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors",
             showSimplified
               ? "bg-background text-foreground shadow-sm"
               : "text-muted-foreground hover:text-foreground"
           )}
         >
-          <FileText className="h-3.5 w-3.5" />
+          <FileText className="h-3.5 w-3.5" aria-hidden="true" />
           Simplified
         </button>
       </div>
@@ -222,17 +222,17 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
       <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
         <Link
           href={`/subjects/${subjectId}/`}
-          className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           Back
         </Link>
         <Link
           href={`/quiz/`}
-          className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-5 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-skill-blue-solid px-5 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
         >
           Take Quiz
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>
     </div>

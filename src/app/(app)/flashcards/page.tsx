@@ -95,11 +95,11 @@ export default function FlashcardsPage() {
             <button
               key={d.id}
               onClick={() => selectDeck(d.id)}
-              className="flex flex-col items-start rounded-xl border border-border bg-card p-5 text-left transition-all hover:-translate-y-0.5 hover:border-skill-blue/30 hover:shadow-md"
+              className="flex flex-col items-start rounded-xl border border-border bg-card p-5 text-left transition-colors hover:border-skill-blue/30"
             >
               <span className="text-sm font-semibold text-foreground">{d.title}</span>
               <span className="mt-1 text-xs text-muted-foreground">{d.description}</span>
-              <span className="mt-3 inline-flex items-center rounded-full bg-skill-blue/10 px-2.5 py-0.5 text-[10px] font-semibold text-skill-blue-text">
+              <span className="mt-3 inline-flex items-center rounded-md bg-skill-blue/10 px-2.5 py-0.5 text-[10px] font-semibold text-skill-blue-text">
                 {d.cards.length} cards
               </span>
             </button>
@@ -113,7 +113,7 @@ export default function FlashcardsPage() {
     <div className="flex min-h-[60vh] flex-col items-center justify-center animate-fade-in">
       <button
         onClick={() => setSelectedDeckId(null)}
-        className="mb-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        className="mb-2 inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         ← All Decks
       </button>
@@ -142,7 +142,7 @@ export default function FlashcardsPage() {
           aria-label="Flip card"
         >
           <div
-            className="card-flip-face flex items-center justify-center rounded-2xl border border-border bg-card p-8 text-center shadow-sm transition-shadow hover:shadow-md"
+            className="card-flip-face flex items-center justify-center rounded-md border border-border bg-card p-8 text-center shadow-sm"
             aria-hidden={flipped}
           >
             <p className="text-lg font-semibold text-foreground">
@@ -150,7 +150,7 @@ export default function FlashcardsPage() {
             </p>
           </div>
           <div
-            className="card-flip-face card-flip-back flex items-center justify-center rounded-2xl border border-skill-blue/30 bg-skill-blue/5 p-8 text-center shadow-sm"
+            className="card-flip-face card-flip-back flex items-center justify-center rounded-md border border-skill-blue/30 bg-skill-blue/5 p-8 text-center shadow-sm"
             aria-hidden={!flipped}
           >
             <p className="text-lg font-semibold text-foreground">
@@ -168,7 +168,7 @@ export default function FlashcardsPage() {
               toggleTTS(flipped ? card.back : card.front);
             }}
             className={cn(
-              "rounded-full border p-2 transition-colors",
+              "rounded-md inline-flex min-h-11 min-w-11 items-center justify-center border p-2 transition-colors",
               speaking
                 ? "border-skill-blue-solid bg-skill-blue/10 text-skill-blue-text"
                 : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -176,20 +176,20 @@ export default function FlashcardsPage() {
             aria-label="Read card aloud"
             aria-pressed={speaking}
           >
-            {speaking ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            {speaking ? <VolumeX className="h-4 w-4" aria-hidden="true" /> : <Volume2 className="h-4 w-4" aria-hidden="true" />}
           </button>
         )}
         <button
           onClick={goPrev}
-          className="rounded-full border border-border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label="Previous card"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
         </button>
         <button
           onClick={handleUnknown}
           className={cn(
-            "rounded-full border p-3 transition-colors",
+            "rounded-md inline-flex min-h-11 min-w-11 items-center justify-center border p-3 transition-colors",
             unknown.has(currentIndex)
               ? "border-destructive bg-destructive/15 text-destructive"
               : "border-destructive/30 bg-destructive/5 text-destructive hover:bg-destructive/10"
@@ -197,12 +197,12 @@ export default function FlashcardsPage() {
           aria-label="Don't know"
           aria-pressed={unknown.has(currentIndex)}
         >
-          <X className="h-5 w-5" />
+          <X className="h-5 w-5" aria-hidden="true" />
         </button>
         <button
           onClick={handleKnown}
           className={cn(
-            "rounded-full border p-3 transition-colors",
+            "rounded-md inline-flex min-h-11 min-w-11 items-center justify-center border p-3 transition-colors",
             known.has(currentIndex)
               ? "border-success-green-solid bg-success-green/15 text-success-green-text"
               : "border-success-green/30 bg-success-green/5 text-success-green-text hover:bg-success-green/10"
@@ -210,14 +210,14 @@ export default function FlashcardsPage() {
           aria-label="Know it"
           aria-pressed={known.has(currentIndex)}
         >
-          <Check className="h-5 w-5" />
+          <Check className="h-5 w-5" aria-hidden="true" />
         </button>
         <button
           onClick={goNext}
-          className="rounded-full border border-border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label="Next card"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5" aria-hidden="true" />
         </button>
       </div>
 

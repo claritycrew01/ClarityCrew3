@@ -146,11 +146,11 @@ export default function QuizPage() {
             <button
               key={q.id}
               onClick={() => selectQuiz(q.id)}
-              className="flex flex-col items-start rounded-xl border border-border bg-card p-5 text-left transition-all hover:-translate-y-0.5 hover:border-skill-blue/30 hover:shadow-md"
+              className="flex flex-col items-start rounded-xl border border-border bg-card p-5 text-left transition-colors hover:border-skill-blue/30"
             >
               <span className="text-sm font-semibold text-foreground">{q.title}</span>
               <span className="mt-1 text-xs text-muted-foreground">{q.description}</span>
-              <span className="mt-3 inline-flex items-center rounded-full bg-cta-orange/10 px-2.5 py-0.5 text-[10px] font-semibold text-cta-orange-text">
+              <span className="mt-3 inline-flex items-center rounded-md bg-cta-orange/10 px-2.5 py-0.5 text-[10px] font-semibold text-cta-orange-text">
                 {q.questions.length} questions
               </span>
             </button>
@@ -167,7 +167,7 @@ export default function QuizPage() {
       <>
         {liveRegion}
         <div className="flex min-h-[60vh] flex-col items-center justify-center animate-fade-in">
-        <Trophy className="mb-4 h-12 w-12 text-premium-amber-text" />
+        <Trophy className="mb-4 h-12 w-12 text-premium-amber-text" aria-hidden="true" />
         <h1 className="mb-1 font-display text-3xl font-bold text-foreground">Quiz Complete</h1>
         <p className="mb-6 text-muted-foreground">{quiz.title}</p>
 
@@ -181,9 +181,9 @@ export default function QuizPage() {
         <div className="mb-8 flex gap-3">
           <button
             onClick={resetQuiz}
-            className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
           >
-            <RotateCcw className="h-4 w-4" />
+            <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Retry
           </button>
           <button
@@ -191,7 +191,7 @@ export default function QuizPage() {
               setSelectedQuizId(null);
               setShowResults(false);
             }}
-            className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-5 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-skill-blue-solid px-5 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
           >
             All Quizzes
           </button>
@@ -206,9 +206,9 @@ export default function QuizPage() {
               <div key={q.id} className="rounded-xl border border-border bg-card p-4">
                 <div className="flex items-start gap-3">
                   {wasCorrect ? (
-                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-success-green-text" />
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-success-green-text" aria-hidden="true" />
                   ) : (
-                    <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
+                    <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" aria-hidden="true" />
                   )}
                   <div>
                     <p className="text-sm font-medium text-foreground">{q.text}</p>
@@ -239,7 +239,7 @@ export default function QuizPage() {
           setSelectedQuizId(null);
           setShowResults(false);
         }}
-        className="mb-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        className="mb-2 inline-flex min-h-11 items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         ← All Quizzes
       </button>
@@ -257,7 +257,7 @@ export default function QuizPage() {
             type="button"
             onClick={() => setTimerRunning((r) => !r)}
             aria-pressed={!timerRunning}
-            className="rounded-lg border border-border px-2 py-0.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
+            className="inline-flex min-h-11 items-center rounded-lg border border-border px-2 py-0.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
           >
             {timerRunning ? "Pause" : "Resume"}
           </button>
@@ -286,14 +286,14 @@ export default function QuizPage() {
           <button
             onClick={() => toggleTTS(question.text)}
             className={cn(
-              "shrink-0 rounded-lg border border-border p-1.5 transition-colors",
+              "inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-lg border border-border p-1.5 transition-colors",
               speaking
                 ? "bg-skill-blue/10 text-skill-blue-text border-skill-blue/30"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
             aria-label={speaking ? "Stop reading" : "Read question aloud"}
           >
-            {speaking ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            {speaking ? <VolumeX className="h-4 w-4" aria-hidden="true" /> : <Volume2 className="h-4 w-4" aria-hidden="true" />}
           </button>
         )}
       </div>
@@ -325,8 +325,8 @@ export default function QuizPage() {
                 {option.id.split("-").pop()?.toUpperCase()}
               </span>
               <span className="flex-1 text-foreground">{option.text}</span>
-              {showCorrect && <CheckCircle className="ml-2 h-4 w-4 text-success-green-text" />}
-              {showWrong && <XCircle className="ml-2 h-4 w-4 text-destructive" />}
+              {showCorrect && <CheckCircle className="ml-2 h-4 w-4 text-success-green-text" aria-hidden="true" />}
+              {showWrong && <XCircle className="ml-2 h-4 w-4 text-destructive" aria-hidden="true" />}
             </button>
           );
         })}
@@ -346,17 +346,17 @@ export default function QuizPage() {
           <button
             onClick={handleAnswer}
             disabled={!selectedOptionId}
-            className="rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="inline-flex min-h-11 items-center rounded-md bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Check Answer
           </button>
         ) : (
           <button
             onClick={handleNext}
-            className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
           >
             {currentQuestionIndex < totalQuestions - 1 ? "Next Question" : "See Results"}
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         )}
       </div>

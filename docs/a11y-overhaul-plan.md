@@ -829,3 +829,48 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   go to 8B; `src/app/page.tsx` 1 landing copy dash, `app-shell.tsx` 3 comment dashes,
   `lesson-client.tsx` 1 comment dash, `right-panel.tsx` 3 tutor-copy dashes go to 8).
 
+
+- Phase 7: DONE, three checkpoints (Files amended in 7A to add
+  `src/components/layout/app-shell.tsx`, whose content canvas still used `rounded-2xl`, and the
+  plan line "Split into two checkpoints" was amended to "three"). Commits: `93add74` (7A),
+  `971c4fc` (7B-1), and this commit (7B-2). 7A, 9 files: `globals.css` caps
+  `--radius-lg`, `--radius-xl`, `--radius-2xl`, and `--radius-3xl` at `0.5rem` (all four already
+  equal `--radius-md`, so every existing `rounded-xl` and `rounded-2xl` collapses to the
+  `rounded-md` maximum; `--radius-sm` stays 0.25rem and `--radius-full` is kept for genuine
+  circles). Header, mobile-nav, right-panel, course-tree, accessibility-toolbar, video-player, and
+  app-shell were restyled: `rounded-md` surfaces, `rounded-full` buttons to `rounded-md`,
+  `aria-hidden="true"` on decorative Lucide icons, course-tree row variants to `min-h-11`. Two
+  lint fixes landed here: `right-panel.tsx` got a module-scope `tutorTypingDelay()` helper
+  (set-state-in-effect), and `video-player.tsx` now reads connectivity with
+  `useSyncExternalStore(subscribeOnLine, () => navigator.onLine, () => true)` plus an
+  `offlineDismissed` state. Behavior delta: the "Try anyway" fallback button now sets dismissed
+  instead of `setIsOffline(false)`, so a later offline event no longer re-shows the fallback after
+  dismissal. 7B-1, 5 files: landing `page.tsx` removed the last remaining gradient (the radial
+  blob at old line 67; hero and CTA gradients were already removed in 1B-1, so the plan phrase
+  "remove both gradients" was stale), removed the `shadow-cta-orange` colored glow shadows, 4
+  hover flourishes, converted rounded-full/2xl/3xl to `rounded-md`, and bumped header CTAs to
+  `min-h-11`; not-found, login, signup, and onboarding converted inputs `h-10` to `h-11`, submit
+  and action buttons to `rounded-md` plus `min-h-11`, logo tiles to `rounded-md`, icons to
+  `aria-hidden`, with login/signup content verified intact. 7B-2, 12 files: all remaining pages.
+  Both settings pages got the switch redesign: track `h-11 w-16 rounded-md`, knob
+  `h-9 w-9 rounded-full left-1 top-1`, `translate-x-5` checked and `translate-x-0` unchecked (the
+  knob keeps `rounded-full` as the allowed toggle exception). Badges, pills, back buttons, and
+  deck tabs went `rounded-full` to `rounded-md`; 31 `min-h-11` additions cover the quiz timer
+  Pause button (~26px), flashcards/lesson/quiz back links, the read-aloud row buttons, TTS icon
+  buttons, view toggles, personalization preset/Cancel/Apply/Reset buttons, subject tab buttons,
+  and lesson bottom nav; 11 hover flourishes were removed across deck, subject, settings, practice,
+  and review cards; 36 decorative icons gained `aria-hidden`. Phase 7 totals: 61 `min-h-11`
+  additions, 49 net `rounded-full` removals, 67 `aria-hidden` additions, 15 hover flourish
+  removals; lint is now exit 0 with 0 warnings (both known errors fixed in 7A). Interpretations
+  logged per the workflow rule: (1) the 44px target applies to every `<button>`, button-styled
+  link, and form input (`h-10` to `h-11`); plain text links (breadcrumbs, landing header Platform
+  and Log In) stay unbumped under the WCAG 2.5.8 spacing exception, and the plan estimate of about
+  30 controls versus the actual 61 buttons, with quiz option rows (47px) and personalization
+  preset rows (52px) passing by content height instead; (2) range sliders were left at their
+  existing heights because the plan did not flag them; (3) `rounded-full` is retained only on
+  toggle knobs, progress bars and rings, answer number circles, logo dots, and the video thumbnail
+  play circle (a child div inside the full-bleed overlay button, not on the button element).
+  Verification: tsc exit 0, lint exit 0, contrast 609/609 exit 0, build exit 0; grep gates pass
+  (zero `rounded-2xl`/`rounded-3xl`, zero `hover:-translate`/`hover:shadow`, zero `gradient`
+  strings, no `rounded-full` on any button or link element); dash scan unchanged at 156 em/en
+  dashes in the same 8 pre-existing files, all already deferred to Phases 8 and 8B.

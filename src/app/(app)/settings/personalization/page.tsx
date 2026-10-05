@@ -28,7 +28,7 @@ function Toggle({
       <button
         onClick={onToggle}
         className={cn(
-          "toggle-switch relative h-6 w-11 rounded-full transition-colors",
+          "toggle-switch relative h-11 w-16 rounded-md transition-colors",
           checked ? "bg-skill-blue-solid" : "bg-muted"
         )}
         role="switch"
@@ -37,8 +37,8 @@ function Toggle({
       >
         <span
           className={cn(
-            "toggle-knob absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform",
-            checked ? "translate-x-5.5" : "translate-x-0.5"
+            "toggle-knob absolute left-1 top-1 h-9 w-9 rounded-full bg-white transition-transform",
+            checked ? "translate-x-5" : "translate-x-0"
           )}
         />
       </button>
@@ -108,7 +108,7 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-lg border border-input bg-background px-3 py-1.5 text-sm text-foreground"
+        className="min-h-11 rounded-lg border border-input bg-background px-3 py-1.5 text-sm text-foreground"
         aria-label={label}
       >
         {options.map((opt) => (
@@ -207,9 +207,9 @@ export default function PersonalizationPage() {
         <button
           ref={presetButtonRef}
           onClick={() => setShowPresetPicker(true)}
-          className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
         >
-          <Sparkles className="h-4 w-4" />
+          <Sparkles className="h-4 w-4" aria-hidden="true" />
           Disability presets
         </button>
       </div>
@@ -229,7 +229,7 @@ export default function PersonalizationPage() {
             aria-modal="true"
             aria-labelledby="preset-picker-title"
             tabIndex={-1}
-            className="w-full max-w-lg rounded-2xl bg-background p-6 shadow-xl animate-fade-in"
+            className="w-full max-w-lg rounded-md bg-background p-6 shadow-xl animate-fade-in"
           >
             <h2 id="preset-picker-title" className="font-display text-xl font-bold text-foreground">
               Choose disability presets
@@ -259,7 +259,7 @@ export default function PersonalizationPage() {
                         : "border-muted-foreground/30 bg-background"
                     )}
                   >
-                    {presetSelections.includes(opt.value) && <Check className="h-3 w-3" />}
+                    {presetSelections.includes(opt.value) && <Check className="h-3 w-3" aria-hidden="true" />}
                   </div>
                   <div>
                     <span className="text-sm font-semibold text-foreground">{opt.label}</span>
@@ -275,7 +275,7 @@ export default function PersonalizationPage() {
                 <ul className="space-y-1">
                   {previewChanges.map((c) => (
                     <li key={c} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Check className="h-3 w-3 text-success-green-text" />
+                      <Check className="h-3 w-3 text-success-green-text" aria-hidden="true" />
                       {c}
                     </li>
                   ))}
@@ -286,13 +286,13 @@ export default function PersonalizationPage() {
             <div className="mt-4 flex items-center gap-3">
               <button
                 onClick={() => setShowPresetPicker(false)}
-                className="rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+                className="inline-flex min-h-11 items-center rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
               >
                 Cancel
               </button>
               <button
                 onClick={applyPresets}
-                className="rounded-full bg-skill-blue-solid px-5 py-2 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+                className="inline-flex min-h-11 items-center rounded-md bg-skill-blue-solid px-5 py-2 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
               >
                 Apply presets
               </button>
@@ -442,9 +442,9 @@ export default function PersonalizationPage() {
             resetToDefaults();
             setPresetSelections([]);
           }}
-          className="inline-flex items-center gap-2 rounded-full border border-destructive/30 px-5 py-2.5 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/5"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md border border-destructive/30 px-5 py-2.5 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/5"
         >
-          <RotateCcw className="h-4 w-4" />
+          <RotateCcw className="h-4 w-4" aria-hidden="true" />
           Reset all to defaults
         </button>
       </div>

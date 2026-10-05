@@ -62,7 +62,7 @@ export default function ProgressPage() {
       <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((stat) => (
           <div key={stat.label} className="rounded-xl border border-border bg-card p-4">
-            <stat.icon className={`mb-2 h-5 w-5 ${stat.color}`} />
+            <stat.icon className={`mb-2 h-5 w-5 ${stat.color}`} aria-hidden="true" />
             <p className="text-2xl font-bold text-foreground">{stat.value}</p>
             <p className="text-xs text-muted-foreground">{stat.label}</p>
           </div>
@@ -84,7 +84,7 @@ export default function ProgressPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                  <TrendingUp className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
                   <span className="text-sm font-semibold text-foreground">{subject.avgScore}%</span>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default function ProgressPage() {
               <div className="flex items-center gap-3">
                 {session.comprehensionScore > 0 && (
                   <span
-                    className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                    className={`rounded-md px-2.5 py-0.5 text-xs font-bold ${
                       session.comprehensionScore >= 90
                         ? "bg-success-green/10 text-success-green-text"
                         : session.comprehensionScore >= 70
@@ -128,7 +128,7 @@ export default function ProgressPage() {
                   </span>
                 )}
                 {session.completed && (
-                  <span className="rounded-full bg-success-green/10 px-2.5 py-0.5 text-[10px] font-semibold text-success-green-text">
+                  <span className="rounded-md bg-success-green/10 px-2.5 py-0.5 text-[10px] font-semibold text-success-green-text">
                     Done
                   </span>
                 )}

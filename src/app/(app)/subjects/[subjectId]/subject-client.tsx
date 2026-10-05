@@ -52,7 +52,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
           onClick={() => setTab("skills")}
           aria-pressed={tab === "skills"}
           className={cn(
-            "border-b-2 pb-2 text-sm font-semibold transition-colors",
+            "min-h-11 border-b-2 pb-2 text-sm font-semibold transition-colors",
             tab === "skills"
               ? "border-skill-blue-solid text-skill-blue-text"
               : "border-transparent text-muted-foreground hover:text-foreground"
@@ -64,7 +64,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
           onClick={() => setTab("videos")}
           aria-pressed={tab === "videos"}
           className={cn(
-            "border-b-2 pb-2 text-sm font-semibold transition-colors",
+            "min-h-11 border-b-2 pb-2 text-sm font-semibold transition-colors",
             tab === "videos"
               ? "border-skill-blue-solid text-skill-blue-text"
               : "border-transparent text-muted-foreground hover:text-foreground"
@@ -85,8 +85,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
               key={skill.id}
               href={`/subjects/${subjectId}/${skill.id}/`}
               className={cn(
-                "group relative flex min-h-[88px] flex-col items-center justify-between rounded-xl border-[1.5px] px-3 py-4 text-center transition-all",
-                "hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]",
+                "group relative flex min-h-[88px] flex-col items-center justify-between rounded-xl border-[1.5px] px-3 py-4 text-center transition-colors",
                 STATUS_STYLES[skill.status]
               )}
             >

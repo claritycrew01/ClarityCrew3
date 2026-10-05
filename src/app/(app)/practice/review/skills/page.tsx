@@ -11,7 +11,7 @@ export default function SkillsReviewPage() {
         href="/progress/"
         className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to Progress
       </Link>
 
@@ -33,7 +33,7 @@ export default function SkillsReviewPage() {
                 <Link
                   key={lesson.id}
                   href={`/subjects/${subject.id}/${lesson.id}/`}
-                  className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-skill-blue/30 hover:shadow-sm"
+                  className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-skill-blue/30"
                 >
                   <div>
                     <p className="text-sm font-semibold text-foreground">{lesson.title}</p>

@@ -41,10 +41,10 @@ export default function PracticePage() {
           <Link
             key={activity.href}
             href={activity.href}
-            className="group flex flex-col items-start rounded-xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-skill-blue/30 hover:shadow-md"
+            className="group flex flex-col items-start rounded-xl border border-border bg-card p-5 transition-colors hover:border-skill-blue/30"
           >
             <div className={`mb-3 rounded-xl p-3 ${activity.color}`}>
-              <activity.icon className="h-6 w-6" />
+              <activity.icon className="h-6 w-6" aria-hidden="true" />
             </div>
             <span className="text-sm font-semibold text-foreground">{activity.label}</span>
             <span className="mt-1 text-xs text-muted-foreground">{activity.description}</span>
@@ -62,10 +62,10 @@ export default function PracticePage() {
             <Link
               key={subject.id}
               href={`/subjects/${subject.id}/`}
-              className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-skill-blue/30 hover:shadow-sm"
+              className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-skill-blue/30"
             >
               <div className={`rounded-lg bg-${subject.color}/10 p-2.5`}>
-                <BookOpen className={`h-5 w-5 text-${subject.color}-text`} />
+                <BookOpen className={`h-5 w-5 text-${subject.color}-text`} aria-hidden="true" />
               </div>
               <div className="flex-1">
                 <p className="text-sm font-semibold text-foreground">{subject.name}</p>

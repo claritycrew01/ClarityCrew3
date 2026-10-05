@@ -103,13 +103,13 @@ export default function DashboardPage() {
       </div>
 
       <div className="mb-6 flex flex-wrap gap-2">
-        <span className="inline-flex items-center rounded-full bg-skill-blue/10 px-3 py-1 text-xs font-semibold text-skill-blue-text">
+        <span className="inline-flex items-center rounded-md bg-skill-blue/10 px-3 py-1 text-xs font-semibold text-skill-blue-text">
           Adaptive Learning
         </span>
-        <span className="inline-flex items-center rounded-full bg-success-green/10 px-3 py-1 text-xs font-semibold text-success-green-text">
+        <span className="inline-flex items-center rounded-md bg-success-green/10 px-3 py-1 text-xs font-semibold text-success-green-text">
           Micro-modules
         </span>
-        <span className="inline-flex items-center rounded-full bg-cta-orange/10 px-3 py-1 text-xs font-semibold text-cta-orange-text">
+        <span className="inline-flex items-center rounded-md bg-cta-orange/10 px-3 py-1 text-xs font-semibold text-cta-orange-text">
           Focus Timer
         </span>
       </div>
@@ -117,7 +117,7 @@ export default function DashboardPage() {
       {/* Daily Goals / Study Planner */}
       <div className="mb-8 rounded-xl border border-skill-blue/20 bg-skill-blue/5 p-5">
         <div className="mb-3 flex items-center gap-2">
-          <Target className="h-4 w-4 text-skill-blue-text" />
+          <Target className="h-4 w-4 text-skill-blue-text" aria-hidden="true" />
           <h2 className="font-display text-sm font-semibold text-foreground">Today&apos;s Study Plan</h2>
         </div>
         <p className="mb-4 text-xs text-muted-foreground">{mounted ? getDailyGoalHint() : ""}</p>
@@ -128,7 +128,7 @@ export default function DashboardPage() {
               <Link
                 key={lesson.id}
                 href={`/subjects/${lesson.subjectId}/${lesson.id}/`}
-                className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2.5 transition-all hover:border-skill-blue/30 hover:shadow-sm"
+                className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2.5 transition-colors hover:border-skill-blue/30"
               >
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-skill-blue/10 text-[10px] font-bold text-skill-blue-text">
                   {i + 1}
@@ -139,7 +139,7 @@ export default function DashboardPage() {
                     {lesson.duration} · {lesson.cognitiveLoad} load
                   </p>
                 </div>
-                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
               </Link>
             ))}
           </div>
@@ -177,10 +177,10 @@ export default function DashboardPage() {
           <Link
             key={action.href}
             href={action.href}
-            className="group flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-5 text-center transition-all hover:-translate-y-0.5 hover:border-skill-blue/30 hover:shadow-md"
+            className="group flex flex-col items-center gap-3 rounded-xl border border-border bg-card p-5 text-center transition-colors hover:border-skill-blue/30"
           >
             <div className={`rounded-xl p-3 ${action.color}`}>
-              <action.icon className="h-6 w-6" />
+              <action.icon className="h-6 w-6" aria-hidden="true" />
             </div>
             <span className="text-sm font-semibold text-foreground">{action.label}</span>
           </Link>
@@ -196,7 +196,7 @@ export default function DashboardPage() {
             <Link
               key={subject.id}
               href={`/subjects/${subject.id}/`}
-              className="flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-skill-blue/30 hover:shadow-sm"
+              className="flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-colors hover:border-skill-blue/30"
             >
               <div className={`rounded-xl p-3 ${
                 subject.color === "skill-blue"
@@ -238,7 +238,7 @@ export default function DashboardPage() {
                   />
                 </div>
               </div>
-              <span className={`rounded-full px-4 py-2 text-xs font-semibold text-white transition-colors ${
+              <span className={`rounded-md px-4 py-2 text-xs font-semibold text-white transition-colors ${
                 subject.color === "skill-blue"
                   ? "bg-skill-blue-solid hover:bg-skill-blue/90"
                   : subject.color === "success-green"

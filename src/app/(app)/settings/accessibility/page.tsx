@@ -29,7 +29,7 @@ function Toggle({
     <button
       onClick={onToggle}
       className={cn(
-        "toggle-switch relative h-6 w-11 rounded-full transition-colors",
+        "toggle-switch relative h-11 w-16 rounded-md transition-colors",
         checked ? "bg-skill-blue-solid" : "bg-muted"
       )}
       role="switch"
@@ -38,8 +38,8 @@ function Toggle({
     >
       <span
         className={cn(
-          "toggle-knob absolute top-0.5 h-5 w-5 rounded-full bg-white transition-transform",
-          checked ? "translate-x-5.5" : "translate-x-0.5"
+          "toggle-knob absolute left-1 top-1 h-9 w-9 rounded-full bg-white transition-transform",
+          checked ? "translate-x-5" : "translate-x-0"
         )}
       />
     </button>

@@ -36,16 +36,16 @@ export default function SettingsPage() {
           <Link
             key={item.label}
             href={item.href}
-            className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-4 transition-all hover:border-skill-blue/30 hover:shadow-sm"
+            className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-4 transition-colors hover:border-skill-blue/30"
           >
             <div className="rounded-lg bg-muted p-2.5">
-              <item.icon className="h-5 w-5 text-muted-foreground" />
+              <item.icon className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold text-foreground">{item.label}</p>
               <p className="text-xs text-muted-foreground">{item.description}</p>
             </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
           </Link>
         ))}
       </div>

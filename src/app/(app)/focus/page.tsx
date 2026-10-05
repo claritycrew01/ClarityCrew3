@@ -165,7 +165,7 @@ export default function FocusPage() {
               startRef.current = null;
             }}
             aria-pressed={duration === d.seconds}
-            className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-4 py-1.5 text-xs font-semibold transition-colors ${
               duration === d.seconds
                 ? "bg-skill-blue-solid text-skill-blue-on-solid"
                 : "border border-border text-muted-foreground hover:bg-muted"
@@ -179,17 +179,17 @@ export default function FocusPage() {
       <div className="flex items-center gap-4">
         <button
           onClick={resetTimer}
-          className="rounded-full border border-border p-3 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border p-3 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label="Reset timer"
         >
-          <RotateCcw className="h-5 w-5" />
+          <RotateCcw className="h-5 w-5" aria-hidden="true" />
         </button>
         <button
           onClick={toggleTimer}
-          className="rounded-full bg-skill-blue-solid p-4 text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md bg-skill-blue-solid p-4 text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
           aria-label={isRunning ? "Pause timer" : "Start timer"}
         >
-          {isRunning ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-0.5" />}
+          {isRunning ? <Pause className="h-6 w-6" aria-hidden="true" /> : <Play className="h-6 w-6 ml-0.5" aria-hidden="true" />}
         </button>
       </div>
     </div>
