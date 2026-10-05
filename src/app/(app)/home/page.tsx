@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { BookOpen, Brain, Timer, BarChart3, Target, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
@@ -48,11 +49,16 @@ function getDailyGoalHint(): string {
   return "Wind down with some flashcard review";
 }
 
+function subscribeNoop(): () => void {
+  return () => {};
+}
+
 export default function DashboardPage() {
   const sessions = useProgressStore((s) => s.sessions);
   const totalLessonsCompleted = useProgressStore((s) => s.totalLessonsCompleted);
   const streak = useProgressStore((s) => s.streak);
   const navigationDensity = usePreferencesStore((s) => s.navigationDensity);
+  const mounted = useSyncExternalStore(subscribeNoop, () => true, () => false);
 
   const allLessons = getAllLessons();
   const totalLessons = allLessons.length;
@@ -89,7 +95,7 @@ export default function DashboardPage() {
     <div className="animate-fade-in">
       <div className="mb-8">
         <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          {getGreeting()}
+          {mounted ? getGreeting() : "Welcome"}
         </h1>
         <p className="mt-1 text-muted-foreground">
           Pick up where you left off, or try something new.
@@ -114,7 +120,7 @@ export default function DashboardPage() {
           <Target className="h-4 w-4 text-skill-blue-text" />
           <h2 className="font-display text-sm font-semibold text-foreground">Today&apos;s Study Plan</h2>
         </div>
-        <p className="mb-4 text-xs text-muted-foreground">{getDailyGoalHint()}</p>
+        <p className="mb-4 text-xs text-muted-foreground">{mounted ? getDailyGoalHint() : ""}</p>
 
         {suggestedLessons.length > 0 ? (
           <div className="space-y-2">

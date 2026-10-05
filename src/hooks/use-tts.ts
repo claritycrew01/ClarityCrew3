@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useSyncExternalStore } from "react";
 import { speak, stop, isSpeaking, isTTSSupported } from "@/lib/utils/tts";
 import { useUIStore } from "@/lib/store/ui-store";
+
+function subscribeNoop(): () => void {
+  return () => {};
+}
 
 export function useTTS() {
   const [speaking, setSpeaking] = useState(false);
   const ttsRate = useUIStore((s) => s.ttsRate);
-  const supported = isTTSSupported();
+  const supported = useSyncExternalStore(subscribeNoop, isTTSSupported, () => false);
 
   useEffect(() => {
     if (!supported) return;

@@ -392,9 +392,11 @@ jsx-a11y findings clear here).
 
 ### Phase 5A: hydration bugfixes (separate commit before preference wiring)
 
-Files: `src/hooks/use-tts.ts`, `src/app/(app)/home/page.tsx`.
+Files: `src/hooks/use-tts.ts`, `src/app/(app)/home/page.tsx`, plus
+`src/app/(app)/onboarding/page.tsx` (added because `docs/baseline-audit.md` maps its
+`set-state-in-effect` finding to Phase 5A).
 
-Changes: move `isTTSSupported()` out of render into `useState` plus `useEffect` so server and first
+Changes: move `isTTSSupported()` out of render so server and first
 client render agree; move the home greeting and daily hint `new Date().getHours()` behind a mount
 gate so the prerendered text cannot mismatch.
 
@@ -727,4 +729,22 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   pages, and the personalization status region. Quiz progressbar, flashcards counter/flip, and
   the tutor drawer regions are runtime-only in exported HTML (rendered after hydration), which
   matches the Phase 3 pattern.
+
+- Phase 5A: DONE. Three files: the two listed plus onboarding (assigned to 5A by
+  `docs/baseline-audit.md`). `use-tts.ts`: the prescribed `useState` plus `useEffect` pattern was
+  implemented first and the lint run proved it creates a new `react-hooks/set-state-in-effect`
+  error (same rule that flags the old onboarding and video-player code), so the final fix uses
+  `useSyncExternalStore(subscribeNoop, isTTSSupported, () => false)`, which renders `false` on the
+  server and during the client hydration pass (matching the prerendered HTML) and flips to the real
+  capability after hydration with no setState in an effect. Home page: same gate
+  (`useSyncExternalStore(subscribeNoop, () => true, () => false)`) named `mounted`; the h1 renders
+  `Welcome` and the daily hint renders empty until mount, then the time-based text appears, so
+  prerendered HTML can never mismatch the client. Onboarding: the local
+  `hydrated` state and its effect were replaced by the preferences store's existing
+  `hasHydrated` flag (the same source `accessibility-effects` gates on), which also guarantees
+  `hasCompletedOnboarding` is read after rehydration and clears that lint error. Verified: tsc
+  exit 0, contrast 609/609 exit 0, lint at the 2 known Phase 7 errors (right-panel purity,
+  video-player set-state-in-effect) with 0 warnings, build exit 0; exported home HTML contains
+  `>Welcome</h1>` with no time-based greeting or hint text, and onboarding still prerenders the
+  spinner.
 

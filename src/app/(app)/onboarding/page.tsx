@@ -14,13 +14,9 @@ export default function OnboardingPage() {
   const router = useRouter();
   const setPreferences = usePreferencesStore((s) => s.setPreferences);
   const hasCompletedOnboarding = usePreferencesStore((s) => s.hasCompletedOnboarding);
+  const hydrated = usePreferencesStore((s) => s.hasHydrated);
   const [step, setStep] = useState<Step>("welcome");
   const [selected, setSelected] = useState<string[]>([]);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
 
   useEffect(() => {
     if (hydrated && hasCompletedOnboarding) {
