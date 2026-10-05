@@ -74,7 +74,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
+                className="flex h-11 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <div>
@@ -88,17 +88,17 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
+                className="flex h-11 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-cta-orange py-2.5 text-sm font-bold text-cta-orange-on-solid transition-colors hover:bg-cta-orange-hover disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full rounded-md bg-cta-orange py-2.5 min-h-11 text-sm font-bold text-cta-orange-on-solid transition-colors hover:bg-cta-orange-hover disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="inline-flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" aria-hidden="true" />
                   Signing in...
                 </span>
               ) : (
@@ -123,7 +123,7 @@ export default function LoginPage() {
       {/* Left branding pane */}
       <div className="hidden lg:flex lg:order-first flex-col items-center justify-center bg-muted/30 p-12">
         <div className="max-w-md text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-2xl">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-md bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-2xl">
             C
           </div>
           <h2 className="font-display text-3xl font-bold text-foreground">

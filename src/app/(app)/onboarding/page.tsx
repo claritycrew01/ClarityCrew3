@@ -84,7 +84,7 @@ export default function OnboardingPage() {
         {/* Welcome step */}
         {step === "welcome" && (
           <div className="animate-fade-in text-center">
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue/10" aria-hidden="true">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-md bg-skill-blue/10" aria-hidden="true">
               <Sparkles className="h-8 w-8 text-skill-blue-text" />
             </div>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">
@@ -100,15 +100,15 @@ export default function OnboardingPage() {
             <div className="mt-8 flex flex-col gap-3">
               <button
                 onClick={() => setStep("select")}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-skill-blue-solid px-6 py-3 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-skill-blue-solid px-6 py-3 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
                 aria-label="Start personalization"
               >
                 Let&apos;s personalize
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </button>
               <button
                 onClick={handleSkip}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground rounded-lg px-3 py-1"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground inline-flex min-h-11 items-center justify-center rounded-md px-3 py-1"
                 aria-label="Skip personalization and use default settings"
               >
                 Skip for now
@@ -152,7 +152,7 @@ export default function OnboardingPage() {
                     )}
                     aria-hidden="true"
                   >
-                    {selected.includes(opt.value) && <Check className="h-3 w-3" />}
+                    {selected.includes(opt.value) && <Check className="h-3 w-3" aria-hidden="true" />}
                   </div>
                   <div>
                     <span className="text-sm font-semibold text-foreground">{opt.label}</span>
@@ -165,23 +165,23 @@ export default function OnboardingPage() {
             <div className="mt-6 flex items-center gap-3">
               <button
                 onClick={() => setStep("welcome")}
-                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
                 aria-label="Go back to welcome step"
               >
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 Back
               </button>
               <button
                 onClick={() => setStep("preview")}
-                className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
                 aria-label={selected.length > 0 ? "Preview changes before applying" : "Continue with default settings"}
               >
                 {selected.length > 0 ? "Preview changes" : "Use defaults"}
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </button>
               <button
                 onClick={handleSkip}
-                className="ml-auto text-sm font-medium text-muted-foreground transition-colors hover:text-foreground rounded-lg px-3 py-1"
+                className="ml-auto text-sm font-medium text-muted-foreground transition-colors hover:text-foreground inline-flex min-h-11 items-center justify-center rounded-md px-3 py-1"
                 aria-label="Skip and use default settings"
               >
                 Skip
@@ -222,18 +222,18 @@ export default function OnboardingPage() {
             <div className="mt-8 flex items-center gap-3">
               <button
                 onClick={() => setStep("select")}
-                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted"
                 aria-label="Go back to selection step"
               >
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 Back
               </button>
               <button
                 onClick={handleConfirm}
-                className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
                 aria-label={selected.length > 0 ? "Apply selected settings and continue to dashboard" : "Continue to dashboard with default settings"}
               >
-                <Settings className="h-4 w-4" />
+                <Settings className="h-4 w-4" aria-hidden="true" />
                 {selected.length > 0 ? "Apply & continue" : "Continue"}
               </button>
             </div>
