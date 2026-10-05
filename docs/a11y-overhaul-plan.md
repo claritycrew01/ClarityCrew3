@@ -930,3 +930,25 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   still renders (linear equations export probe finds `slope-intercept`), and the converted
   simplifiedBody string is confirmed present in source (that line is client toggled, so it is
   not in prerendered HTML).
+- Phase 9: DONE, FINAL PHASE. Files: `docs/a11y-walkthrough.md` only (none in `src`). The
+  walkthrough documents the verified behavior: app shell tab order (skip link, header, course
+  tree, tutor drawer, accessibility toolbar launcher, main content, mobile nav, matching the
+  DOM order in `app-shell.tsx`), Escape handling for the tutor drawer (closes and restores
+  focus to its opener or to the `Open AI tutor` launcher, with focus moving to the message
+  input on open), the accessibility toolbar popover (closes to its `Accessibility settings`
+  launcher, `role="dialog"` with Tab cycling), and the personalization presets modal (closes to
+  its opener with a Tab trap and `aria-modal="true"`), the quiz digit and Enter flows with the
+  input and button guards, the flashcard arrow, Space, 1, and 2 keys with the button focus
+  guard, and route change focus (`RouteFocus` in the root layout focuses the page `h1` or
+  `#main-content` after every pathname change beyond the first render). Verification output:
+  `npm run build` exit 0, `npx tsc --noEmit` exit 0, `node scripts/check-contrast.mjs` 609/609
+  pass exit 0, `npm run lint` exit 0. Static export checks: `out/index.html` and `out/404.html`
+  exist, lesson folders count 12 mathematics, 10 science, and 10 english (each subject
+  directory also contains one build artifact directory that is not a lesson page), zero
+  exported HTML files contain `data-literal` or the development only `literalBody` report
+  text, and the whole `out` HTML tree scans at zero em/en dashes. Per Q5 no axe runner was
+  added; the manual axe extension pass remains the user's own step, noted at the top of the
+  walkthrough. Repo wide dash scan (src, docs, scripts) is 0. Phase 0 through Phase 9 are all
+  committed: `56a5106`, `1c6ab4e`, `e70e676`, `4b81fcc`, `9df359c`, `94edd8b`, `6c38fde`,
+  `5992c60`, `6f5b700`, `f7fbdf8`, `93add74`, `971c4fc`, `c0eea8d`, `ca14c61`, `f6e1c59`,
+  and this commit.
