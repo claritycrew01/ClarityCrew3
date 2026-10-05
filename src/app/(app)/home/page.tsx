@@ -12,25 +12,25 @@ const QUICK_ACTIONS = [
     href: "/subjects/math/",
     label: "Mathematics",
     icon: BookOpen,
-    color: "bg-skill-blue/10 text-skill-blue",
+    color: "bg-skill-blue/10 text-skill-blue-text",
   },
   {
     href: "/focus/",
     label: "Focus Mode",
     icon: Timer,
-    color: "bg-cta-orange/10 text-cta-orange",
+    color: "bg-cta-orange/10 text-cta-orange-text",
   },
   {
     href: "/flashcards/",
     label: "Flashcards",
     icon: Brain,
-    color: "bg-success-green/10 text-success-green",
+    color: "bg-success-green/10 text-success-green-text",
   },
   {
     href: "/progress/",
     label: "Progress",
     icon: BarChart3,
-    color: "bg-premium-amber/10 text-premium-amber",
+    color: "bg-premium-amber/10 text-premium-amber-text",
   },
 ];
 
@@ -97,13 +97,13 @@ export default function DashboardPage() {
       </div>
 
       <div className="mb-6 flex flex-wrap gap-2">
-        <span className="inline-flex items-center rounded-full bg-skill-blue/10 px-3 py-1 text-xs font-semibold text-skill-blue">
+        <span className="inline-flex items-center rounded-full bg-skill-blue/10 px-3 py-1 text-xs font-semibold text-skill-blue-text">
           Adaptive Learning
         </span>
-        <span className="inline-flex items-center rounded-full bg-success-green/10 px-3 py-1 text-xs font-semibold text-success-green">
+        <span className="inline-flex items-center rounded-full bg-success-green/10 px-3 py-1 text-xs font-semibold text-success-green-text">
           Micro-modules
         </span>
-        <span className="inline-flex items-center rounded-full bg-cta-orange/10 px-3 py-1 text-xs font-semibold text-cta-orange">
+        <span className="inline-flex items-center rounded-full bg-cta-orange/10 px-3 py-1 text-xs font-semibold text-cta-orange-text">
           Focus Timer
         </span>
       </div>
@@ -111,7 +111,7 @@ export default function DashboardPage() {
       {/* Daily Goals / Study Planner */}
       <div className="mb-8 rounded-xl border border-skill-blue/20 bg-skill-blue/5 p-5">
         <div className="mb-3 flex items-center gap-2">
-          <Target className="h-4 w-4 text-skill-blue" />
+          <Target className="h-4 w-4 text-skill-blue-text" />
           <h2 className="font-display text-sm font-semibold text-foreground">Today&apos;s Study Plan</h2>
         </div>
         <p className="mb-4 text-xs text-muted-foreground">{getDailyGoalHint()}</p>
@@ -124,7 +124,7 @@ export default function DashboardPage() {
                 href={`/subjects/${lesson.subjectId}/${lesson.id}/`}
                 className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2.5 transition-all hover:border-skill-blue/30 hover:shadow-sm"
               >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-skill-blue/10 text-[10px] font-bold text-skill-blue">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-skill-blue/10 text-[10px] font-bold text-skill-blue-text">
                   {i + 1}
                 </span>
                 <div className="flex-1 min-w-0">
@@ -151,7 +151,7 @@ export default function DashboardPage() {
             </div>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
               <div
-                className="h-full rounded-full bg-skill-blue transition-all duration-500"
+                className="h-full rounded-full bg-skill-blue-solid transition-all duration-500"
                 style={{ width: `${completionPct}%` }}
               />
             </div>
@@ -194,10 +194,10 @@ export default function DashboardPage() {
               }`}>
                 <BookOpen className={`h-6 w-6 ${
                   subject.color === "skill-blue"
-                    ? "text-skill-blue"
+                    ? "text-skill-blue-text"
                     : subject.color === "success-green"
-                      ? "text-success-green"
-                      : "text-premium-amber"
+                      ? "text-success-green-text"
+                      : "text-premium-amber-text"
                 }`} />
               </div>
               <div className="flex-1">
@@ -209,10 +209,10 @@ export default function DashboardPage() {
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       subject.color === "skill-blue"
-                        ? "bg-skill-blue"
+                        ? "bg-skill-blue-solid"
                         : subject.color === "success-green"
-                          ? "bg-success-green"
-                          : "bg-premium-amber"
+                          ? "bg-success-green-solid"
+                          : "bg-premium-amber-solid"
                     }`}
                     style={{ width: `${subject.pct}%` }}
                   />
@@ -220,10 +220,10 @@ export default function DashboardPage() {
               </div>
               <span className={`rounded-full px-4 py-2 text-xs font-semibold text-white transition-colors ${
                 subject.color === "skill-blue"
-                  ? "bg-skill-blue hover:bg-skill-blue/90"
+                  ? "bg-skill-blue-solid hover:bg-skill-blue/90"
                   : subject.color === "success-green"
-                    ? "bg-success-green hover:bg-success-green/90"
-                    : "bg-premium-amber hover:bg-premium-amber/90"
+                    ? "bg-success-green-solid hover:bg-success-green/90"
+                    : "bg-premium-amber-solid hover:bg-premium-amber/90"
               }`}>
                 {subject.pct === 0 ? "Start" : "Continue"}
               </span>

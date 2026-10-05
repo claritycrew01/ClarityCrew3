@@ -74,7 +74,7 @@ export function AccessibilityToolbar() {
                 className={cn(
                   "flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs transition-colors",
                   toggle.active
-                    ? "bg-skill-blue/10 text-skill-blue font-semibold"
+                    ? "bg-skill-blue/10 text-skill-blue-text font-semibold"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
@@ -98,7 +98,7 @@ export function AccessibilityToolbar() {
         className={cn(
           "flex h-11 w-11 items-center justify-center rounded-full border border-border shadow-lg transition-all",
           open
-            ? "bg-skill-blue text-white border-skill-blue"
+            ? "bg-skill-blue-solid text-skill-blue-on-solid border-skill-blue-solid"
             : "bg-background text-muted-foreground hover:bg-muted hover:text-foreground"
         )}
         aria-label="Accessibility settings"

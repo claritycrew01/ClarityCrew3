@@ -8,8 +8,8 @@ import { getSubjectById, getSubjectSkillStatus, getVideosBySubjectId } from "@/d
 import { VideoPlayer } from "@/components/video/video-player";
 
 const STATUS_STYLES: Record<string, string> = {
-  mastered: "border-success-green/40 bg-success-green/5 text-success-green",
-  "in-progress": "border-skill-blue/40 bg-skill-blue/5 text-skill-blue",
+  mastered: "border-success-green/40 bg-success-green/5 text-success-green-text",
+  "in-progress": "border-skill-blue/40 bg-skill-blue/5 text-skill-blue-text",
   "not-started": "border-border bg-muted/50 text-muted-foreground",
 };
 
@@ -29,7 +29,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
     return (
       <div className="animate-fade-in">
         <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">Subject Not Found</h1>
-        <Link href="/home/" className="mt-4 inline-flex text-sm text-skill-blue hover:underline">Back to Dashboard</Link>
+        <Link href="/home/" className="mt-4 inline-flex text-sm text-skill-blue-text hover:underline">Back to Dashboard</Link>
       </div>
     );
   }
@@ -53,7 +53,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
           className={cn(
             "border-b-2 pb-2 text-sm font-semibold transition-colors",
             tab === "skills"
-              ? "border-skill-blue text-skill-blue"
+              ? "border-skill-blue-solid text-skill-blue-text"
               : "border-transparent text-muted-foreground hover:text-foreground"
           )}
         >
@@ -64,7 +64,7 @@ export function SubjectClient({ subjectId }: { subjectId: string }) {
           className={cn(
             "border-b-2 pb-2 text-sm font-semibold transition-colors",
             tab === "videos"
-              ? "border-skill-blue text-skill-blue"
+              ? "border-skill-blue-solid text-skill-blue-text"
               : "border-transparent text-muted-foreground hover:text-foreground"
           )}
         >

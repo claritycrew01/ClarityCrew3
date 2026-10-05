@@ -28,7 +28,7 @@ function Toggle({
       onClick={onToggle}
       className={cn(
         "toggle-switch relative h-6 w-11 rounded-full transition-colors",
-        checked ? "bg-skill-blue" : "bg-muted"
+        checked ? "bg-skill-blue-solid" : "bg-muted"
       )}
       role="switch"
       aria-checked={checked}
@@ -67,7 +67,7 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-muted accent-skill-blue"
+        className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-muted accent-skill-blue-solid"
       />
       <span className="min-w-[3rem] text-right text-xs font-semibold text-foreground tabular-nums">
         {displayValue}
@@ -129,7 +129,7 @@ export default function AccessibilitySettingsPage() {
               className={cn(
                 "flex flex-col items-start rounded-xl border-[1.5px] p-4 text-left transition-all",
                 selected.includes(trait.value)
-                  ? "border-skill-blue bg-skill-blue/5"
+                  ? "border-skill-blue-solid bg-skill-blue/5"
                   : "border-border bg-card hover:border-muted-foreground/30"
               )}
             >

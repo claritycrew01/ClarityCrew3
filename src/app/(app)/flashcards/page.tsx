@@ -94,7 +94,7 @@ export default function FlashcardsPage() {
             >
               <span className="text-sm font-semibold text-foreground">{d.title}</span>
               <span className="mt-1 text-xs text-muted-foreground">{d.description}</span>
-              <span className="mt-3 inline-flex items-center rounded-full bg-skill-blue/10 px-2.5 py-0.5 text-[10px] font-semibold text-skill-blue">
+              <span className="mt-3 inline-flex items-center rounded-full bg-skill-blue/10 px-2.5 py-0.5 text-[10px] font-semibold text-skill-blue-text">
                 {d.cards.length} cards
               </span>
             </button>
@@ -152,7 +152,7 @@ export default function FlashcardsPage() {
             className={cn(
               "rounded-full border p-2 transition-colors",
               speaking
-                ? "border-skill-blue bg-skill-blue/10 text-skill-blue"
+                ? "border-skill-blue-solid bg-skill-blue/10 text-skill-blue-text"
                 : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
             aria-label={speaking ? "Stop reading" : "Read card aloud"}
@@ -184,8 +184,8 @@ export default function FlashcardsPage() {
           className={cn(
             "rounded-full border p-3 transition-colors",
             known.has(currentIndex)
-              ? "border-success-green bg-success-green/15 text-success-green"
-              : "border-success-green/30 bg-success-green/5 text-success-green hover:bg-success-green/10"
+              ? "border-success-green-solid bg-success-green/15 text-success-green-text"
+              : "border-success-green/30 bg-success-green/5 text-success-green-text hover:bg-success-green/10"
           )}
           aria-label="Know it"
         >
@@ -200,7 +200,7 @@ export default function FlashcardsPage() {
         </button>
       </div>
 
-      <p className="mt-4 text-[10px] text-muted-foreground/50">
+      <p className="mt-4 text-[10px] text-muted-foreground">
         Keyboard: ← → navigate · Space flip · 1 unknown · 2 known
       </p>
     </div>

@@ -288,6 +288,23 @@ Changes:
   scope approval at 1B-2). Result: 629/714 pass, 85 fails, all deferred, zero non-deferred.
   Build exit 0, tsc exit 0, lint unchanged at 5, generated CSS confirmed to contain every new
   class literal.
+- Phase 1B-2: DONE, Phase 1 COMPLETE. Sixteen files: the ten listed (home, quiz, flashcards,
+  progress, lesson-client, subject-client, header, right-panel, course-tree, video-player), the
+  four flagged in the 1B-1 report (settings/accessibility, settings/personalization,
+  accessibility-toolbar, focus), and two user-approved additions (practice, mobile-nav). Swaps:
+  every base `text-<brand>` to `-text` (only landing's white CTA button keeps the base token,
+  covered by the skill-blue-on-white pair); every `text-white` on a brand solid to `-on-solid`
+  except home's three-brand pill template and the video play icon, which the white-on-solid pairs
+  cover; every bare `bg`/`border`/`border-t`/`accent` brand UI fill, border, and thumb to `-solid`
+  (progress fills, toggles, selected borders, checkboxes, buttons, logo tiles, status dots) except
+  the `bg-cta-orange` buttons and CTA section, per the documented 1B-1 position that orange
+  buttons are identified by their text label; all `text-muted-foreground/*` and
+  `text-sidebar-foreground/*` text to full opacity (locked course-tree items included). Script:
+  removed the five deferred pair categories (base-as-text, muted/sidebar opacity, base progress
+  fills, bare skill-blue UI) now that all usages are swapped, and replaced the fill category with
+  `<brand>-solid on background/card/muted` UI pairs covering the rendered solid fills.
+  Result: 609/609 pairs pass, script exit 0. Build exit 0, tsc exit 0, lint unchanged at 5,
+  generated CSS confirmed to contain every swapped class literal.
 4. Do not rename existing tokens.
 
 Risks: tokens and class strings only, no store reads, no window access, no hydration impact.

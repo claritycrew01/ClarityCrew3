@@ -96,17 +96,17 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
             "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
             "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             node.locked
-              ? "text-sidebar-foreground/40 pointer-events-none"
+              ? "text-sidebar-foreground pointer-events-none"
               : "text-sidebar-foreground",
             depth === 0 && "font-medium"
           )}
           style={{ paddingLeft: `${depth * 12 + 8}px` }}
         >
           <span className="w-3.5" />
-          {node.icon && <span className="shrink-0 text-sidebar-foreground/70">{node.icon}</span>}
+          {node.icon && <span className="shrink-0 text-sidebar-foreground">{node.icon}</span>}
           <span className="flex-1 truncate">{node.label}</span>
           {node.locked ? (
-            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground/30" />
+            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground" />
           ) : (
             node.progress !== undefined && (
               <ProgressRing progress={node.progress} size={22} />
@@ -120,7 +120,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
             "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
             "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             node.locked
-              ? "text-sidebar-foreground/40"
+              ? "text-sidebar-foreground"
               : "text-sidebar-foreground",
             depth === 0 && "font-medium"
           )}
@@ -130,7 +130,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
           {hasChildren ? (
             <ChevronRight
               className={cn(
-                "h-3.5 w-3.5 shrink-0 text-sidebar-foreground/50 transition-transform duration-200",
+                "h-3.5 w-3.5 shrink-0 text-sidebar-foreground transition-transform duration-200",
                 expanded && "rotate-90"
               )}
             />
@@ -138,12 +138,12 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
             <span className="w-3.5" />
           )}
 
-          {node.icon && <span className="shrink-0 text-sidebar-foreground/70">{node.icon}</span>}
+          {node.icon && <span className="shrink-0 text-sidebar-foreground">{node.icon}</span>}
 
           <span className="flex-1 truncate">{node.label}</span>
 
           {node.locked ? (
-            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground/30" />
+            <Lock className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground" />
           ) : (
             node.progress !== undefined && (
               <ProgressRing progress={node.progress} size={22} />
@@ -176,7 +176,7 @@ export function CourseTree({ collapsed }: { collapsed: boolean }) {
       )}
     >
       <div className="px-3 pt-4 pb-2">
-        <h2 className="text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/50">
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-sidebar-foreground">
           Course Tree
         </h2>
       </div>

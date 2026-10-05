@@ -40,8 +40,8 @@ export function VideoPlayer({ youtubeId, title, channel, className }: VideoPlaye
   return (
     <div className={cn("group relative overflow-hidden rounded-2xl border border-border bg-card", className)}>
       {/* Internet caveat microcopy */}
-      <div className="flex items-center gap-1.5 px-4 pt-3 text-[11px] text-muted-foreground/70">
-        <span className="inline-block h-1 w-1 rounded-full bg-skill-blue" />
+      <div className="flex items-center gap-1.5 px-4 pt-3 text-[11px] text-muted-foreground">
+        <span className="inline-block h-1 w-1 rounded-full bg-skill-blue-solid" />
         Requires an internet connection to play
       </div>
 
@@ -50,7 +50,7 @@ export function VideoPlayer({ youtubeId, title, channel, className }: VideoPlaye
           /* ── Offline fallback ── */
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-muted/80 p-6 text-center backdrop-blur-sm">
             <div className="rounded-full bg-premium-amber/10 p-3">
-              <WifiOff className="h-6 w-6 text-premium-amber" />
+              <WifiOff className="h-6 w-6 text-premium-amber-text" />
             </div>
             <p className="text-sm font-semibold text-foreground">You&apos;re offline</p>
             <p className="max-w-xs text-xs text-muted-foreground">

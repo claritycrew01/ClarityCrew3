@@ -199,7 +199,7 @@ export function RightPanel({ open }: { open: boolean }) {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between border-b border-border px-3 py-2.5">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-skill-blue" />
+              <Sparkles className="h-4 w-4 text-skill-blue-text" />
               <span className="text-sm font-semibold text-foreground">AI Tutor</span>
             </div>
             <div className="flex items-center gap-1">
@@ -225,7 +225,7 @@ export function RightPanel({ open }: { open: boolean }) {
           <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3">
             {messages.length === 0 && !isTyping && (
               <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <Sparkles className="h-8 w-8 text-muted-foreground/30 mb-3" />
+                <Sparkles className="h-8 w-8 text-muted-foreground mb-3" />
                 <p className="text-sm font-medium text-foreground mb-1">Ask me anything</p>
                 <p className="text-xs text-muted-foreground">
                   I can help with math, science, English, study tips, and more. Navigate to a lesson for contextual help.
@@ -250,7 +250,7 @@ export function RightPanel({ open }: { open: boolean }) {
                 className={cn(
                   "max-w-[90%] rounded-xl px-3 py-2 text-sm animate-fade-in",
                   msg.role === "user"
-                    ? "ml-auto bg-skill-blue text-white rounded-br-sm"
+                    ? "ml-auto bg-skill-blue-solid text-skill-blue-on-solid rounded-br-sm"
                     : "bg-muted text-foreground rounded-bl-sm"
                 )}
               >
@@ -285,7 +285,7 @@ export function RightPanel({ open }: { open: boolean }) {
               <button
                 onClick={() => handleSend()}
                 disabled={!input.trim()}
-                className="rounded-lg bg-skill-blue p-2 text-white transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="rounded-lg bg-skill-blue-solid p-2 text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
                 aria-label="Send message"
               >
                 <Send className="h-4 w-4" />

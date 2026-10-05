@@ -142,7 +142,7 @@ export default function FocusPage() {
             }}
             className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${
               duration === d.seconds
-                ? "bg-skill-blue text-white"
+                ? "bg-skill-blue-solid text-skill-blue-on-solid"
                 : "border border-border text-muted-foreground hover:bg-muted"
             }`}
           >
@@ -161,7 +161,7 @@ export default function FocusPage() {
         </button>
         <button
           onClick={toggleTimer}
-          className="rounded-full bg-skill-blue p-4 text-white transition-colors hover:bg-skill-blue/90"
+          className="rounded-full bg-skill-blue-solid p-4 text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
           aria-label={isRunning ? "Pause timer" : "Start timer"}
         >
           {isRunning ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-0.5" />}

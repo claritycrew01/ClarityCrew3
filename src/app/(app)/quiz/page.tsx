@@ -104,7 +104,7 @@ export default function QuizPage() {
             >
               <span className="text-sm font-semibold text-foreground">{q.title}</span>
               <span className="mt-1 text-xs text-muted-foreground">{q.description}</span>
-              <span className="mt-3 inline-flex items-center rounded-full bg-cta-orange/10 px-2.5 py-0.5 text-[10px] font-semibold text-cta-orange">
+              <span className="mt-3 inline-flex items-center rounded-full bg-cta-orange/10 px-2.5 py-0.5 text-[10px] font-semibold text-cta-orange-text">
                 {q.questions.length} questions
               </span>
             </button>
@@ -118,7 +118,7 @@ export default function QuizPage() {
     const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center animate-fade-in">
-        <Trophy className="mb-4 h-12 w-12 text-premium-amber" />
+        <Trophy className="mb-4 h-12 w-12 text-premium-amber-text" />
         <h1 className="mb-1 font-display text-3xl font-bold text-foreground">Quiz Complete</h1>
         <p className="mb-6 text-muted-foreground">{quiz.title}</p>
 
@@ -142,7 +142,7 @@ export default function QuizPage() {
               setSelectedQuizId(null);
               setShowResults(false);
             }}
-            className="inline-flex items-center gap-2 rounded-full bg-skill-blue px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-skill-blue/90"
+            className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-5 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
           >
             All Quizzes
           </button>
@@ -157,7 +157,7 @@ export default function QuizPage() {
               <div key={q.id} className="rounded-xl border border-border bg-card p-4">
                 <div className="flex items-start gap-3">
                   {wasCorrect ? (
-                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-success-green" />
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-success-green-text" />
                   ) : (
                     <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
                   )}
@@ -198,7 +198,7 @@ export default function QuizPage() {
 
       <div className="mb-4 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-muted">
         <div
-          className="h-full rounded-full bg-skill-blue transition-all duration-300"
+          className="h-full rounded-full bg-skill-blue-solid transition-all duration-300"
           style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
         />
       </div>
@@ -213,7 +213,7 @@ export default function QuizPage() {
             className={cn(
               "shrink-0 rounded-lg border border-border p-1.5 transition-colors",
               speaking
-                ? "bg-skill-blue/10 text-skill-blue border-skill-blue/30"
+                ? "bg-skill-blue/10 text-skill-blue-text border-skill-blue/30"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
             aria-label={speaking ? "Stop reading" : "Read question aloud"}
@@ -239,9 +239,9 @@ export default function QuizPage() {
               disabled={answerState !== "idle"}
               className={cn(
                 "flex items-center rounded-xl border-[1.5px] px-4 py-3 text-left text-sm transition-all",
-                answerState === "idle" && isSelected && "border-skill-blue bg-skill-blue/5",
+                answerState === "idle" && isSelected && "border-skill-blue-solid bg-skill-blue/5",
                 answerState === "idle" && !isSelected && "border-border bg-card hover:border-muted-foreground/30",
-                showCorrect && "border-success-green bg-success-green/5",
+                showCorrect && "border-success-green-solid bg-success-green/5",
                 showWrong && "border-destructive bg-destructive/5",
                 answerState !== "idle" && !showCorrect && !showWrong && "border-border bg-card opacity-50"
               )}
@@ -250,7 +250,7 @@ export default function QuizPage() {
                 {option.id.split("-").pop()?.toUpperCase()}
               </span>
               <span className="flex-1 text-foreground">{option.text}</span>
-              {showCorrect && <CheckCircle className="ml-2 h-4 w-4 text-success-green" />}
+              {showCorrect && <CheckCircle className="ml-2 h-4 w-4 text-success-green-text" />}
               {showWrong && <XCircle className="ml-2 h-4 w-4 text-destructive" />}
             </button>
           );
@@ -271,14 +271,14 @@ export default function QuizPage() {
           <button
             onClick={handleAnswer}
             disabled={!selectedOptionId}
-            className="rounded-full bg-skill-blue px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Check Answer
           </button>
         ) : (
           <button
             onClick={handleNext}
-            className="inline-flex items-center gap-2 rounded-full bg-skill-blue px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-skill-blue/90"
+            className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
           >
             {currentQuestionIndex < totalQuestions - 1 ? "Next Question" : "See Results"}
             <ArrowRight className="h-4 w-4" />
@@ -286,7 +286,7 @@ export default function QuizPage() {
         )}
       </div>
 
-      <p className="mt-4 text-[10px] text-muted-foreground/50">
+      <p className="mt-4 text-[10px] text-muted-foreground">
         Keyboard: 1-4 select · Enter check/next
       </p>
     </div>

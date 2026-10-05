@@ -47,10 +47,10 @@ export default function ProgressPage() {
   });
 
   const stats = [
-    { label: "Lessons Completed", value: totalLessonsCompleted.toString(), icon: BookOpen, color: "text-skill-blue" },
-    { label: "Completion", value: `${completionPct}%`, icon: Trophy, color: "text-success-green" },
-    { label: "Focus Time", value: `${focusMinutes}m`, icon: Clock, color: "text-cta-orange" },
-    { label: "Day Streak", value: streak.toString(), icon: Flame, color: "text-premium-amber" },
+    { label: "Lessons Completed", value: totalLessonsCompleted.toString(), icon: BookOpen, color: "text-skill-blue-text" },
+    { label: "Completion", value: `${completionPct}%`, icon: Trophy, color: "text-success-green-text" },
+    { label: "Focus Time", value: `${focusMinutes}m`, icon: Clock, color: "text-cta-orange-text" },
+    { label: "Day Streak", value: streak.toString(), icon: Flame, color: "text-premium-amber-text" },
   ];
 
   return (
@@ -118,17 +118,17 @@ export default function ProgressPage() {
                   <span
                     className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
                       session.comprehensionScore >= 90
-                        ? "bg-success-green/10 text-success-green"
+                        ? "bg-success-green/10 text-success-green-text"
                         : session.comprehensionScore >= 70
-                          ? "bg-skill-blue/10 text-skill-blue"
-                          : "bg-cta-orange/10 text-cta-orange"
+                          ? "bg-skill-blue/10 text-skill-blue-text"
+                          : "bg-cta-orange/10 text-cta-orange-text"
                     }`}
                   >
                     {Math.round(session.comprehensionScore * 100)}%
                   </span>
                 )}
                 {session.completed && (
-                  <span className="rounded-full bg-success-green/10 px-2.5 py-0.5 text-[10px] font-semibold text-success-green">
+                  <span className="rounded-full bg-success-green/10 px-2.5 py-0.5 text-[10px] font-semibold text-success-green-text">
                     Done
                   </span>
                 )}

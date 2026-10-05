@@ -208,21 +208,7 @@ const add = (fg, bg, need, note = "") => PAIRS.push({ fg, bg, need, note });
 for (const s of SURFACES) add("foreground", s, TEXT);
 for (const s of SURFACES) add("muted-foreground", s, TEXT);
 
-// Opacity text (fails until the 1B class swap to full-opacity tokens)
-for (const [alpha, surfaces] of [
-  [70, ["background", "card"]],
-  [50, ["background"]],
-  [30, ["background", "card"]],
-]) {
-  for (const s of surfaces) {
-    add(
-      { token: "muted-foreground", alpha },
-      s,
-      TEXT,
-      "remove this pair in 1B-2 after the swap to a full-opacity token"
-    );
-  }
-}
+// Opacity text was swapped to full-opacity tokens in 1B-1/1B-2.
 
 // Brand text: dedicated -text token on every surface and on its own tint
 for (const [b, cfg] of Object.entries(BRANDS)) {
@@ -230,11 +216,8 @@ for (const [b, cfg] of Object.entries(BRANDS)) {
   for (const a of cfg.tints) {
     for (const s of SURFACES) add(`${b}-text`, { tint: b, alpha: a, over: s }, TEXT);
   }
-  // Base token still renders as text until 1B-2 swaps text-* to -text.
-  // Both pairs are removed from this list in 1B-2 once the swap is done.
-  add(b, "background", TEXT, "remove this pair in 1B-2 after text-* swaps to -text");
-  add(b, { tint: b, alpha: Math.max(...cfg.tints), over: "card" }, TEXT,
-    "remove this pair in 1B-2 after text-* swaps to -text");
+  // Base-as-text usages were swapped to -text in 1B-1/1B-2; the only base text
+  // left renders on white and is covered by the skill-blue-on-white pair below.
 }
 
 // White (or -on-solid) on brand solids, including hover alphas
@@ -263,38 +246,22 @@ for (const a of [15, 10, 5]) {
 add("destructive", "background", TEXT);
 add("destructive", "card", TEXT);
 
-// Progress fills (UI 3:1 against their track)
+// Solid brand fills: the rendered UI indicators (progress fills, toggles,
+// buttons, pills, logos, selected borders). Base-token fills were swapped to
+// -solid in 1B-1/1B-2.
 for (const b of Object.keys(BRANDS)) {
-  add(`${b}-solid`, "muted", UI);
-  // Base token renders as the fill until 1B-2 swaps progress fills to -solid.
-  add(b, "muted", UI, "remove this pair in 1B-2 after progress fills swap to -solid");
+  for (const s of SURFACES) add(`${b}-solid`, s, UI);
 }
 
-// Sidebar
+// Sidebar (opacity classes were swapped to full tokens in 1B-2)
 add("sidebar-foreground", "sidebar-bg", TEXT);
 add("sidebar-foreground", "sidebar-accent", TEXT);
 add("sidebar-accent-foreground", "sidebar-accent", TEXT);
-for (const alpha of [70, 30]) {
-  add({ token: "sidebar-foreground", alpha }, "sidebar-bg", UI,
-    "remove this pair in 1B-2 after the opacity class swap");
-}
-for (const alpha of [50, 40]) {
-  add({ token: "sidebar-foreground", alpha }, "sidebar-bg", TEXT,
-    "remove this pair in 1B-2 after the opacity class swap");
-}
 
 // Focus indicators (3:1 against everything they can land on)
 for (const ring of ["focus-ring", "ring"]) {
   for (const s of ["background", "card", "muted", "sidebar-bg"]) add(ring, s, UI);
 }
-// 1B-1 swapped every focus:ring-skill-blue site (all in onboarding) to
-// ring-focus-ring. These two pairs now cover the remaining bare skill-blue UI
-// fills and borders: swap them to bg/border-skill-blue-solid in 1B-2 (home,
-// quiz, flashcards, subject-client, right-panel, video-player) and in four
-// files outside the current 1B lists (settings/accessibility,
-// settings/personalization, accessibility-toolbar, focus).
-add("skill-blue", "background", UI, "remove this pair in 1B-2 after remaining bare skill-blue UI fills and borders swap to -solid");
-add("skill-blue", "card", UI, "remove this pair in 1B-2 after remaining bare skill-blue UI fills and borders swap to -solid");
 
 // ---------------------------------------------------------------------------
 // Runner

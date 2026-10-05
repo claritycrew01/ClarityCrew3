@@ -52,7 +52,7 @@ export function Header() {
         </button>
 
         <Link href="/home/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-skill-blue text-white font-display font-bold text-sm">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-sm">
             C
           </div>
           <span className="hidden font-display text-lg font-bold text-foreground sm:inline">
@@ -64,7 +64,7 @@ export function Header() {
         <nav className="hidden items-center gap-1 text-sm md:flex" aria-label="Breadcrumb">
           {breadcrumbs.map((crumb) => (
             <span key={crumb.href} className="flex items-center gap-1">
-              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/50" />
+              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
               {crumb.isLast ? (
                 <span className="font-medium text-foreground">{crumb.label}</span>
               ) : (
@@ -107,7 +107,7 @@ export function Header() {
         ) : (
           <Link
             href="/login/"
-            className="rounded-full bg-cta-orange px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-cta-orange-hover"
+            className="rounded-full bg-cta-orange px-5 py-2 text-sm font-bold text-cta-orange-on-solid transition-colors hover:bg-cta-orange-hover"
           >
             Get Started
           </Link>

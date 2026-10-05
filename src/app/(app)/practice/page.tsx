@@ -8,21 +8,21 @@ const ACTIVITIES = [
     label: "Take a Quiz",
     description: "Test your knowledge across all subjects with instant feedback.",
     icon: Target,
-    color: "bg-cta-orange/10 text-cta-orange",
+    color: "bg-cta-orange/10 text-cta-orange-text",
   },
   {
     href: "/flashcards/",
     label: "Study Flashcards",
     description: "Review key concepts with spaced repetition across all topics.",
     icon: Brain,
-    color: "bg-success-green/10 text-success-green",
+    color: "bg-success-green/10 text-success-green-text",
   },
   {
     href: "/focus/",
     label: "Focus Session",
     description: "Start a timed Pomodoro session with distraction-free studying.",
     icon: Timer,
-    color: "bg-skill-blue/10 text-skill-blue",
+    color: "bg-skill-blue/10 text-skill-blue-text",
   },
 ];
 
@@ -65,7 +65,7 @@ export default function PracticePage() {
               className="flex items-center gap-4 rounded-xl border border-border bg-card px-4 py-3 transition-all hover:border-skill-blue/30 hover:shadow-sm"
             >
               <div className={`rounded-lg bg-${subject.color}/10 p-2.5`}>
-                <BookOpen className={`h-5 w-5 text-${subject.color}`} />
+                <BookOpen className={`h-5 w-5 text-${subject.color}-text`} />
               </div>
               <div className="flex-1">
                 <p className="text-sm font-semibold text-foreground">{subject.name}</p>

@@ -28,7 +28,7 @@ function Toggle({
         onClick={onToggle}
         className={cn(
           "toggle-switch relative h-6 w-11 rounded-full transition-colors",
-          checked ? "bg-skill-blue" : "bg-muted"
+          checked ? "bg-skill-blue-solid" : "bg-muted"
         )}
         role="switch"
         aria-checked={checked}
@@ -68,7 +68,7 @@ function Slider({
     <div className="rounded-xl border border-border bg-card px-4 py-3">
       <div className="mb-1 flex items-center justify-between">
         <p className="text-sm font-semibold text-foreground">{label}</p>
-        <span className="text-xs font-semibold text-skill-blue tabular-nums">{displayValue}</span>
+        <span className="text-xs font-semibold text-skill-blue-text tabular-nums">{displayValue}</span>
       </div>
       <p className="mb-2 text-xs text-muted-foreground">{description}</p>
       <input
@@ -78,7 +78,7 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-muted accent-skill-blue"
+        className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-muted accent-skill-blue-solid"
         aria-label={label}
       />
     </div>
@@ -190,7 +190,7 @@ export default function PersonalizationPage() {
                   className={cn(
                     "flex items-start gap-3 rounded-xl border-[1.5px] p-3 text-left transition-all",
                     presetSelections.includes(opt.value)
-                      ? "border-skill-blue bg-skill-blue/5"
+                      ? "border-skill-blue-solid bg-skill-blue/5"
                       : "border-border bg-card hover:border-muted-foreground/30"
                   )}
                   aria-pressed={presetSelections.includes(opt.value)}
@@ -199,7 +199,7 @@ export default function PersonalizationPage() {
                     className={cn(
                       "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors",
                       presetSelections.includes(opt.value)
-                        ? "border-skill-blue bg-skill-blue text-white"
+                        ? "border-skill-blue-solid bg-skill-blue-solid text-skill-blue-on-solid"
                         : "border-muted-foreground/30 bg-background"
                     )}
                   >
@@ -219,7 +219,7 @@ export default function PersonalizationPage() {
                 <ul className="space-y-1">
                   {previewChanges.map((c) => (
                     <li key={c} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Check className="h-3 w-3 text-success-green" />
+                      <Check className="h-3 w-3 text-success-green-text" />
                       {c}
                     </li>
                   ))}
@@ -236,7 +236,7 @@ export default function PersonalizationPage() {
               </button>
               <button
                 onClick={applyPresets}
-                className="rounded-full bg-skill-blue px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-skill-blue/90"
+                className="rounded-full bg-skill-blue-solid px-5 py-2 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
               >
                 Apply presets
               </button>
