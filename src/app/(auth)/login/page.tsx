@@ -34,7 +34,7 @@ export default function LoginPage() {
       {/* Left branding pane */}
       <div className="hidden lg:flex flex-col items-center justify-center bg-muted/30 p-12">
         <div className="max-w-md text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue text-white font-display font-bold text-2xl">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-2xl">
             C
           </div>
           <h2 className="font-display text-3xl font-bold text-foreground">
@@ -50,7 +50,7 @@ export default function LoginPage() {
       <div className="flex flex-col justify-center p-6 sm:p-10">
         <div className="mx-auto w-full max-w-[400px]">
           <Link href="/" className="mb-8 inline-flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-skill-blue text-white font-display font-bold text-sm">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-skill-blue-solid text-skill-blue-on-solid font-display font-bold text-sm">
               C
             </div>
             <span className="font-display text-lg font-bold text-foreground">ClarityCrew</span>
@@ -101,7 +101,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-cta-orange py-2.5 text-sm font-bold text-white transition-colors hover:bg-cta-orange-hover disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full rounded-lg bg-cta-orange py-2.5 text-sm font-bold text-cta-orange-on-solid transition-colors hover:bg-cta-orange-hover disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="inline-flex items-center gap-2">
@@ -116,7 +116,7 @@ export default function LoginPage() {
 
           <p className="mt-4 text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/signup/" className="font-semibold text-skill-blue hover:underline">
+            <Link href="/signup/" className="font-semibold text-skill-blue-text hover:underline">
               Sign up
             </Link>
           </p>

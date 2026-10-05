@@ -31,7 +31,7 @@ export default function OnboardingPage() {
   if (!hydrated || hasCompletedOnboarding) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-skill-blue/30 border-t-skill-blue" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-skill-blue/30 border-t-skill-blue-solid" />
       </div>
     );
   }
@@ -73,7 +73,7 @@ export default function OnboardingPage() {
               className={cn(
                 "h-1.5 rounded-full transition-all",
                 i <= (["welcome", "select", "preview"].indexOf(step))
-                  ? "w-8 bg-skill-blue"
+                  ? "w-8 bg-skill-blue-solid"
                   : "w-4 bg-muted"
               )}
             />
@@ -84,7 +84,7 @@ export default function OnboardingPage() {
         {step === "welcome" && (
           <div className="animate-fade-in text-center">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-skill-blue/10" aria-hidden="true">
-              <Sparkles className="h-8 w-8 text-skill-blue" />
+              <Sparkles className="h-8 w-8 text-skill-blue-text" />
             </div>
             <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">
               Welcome to ClarityCrew
@@ -93,13 +93,13 @@ export default function OnboardingPage() {
               Would you like us to personalize the app for you? We can adjust fonts, spacing, navigation,
               and more based on how you learn best.
             </p>
-            <p className="mt-2 text-sm text-muted-foreground/70">
+            <p className="mt-2 text-sm text-muted-foreground">
               This is completely optional. You can always change everything later in Settings.
             </p>
             <div className="mt-8 flex flex-col gap-3">
               <button
                 onClick={() => setStep("select")}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-skill-blue px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-skill-blue/90 focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-skill-blue-solid px-6 py-3 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2"
                 aria-label="Start personalization"
               >
                 Let&apos;s personalize
@@ -107,7 +107,7 @@ export default function OnboardingPage() {
               </button>
               <button
                 onClick={handleSkip}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2 rounded-lg px-3 py-1"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 rounded-lg px-3 py-1"
                 aria-label="Skip personalization and use default settings"
               >
                 Skip for now
@@ -134,9 +134,9 @@ export default function OnboardingPage() {
                   type="button"
                   onClick={() => toggle(opt.value)}
                   className={cn(
-                    "flex items-start gap-3 rounded-xl border-[1.5px] p-4 text-left transition-all focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2",
+                    "flex items-start gap-3 rounded-xl border-[1.5px] p-4 text-left transition-all focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2",
                     selected.includes(opt.value)
-                      ? "border-skill-blue bg-skill-blue/5"
+                      ? "border-skill-blue-solid bg-skill-blue/5"
                       : "border-border bg-card hover:border-muted-foreground/30"
                   )}
                   aria-pressed={selected.includes(opt.value)}
@@ -146,7 +146,7 @@ export default function OnboardingPage() {
                     className={cn(
                       "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors",
                       selected.includes(opt.value)
-                        ? "border-skill-blue bg-skill-blue text-white"
+                        ? "border-skill-blue-solid bg-skill-blue-solid text-skill-blue-on-solid"
                         : "border-muted-foreground/30 bg-background"
                     )}
                     aria-hidden="true"
@@ -164,7 +164,7 @@ export default function OnboardingPage() {
             <div className="mt-6 flex items-center gap-3">
               <button
                 onClick={() => setStep("welcome")}
-                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2"
                 aria-label="Go back to welcome step"
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -172,7 +172,7 @@ export default function OnboardingPage() {
               </button>
               <button
                 onClick={() => setStep("preview")}
-                className="inline-flex items-center gap-2 rounded-full bg-skill-blue px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-skill-blue/90 focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2"
                 aria-label={selected.length > 0 ? "Preview changes before applying" : "Continue with default settings"}
               >
                 {selected.length > 0 ? "Preview changes" : "Use defaults"}
@@ -180,7 +180,7 @@ export default function OnboardingPage() {
               </button>
               <button
                 onClick={handleSkip}
-                className="ml-auto text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2 rounded-lg px-3 py-1"
+                className="ml-auto text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 rounded-lg px-3 py-1"
                 aria-label="Skip and use default settings"
               >
                 Skip
@@ -206,7 +206,7 @@ export default function OnboardingPage() {
                 <ul className="space-y-2">
                   {previewChanges.map((change) => (
                     <li key={change} className="flex items-center gap-2 text-sm text-foreground" role="listitem">
-                      <Check className="h-4 w-4 text-success-green" aria-hidden="true" />
+                      <Check className="h-4 w-4 text-success-green-text" aria-hidden="true" />
                       {change}
                     </li>
                   ))}
@@ -214,14 +214,14 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            <p className="mt-4 text-sm text-muted-foreground/70">
+            <p className="mt-4 text-sm text-muted-foreground">
               You can change any of these individually in Settings at any time.
             </p>
 
             <div className="mt-8 flex items-center gap-3">
               <button
                 onClick={() => setStep("select")}
-                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2"
                 aria-label="Go back to selection step"
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -229,7 +229,7 @@ export default function OnboardingPage() {
               </button>
               <button
                 onClick={handleConfirm}
-                className="inline-flex items-center gap-2 rounded-full bg-skill-blue px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-skill-blue/90 focus:outline-none focus:ring-2 focus:ring-skill-blue focus:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full bg-skill-blue-solid px-6 py-2.5 text-sm font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2"
                 aria-label={selected.length > 0 ? "Apply selected settings and continue to dashboard" : "Continue to dashboard with default settings"}
               >
                 <Settings className="h-4 w-4" />

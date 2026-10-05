@@ -268,7 +268,26 @@ Changes:
    256 becomes a solid `bg-cta-orange` background with `text-white` (the white/80 line becomes
    full `text-white`), since the script shows white text failing on both gradient stops.
    As swaps land, delete the corresponding "remove this pair in 1B-2" entries from
-   `scripts/check-contrast.mjs` so the gate ends Phase 1 at 721/721.
+   `scripts/check-contrast.mjs` so the gate ends Phase 1 fully green (all pairs either passing or
+   removed as phantom after their last usage is swapped; the white/80 pair was removed in 1B-1,
+   so the final target is the remaining rows only).
+- Phase 1B-1: DONE. Five files, class swaps only. Landing: six feature chips, hero badge, and the
+  two dynamic `text-${subject.color}` templates to `-text`; hero gradient span to `text-foreground`;
+  CTA block gradient to solid `bg-cta-orange` with `text-cta-orange-on-solid` (white/80 line
+  full-opacity) and the outline button hover `bg-white/10` (4.42 light) to
+  `hover:bg-cta-orange-hover` (9.39); all `text-white` on brand solids to `-on-solid`; three
+  illustrative `bg-skill-blue` dots/toggles and both logo tiles to `bg-skill-blue-solid`.
+  Onboarding: progress fill, spinner top border, selected border/checkbox fill, and three primary
+  buttons to `bg`/`border-skill-blue-solid`; two `text-muted-foreground/70` to full opacity;
+  `text-success-green` to `-text`; all eight `focus:ring-skill-blue` to `focus:ring-focus-ring`
+  (every ring site in the repo was in this file). Login/signup/not-found: logo tiles, submit
+  buttons, and the two auth links swapped the same way. Script: removed the `white/80` pair (usage
+  eliminated, 7 rows) and re-noted the two `skill-blue on background/card` UI pairs to track the
+  remaining bare skill-blue fills/borders (1B-2 files plus four files outside the current lists:
+  settings/accessibility, settings/personalization, accessibility-toolbar, focus - flagged for
+  scope approval at 1B-2). Result: 629/714 pass, 85 fails, all deferred, zero non-deferred.
+  Build exit 0, tsc exit 0, lint unchanged at 5, generated CSS confirmed to contain every new
+  class literal.
 4. Do not rename existing tokens.
 
 Risks: tokens and class strings only, no store reads, no window access, no hydration impact.

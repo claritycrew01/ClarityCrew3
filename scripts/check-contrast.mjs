@@ -252,9 +252,6 @@ for (const [b, cfg] of Object.entries(BRANDS)) {
   }
 }
 
-// White at 80% on the landing CTA solid (Q15 solid block)
-add({ white: 80 }, "cta-orange-solid", TEXT,
-  "remove this pair in 1B-2 after text-white/80 swaps to text-white");
 // White CTA button keeps the base token as its text in every mode.
 add("skill-blue", "white", TEXT);
 add("skill-blue", { white: 90, over: "cta-orange-solid" }, TEXT);
@@ -290,9 +287,14 @@ for (const alpha of [50, 40]) {
 for (const ring of ["focus-ring", "ring"]) {
   for (const s of ["background", "card", "muted", "sidebar-bg"]) add(ring, s, UI);
 }
-// focus:ring-skill-blue sites swap to ring-focus-ring in 1B-2 where they fail
-add("skill-blue", "background", UI, "remove this pair in 1B-2 after ring-skill-blue swaps to ring-focus-ring");
-add("skill-blue", "card", UI, "remove this pair in 1B-2 after ring-skill-blue swaps to ring-focus-ring");
+// 1B-1 swapped every focus:ring-skill-blue site (all in onboarding) to
+// ring-focus-ring. These two pairs now cover the remaining bare skill-blue UI
+// fills and borders: swap them to bg/border-skill-blue-solid in 1B-2 (home,
+// quiz, flashcards, subject-client, right-panel, video-player) and in four
+// files outside the current 1B lists (settings/accessibility,
+// settings/personalization, accessibility-toolbar, focus).
+add("skill-blue", "background", UI, "remove this pair in 1B-2 after remaining bare skill-blue UI fills and borders swap to -solid");
+add("skill-blue", "card", UI, "remove this pair in 1B-2 after remaining bare skill-blue UI fills and borders swap to -solid");
 
 // ---------------------------------------------------------------------------
 // Runner
