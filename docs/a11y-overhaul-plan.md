@@ -772,3 +772,58 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   content (Phase 8B, approval required first) and the pre-existing `Video` comment dash in
   `lesson-client.tsx` (Phase 8).
 
+- Phase 6: DONE. Seven files, exactly the planned list. `tts.ts` gained `pause()`/`resume()`
+  wrappers guarded by `isTTSSupported()`. `use-tts.ts` gained a `paused` state (set from
+  `window.speechSynthesis.paused` inside the existing 200ms poll, an async callback so
+  `react-hooks/set-state-in-effect` stays at its known count), `pause`/`resume` callbacks guarded
+  on `isSpeaking()`/`synth.paused` with optimistic set, and `halt` now also clears `paused`.
+  New `use-voice-input.ts` declares minimal local `SpeechRecognition` types (the TS DOM lib has
+  none) and detects `window.SpeechRecognition || window.webkitSpeechRecognition` inside a
+  `setTimeout(0)` callback in an effect, never during render; `startListening` constructs the
+  recognition in the handler (`lang="en-US"`, `interimResults=false`, `continuous=false`),
+  `onresult` appends the transcript through a ref-synced callback, `onend`/`onerror` clear state
+  and the ref, `start()` is wrapped in try/catch, and cleanup aborts on unmount. New
+  `use-read-aloud.ts` composes `use-tts` and `use-preferences-applied`: `enabled = hydrated &&
+  readAloudEnabled`, an effect attempts speech when enabled and supported, a 500ms `setTimeout`
+  marks `blockedText` when the synth is neither `speaking` nor `pending` (async callback,
+  lint-safe), cleanup always calls `halt` (covers route change, unmount, and the disabled path),
+  `blocked` is keyed to the current text so text changes never need a synchronous setState, and
+  speech reads through a ref so `ttsRate` changes do not restart playback. It returns `visible`
+  (`hydrated && supported`), `speaking/paused/blocked`, `rate`/`setRate` bound to the ui-store,
+  and `play/pause/resume/stop`. Quiz timer: gated on `hydrated && quizTimerEnabled`, so it is
+  absent from prerendered HTML and appears post-hydration at `00:00` with no jump; `useState(0)`
+  elapsed incremented by an interval only while `showTimer && inQuizView && timerRunning`,
+  rendered with `formatTimerDisplay`, Pause/Resume button with dynamic label and
+  `aria-pressed={!timerRunning}`, elapsed and running reset in `selectQuiz` and `resetQuiz`; the
+  timer is display-only and never submits, scores, or fails anything. Quiz keyboard handler
+  improvement (same file): Enter/Space/number shortcuts now skip when the event target is a
+  `BUTTON`, so a focused Pause/Check/Next button activates natively instead of being hijacked
+  (numbers still work globally, `INPUT`/`TEXTAREA`/`SELECT` guard unchanged).
+  `lesson-client.tsx`: `useReadAloud(lesson?.body ?? "")` is called before the early return; when
+  `visible`, an always-mounted `role="status"` block announces the blocked fallback, a
+  conditional `Play lesson audio` button appears (no focus calls), always-present Pause (dynamic
+  label, `aria-pressed={paused}`) and Stop buttons, and a labelled rate range (0.5 to 2 step 0.1)
+  with a visible `1.0x` readout. Interpretation: the row renders whenever
+  `hydrated && speechSupported`, not only when `readAloudEnabled`; the preference controls
+  auto-play, while the controls stay available either way (logged here per the workflow rule).
+  `right-panel.tsx`: `usePreferencesApplied` plus `useVoiceInput(handleTranscript)` (appends via
+  functional setState); a mic button sits between input and send only when
+  `hydrated && voiceInputPreferred && supported` (`aria-pressed` on `listening`, dynamic
+  Start/Stop dictation label); the factual note `Voice input is not available in this browser.`
+  renders only when the preference is on but the API is missing (the plan's "otherwise" read
+  against that preference, logged); an extra guard effect stops dictation if the panel closes
+  while listening (within the right-panel scope). Verification: tsc exit 0, contrast 609/609
+  exit 0, lint at the 2 known Phase 7 errors with 0 warnings (the setTimeout-based detection kept
+  `set-state-in-effect` from growing), build exit 0; dev-server probes show no read-aloud row in
+  SSR lesson HTML, no timer in prerendered quiz HTML, and the quiz status region present; a full
+  export scan found no `lesson-read-rate`, `Play lesson audio`, `Voice input is not available`,
+  or `Stop dictation` in any static HTML. Interactive browser checks (timer ticking, blocked
+  autoplay fallback, speech cancel on navigation, live dictation) cannot be automated here (no
+  browser tooling installed, no new dependencies allowed) and are listed for the Phase 9
+  walkthrough/manual pass. Dash scan of all seven changed files: zero newly written dashes (the
+  4 found are pre-existing: the `Video` comment and 3 tutor-copy dashes, already Phase 8). A
+  full src dash inventory was taken for that sweep: 156 em/en dashes in 8 files, all pre-existing
+  from the original commit (`subjects.ts` 105, `flashcards.ts` 25, `quizzes.ts` 16, `videos.ts` 2
+  go to 8B; `src/app/page.tsx` 1 landing copy dash, `app-shell.tsx` 3 comment dashes,
+  `lesson-client.tsx` 1 comment dash, `right-panel.tsx` 3 tutor-copy dashes go to 8).
+

@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils/cn";
 import { QUIZZES, getQuizById, getQuizByLessonId } from "@/data";
 import type { QuizData, QuizQuestionData } from "@/data";
 import { useTTS } from "@/hooks/use-tts";
+import { usePreferencesApplied } from "@/hooks/use-preferences-applied";
+import { formatTimerDisplay } from "@/lib/utils/time";
 
 type AnswerState = "idle" | "correct" | "incorrect";
 
@@ -19,10 +21,21 @@ export default function QuizPage() {
   const [showResults, setShowResults] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const { toggle: toggleTTS, speaking, supported: ttsSupported } = useTTS();
+  const { hydrated, prefs } = usePreferencesApplied();
+  const [timerElapsed, setTimerElapsed] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(true);
 
   const quiz: QuizData | null = selectedQuizId ? getQuizById(selectedQuizId) ?? null : null;
   const question: QuizQuestionData | undefined = quiz?.questions[currentQuestionIndex];
   const totalQuestions = quiz?.questions.length ?? 0;
+  const showTimer = hydrated && prefs.quizTimerEnabled;
+  const inQuizView = quiz !== null && !showResults && question !== undefined;
+
+  useEffect(() => {
+    if (!showTimer || !inQuizView || !timerRunning) return;
+    const id = window.setInterval(() => setTimerElapsed((e) => e + 1), 1000);
+    return () => window.clearInterval(id);
+  }, [showTimer, inQuizView, timerRunning]);
 
   function selectQuiz(quizId: string) {
     const q = getQuizById(quizId);
@@ -34,6 +47,8 @@ export default function QuizPage() {
     setScore(0);
     setAnswers(new Array(q.questions.length).fill(null));
     setShowResults(false);
+    setTimerElapsed(0);
+    setTimerRunning(true);
   }
 
   const handleAnswer = useCallback(() => {
@@ -74,6 +89,7 @@ export default function QuizPage() {
       const target = e.target as HTMLElement | null;
       const tagName = target?.tagName;
       if (tagName === "INPUT" || tagName === "TEXTAREA" || tagName === "SELECT") return;
+      const isButton = target?.tagName === "BUTTON";
       if (answerState === "idle" && ["1", "2", "3", "4"].includes(e.key)) {
         const option = question?.options[Number(e.key) - 1];
         if (option) {
@@ -82,12 +98,12 @@ export default function QuizPage() {
         }
         return;
       }
-      if (answerState === "idle" && selectedOptionId) {
+      if (answerState === "idle" && selectedOptionId && !isButton) {
         if (e.key === "Enter") {
           e.preventDefault();
           handleAnswer();
         }
-      } else if (answerState !== "idle") {
+      } else if (answerState !== "idle" && !isButton) {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           handleNext();
@@ -106,6 +122,8 @@ export default function QuizPage() {
     setScore(0);
     setAnswers(new Array(quiz.questions.length).fill(null));
     setShowResults(false);
+    setTimerElapsed(0);
+    setTimerRunning(true);
   }
 
   const liveRegion = (
@@ -229,6 +247,22 @@ export default function QuizPage() {
       <p className="mb-2 text-sm text-muted-foreground">
         Question {currentQuestionIndex + 1} of {totalQuestions}
       </p>
+
+      {showTimer && (
+        <div className="mb-3 flex items-center gap-3">
+          <p className="text-sm tabular-nums text-muted-foreground">
+            {formatTimerDisplay(timerElapsed)}
+          </p>
+          <button
+            type="button"
+            onClick={() => setTimerRunning((r) => !r)}
+            aria-pressed={!timerRunning}
+            className="rounded-lg border border-border px-2 py-0.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
+          >
+            {timerRunning ? "Pause" : "Resume"}
+          </button>
+        </div>
+      )}
 
       <div
         className="mb-4 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-muted"

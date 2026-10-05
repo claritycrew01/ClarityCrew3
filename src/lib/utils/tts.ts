@@ -30,6 +30,16 @@ export function stop(): void {
   currentUtterance = null;
 }
 
+export function pause(): void {
+  if (!isTTSSupported()) return;
+  window.speechSynthesis.pause();
+}
+
+export function resume(): void {
+  if (!isTTSSupported()) return;
+  window.speechSynthesis.resume();
+}
+
 export function isSpeaking(): boolean {
   if (!isTTSSupported()) return false;
   return window.speechSynthesis.speaking;

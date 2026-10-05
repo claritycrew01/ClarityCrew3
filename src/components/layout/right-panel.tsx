@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect, type KeyboardEvent } from "react";
-import { PanelRightOpen, PanelRightClose, Sparkles, Send, Trash2 } from "lucide-react";
+import { useState, useRef, useEffect, useCallback, type KeyboardEvent } from "react";
+import { PanelRightOpen, PanelRightClose, Sparkles, Send, Trash2, Mic } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { useUIStore } from "@/lib/store/ui-store";
 import { useTutorStore } from "@/lib/store/tutor-store";
+import { usePreferencesApplied } from "@/hooks/use-preferences-applied";
+import { useVoiceInput } from "@/hooks/use-voice-input";
 import { getLessonById, getSubjectById } from "@/data";
 
 function generateTutorResponse(userMessage: string, pathname: string): string {
@@ -134,6 +136,19 @@ export function RightPanel({ open }: { open: boolean }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const hadOpenRef = useRef(false);
+  const { hydrated, prefs } = usePreferencesApplied();
+
+  const handleTranscript = useCallback((text: string) => {
+    setInput((prev) => (prev ? `${prev} ${text}` : text));
+  }, []);
+  const {
+    supported: voiceSupported,
+    listening: voiceListening,
+    startListening,
+    stopListening,
+  } = useVoiceInput(handleTranscript);
+  const showVoiceMic = hydrated && prefs.voiceInputPreferred && voiceSupported;
+  const showVoiceNote = hydrated && prefs.voiceInputPreferred && !voiceSupported;
 
   useEffect(() => {
     const recordOpener = (event: Event) => {
@@ -172,6 +187,10 @@ export function RightPanel({ open }: { open: boolean }) {
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, toggleRightPanel]);
+
+  useEffect(() => {
+    if (!open && voiceListening) stopListening();
+  }, [open, voiceListening, stopListening]);
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -341,6 +360,22 @@ export function RightPanel({ open }: { open: boolean }) {
                 aria-label="Ask the AI tutor a question"
                 className="flex-1 rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
+              {showVoiceMic && (
+                <button
+                  type="button"
+                  onClick={() => (voiceListening ? stopListening() : startListening())}
+                  aria-pressed={voiceListening}
+                  aria-label={voiceListening ? "Stop dictation" : "Start dictation"}
+                  className={cn(
+                    "shrink-0 rounded-lg border border-border p-2 transition-colors",
+                    voiceListening
+                      ? "bg-skill-blue/10 text-skill-blue-text border-skill-blue/30"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                >
+                  <Mic className="h-4 w-4" />
+                </button>
+              )}
               <button
                 onClick={() => handleSend()}
                 disabled={!input.trim()}
@@ -350,6 +385,11 @@ export function RightPanel({ open }: { open: boolean }) {
                 <Send className="h-4 w-4" />
               </button>
             </div>
+            {showVoiceNote && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                Voice input is not available in this browser.
+              </p>
+            )}
           </div>
         </div>
       )}

@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils/cn";
 import { getLessonById, getVideoByLessonId } from "@/data";
 import { reportLiteralCoverage } from "@/data/lesson-content-report";
 import { useTTS } from "@/hooks/use-tts";
+import { useReadAloud } from "@/hooks/use-read-aloud";
 import { usePreferencesApplied } from "@/hooks/use-preferences-applied";
 import { VideoPlayer } from "@/components/video/video-player";
 
@@ -20,6 +21,7 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
   const [showSimplified, setShowSimplified] = useState(false);
   const { toggle, speaking, supported } = useTTS();
   const { hydrated, prefs } = usePreferencesApplied();
+  const aloud = useReadAloud(lesson?.body ?? "");
 
   if (!lesson) {
     return (
@@ -88,6 +90,56 @@ export function LessonClient({ subjectId, lessonId }: { subjectId: string; lesso
           )}
         </div>
       </div>
+
+      {aloud.visible && (
+        <div className="mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-muted/50 px-4 py-3">
+          <div role="status" className="sr-only">
+            {aloud.blocked
+              ? "Lesson audio was blocked by the browser. Use the Play lesson audio button to start playback."
+              : ""}
+          </div>
+          {aloud.blocked && (
+            <button
+              type="button"
+              onClick={aloud.play}
+              className="rounded-lg bg-skill-blue-solid px-3 py-1.5 text-xs font-semibold text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90"
+            >
+              Play lesson audio
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={aloud.paused ? aloud.resume : aloud.pause}
+            aria-pressed={aloud.paused}
+            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
+          >
+            {aloud.paused ? "Resume" : "Pause"}
+          </button>
+          <button
+            type="button"
+            onClick={aloud.stop}
+            className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
+          >
+            Stop
+          </button>
+          <label htmlFor="lesson-read-rate" className="text-xs font-semibold text-foreground">
+            Rate
+          </label>
+          <input
+            id="lesson-read-rate"
+            type="range"
+            min={0.5}
+            max={2}
+            step={0.1}
+            value={aloud.rate}
+            onChange={(e) => aloud.setRate(Number(e.target.value))}
+            className="w-28"
+          />
+          <span className="text-xs tabular-nums text-muted-foreground">
+            {aloud.rate.toFixed(1)}x
+          </span>
+        </div>
+      )}
 
       {/* Video — only if a video is linked to this lesson */}
       {video && (

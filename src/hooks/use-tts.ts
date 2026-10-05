@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, useCallback, useEffect, useSyncExternalStore } from "react";
-import { speak, stop, isSpeaking, isTTSSupported } from "@/lib/utils/tts";
+import {
+  speak,
+  stop,
+  pause as pauseSpeech,
+  resume as resumeSpeech,
+  isSpeaking,
+  isTTSSupported,
+} from "@/lib/utils/tts";
 import { useUIStore } from "@/lib/store/ui-store";
 
 function subscribeNoop(): () => void {
@@ -10,6 +17,7 @@ function subscribeNoop(): () => void {
 
 export function useTTS() {
   const [speaking, setSpeaking] = useState(false);
+  const [paused, setPaused] = useState(false);
   const ttsRate = useUIStore((s) => s.ttsRate);
   const supported = useSyncExternalStore(subscribeNoop, isTTSSupported, () => false);
 
@@ -17,6 +25,7 @@ export function useTTS() {
     if (!supported) return;
     const interval = setInterval(() => {
       setSpeaking(isSpeaking());
+      setPaused(isTTSSupported() && window.speechSynthesis.paused);
     }, 200);
     return () => clearInterval(interval);
   }, [supported]);
@@ -32,6 +41,21 @@ export function useTTS() {
   const halt = useCallback(() => {
     stop();
     setSpeaking(false);
+    setPaused(false);
+  }, []);
+
+  const pause = useCallback(() => {
+    if (isSpeaking()) {
+      pauseSpeech();
+      setPaused(true);
+    }
+  }, []);
+
+  const resume = useCallback(() => {
+    if (isTTSSupported() && window.speechSynthesis.paused) {
+      resumeSpeech();
+      setPaused(false);
+    }
   }, []);
 
   const toggle = useCallback(
@@ -45,5 +69,5 @@ export function useTTS() {
     [speaking, halt, read]
   );
 
-  return { read, halt, toggle, speaking, supported };
+  return { read, halt, toggle, pause, resume, speaking, paused, supported };
 }
