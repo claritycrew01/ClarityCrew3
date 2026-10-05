@@ -226,7 +226,7 @@ npx tsc --noEmit
 npm run lint
 ```
 
-### Phase 1: color tokens and contrast script
+### Phase 1: color tokens and contrast script (DONE)
 
 Checkpoints:
 
@@ -269,42 +269,8 @@ Changes:
    full `text-white`), since the script shows white text failing on both gradient stops.
    As swaps land, delete the corresponding "remove this pair in 1B-2" entries from
    `scripts/check-contrast.mjs` so the gate ends Phase 1 fully green (all pairs either passing or
-   removed as phantom after their last usage is swapped; the white/80 pair was removed in 1B-1,
-   so the final target is the remaining rows only).
-- Phase 1B-1: DONE. Five files, class swaps only. Landing: six feature chips, hero badge, and the
-  two dynamic `text-${subject.color}` templates to `-text`; hero gradient span to `text-foreground`;
-  CTA block gradient to solid `bg-cta-orange` with `text-cta-orange-on-solid` (white/80 line
-  full-opacity) and the outline button hover `bg-white/10` (4.42 light) to
-  `hover:bg-cta-orange-hover` (9.39); all `text-white` on brand solids to `-on-solid`; three
-  illustrative `bg-skill-blue` dots/toggles and both logo tiles to `bg-skill-blue-solid`.
-  Onboarding: progress fill, spinner top border, selected border/checkbox fill, and three primary
-  buttons to `bg`/`border-skill-blue-solid`; two `text-muted-foreground/70` to full opacity;
-  `text-success-green` to `-text`; all eight `focus:ring-skill-blue` to `focus:ring-focus-ring`
-  (every ring site in the repo was in this file). Login/signup/not-found: logo tiles, submit
-  buttons, and the two auth links swapped the same way. Script: removed the `white/80` pair (usage
-  eliminated, 7 rows) and re-noted the two `skill-blue on background/card` UI pairs to track the
-  remaining bare skill-blue fills/borders (1B-2 files plus four files outside the current lists:
-  settings/accessibility, settings/personalization, accessibility-toolbar, focus - flagged for
-  scope approval at 1B-2). Result: 629/714 pass, 85 fails, all deferred, zero non-deferred.
-  Build exit 0, tsc exit 0, lint unchanged at 5, generated CSS confirmed to contain every new
-  class literal.
-- Phase 1B-2: DONE, Phase 1 COMPLETE. Sixteen files: the ten listed (home, quiz, flashcards,
-  progress, lesson-client, subject-client, header, right-panel, course-tree, video-player), the
-  four flagged in the 1B-1 report (settings/accessibility, settings/personalization,
-  accessibility-toolbar, focus), and two user-approved additions (practice, mobile-nav). Swaps:
-  every base `text-<brand>` to `-text` (only landing's white CTA button keeps the base token,
-  covered by the skill-blue-on-white pair); every `text-white` on a brand solid to `-on-solid`
-  except home's three-brand pill template and the video play icon, which the white-on-solid pairs
-  cover; every bare `bg`/`border`/`border-t`/`accent` brand UI fill, border, and thumb to `-solid`
-  (progress fills, toggles, selected borders, checkboxes, buttons, logo tiles, status dots) except
-  the `bg-cta-orange` buttons and CTA section, per the documented 1B-1 position that orange
-  buttons are identified by their text label; all `text-muted-foreground/*` and
-  `text-sidebar-foreground/*` text to full opacity (locked course-tree items included). Script:
-  removed the five deferred pair categories (base-as-text, muted/sidebar opacity, base progress
-  fills, bare skill-blue UI) now that all usages are swapped, and replaced the fill category with
-  `<brand>-solid on background/card/muted` UI pairs covering the rendered solid fills.
-  Result: 609/609 pairs pass, script exit 0. Build exit 0, tsc exit 0, lint unchanged at 5,
-  generated CSS confirmed to contain every swapped class literal.
+    removed as phantom after their last usage is swapped; the white/80 pair was removed in 1B-1,
+    so the final target is the remaining rows only).
 4. Do not rename existing tokens.
 
 Risks: tokens and class strings only, no store reads, no window access, no hydration impact.
@@ -643,4 +609,55 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   "remove this pair in 1B-2 ..." in the script), zero non-deferred failures. Build exit 0, tsc
   exit 0, lint unchanged at the 5 known errors. 1B-2 must also delete those marked pairs from the
   script list as it performs the swaps.
+- Phase 1B-1: DONE. Five files, class swaps only. Landing: six feature chips, hero badge, and the
+  two dynamic `text-${subject.color}` templates to `-text`; hero gradient span to `text-foreground`;
+  CTA block gradient to solid `bg-cta-orange` with `text-cta-orange-on-solid` (white/80 line
+  full-opacity) and the outline button hover `bg-white/10` (4.42 light) to
+  `hover:bg-cta-orange-hover` (9.39); all `text-white` on brand solids to `-on-solid`; three
+  illustrative `bg-skill-blue` dots/toggles and both logo tiles to `bg-skill-blue-solid`.
+  Onboarding: progress fill, spinner top border, selected border/checkbox fill, and three primary
+  buttons to `bg`/`border-skill-blue-solid`; two `text-muted-foreground/70` to full opacity;
+  `text-success-green` to `-text`; all eight `focus:ring-skill-blue` to `focus:ring-focus-ring`
+  (every ring site in the repo was in this file). Login/signup/not-found: logo tiles, submit
+  buttons, and the two auth links swapped the same way. Script: removed the `white/80` pair (usage
+  eliminated, 7 rows) and re-noted the two `skill-blue on background/card` UI pairs to track the
+  remaining bare skill-blue fills/borders (1B-2 files plus four files outside the current lists:
+  settings/accessibility, settings/personalization, accessibility-toolbar, focus - flagged for
+  scope approval at 1B-2). Result: 629/714 pass, 85 fails, all deferred, zero non-deferred.
+  Build exit 0, tsc exit 0, lint unchanged at 5, generated CSS confirmed to contain every new
+  class literal.
+- Phase 1B-2: DONE, Phase 1 COMPLETE. Sixteen files: the ten listed (home, quiz, flashcards,
+  progress, lesson-client, subject-client, header, right-panel, course-tree, video-player), the
+  four flagged in the 1B-1 report (settings/accessibility, settings/personalization,
+  accessibility-toolbar, focus), and two user-approved additions (practice, mobile-nav). Swaps:
+  every base `text-<brand>` to `-text` (only landing's white CTA button keeps the base token,
+  covered by the skill-blue-on-white pair); every `text-white` on a brand solid to `-on-solid`
+  except home's three-brand pill template and the video play icon, which the white-on-solid pairs
+  cover; every bare `bg`/`border`/`border-t`/`accent` brand UI fill, border, and thumb to `-solid`
+  (progress fills, toggles, selected borders, checkboxes, buttons, logo tiles, status dots) except
+  the `bg-cta-orange` buttons and CTA section, per the documented 1B-1 position that orange
+  buttons are identified by their text label; all `text-muted-foreground/*` and
+  `text-sidebar-foreground/*` text to full opacity (locked course-tree items included). Script:
+  removed the five deferred pair categories (base-as-text, muted/sidebar opacity, base progress
+  fills, bare skill-blue UI) now that all usages are swapped, and replaced the fill category with
+  `<brand>-solid on background/card/muted` UI pairs covering the rendered solid fills.
+  Result: 609/609 pairs pass, script exit 0. Build exit 0, tsc exit 0, lint unchanged at 5,
+  generated CSS confirmed to contain every swapped class literal.
+- Phase 2: DONE. `globals.css`: single `:focus-visible` rule (2px `var(--color-focus-ring)`
+  outline, 2px offset) in `@layer base`, `forced-colors: active` variant using `Highlight`,
+  `.skip-link` hidden above the viewport until focused, `scroll-behavior: auto` guard added inside
+  the existing `prefers-reduced-motion` block (block otherwise unchanged). `app-shell.tsx`: skip
+  link is the first child, `main` gets `id="main-content"` and `tabIndex={-1}`, course-tree aside
+  gets `id="course-tree"` and tutor aside `id="tutor-panel"` (Phase 3 `aria-controls` targets).
+  New `src/components/a11y/route-focus.tsx` (client, `usePathname`, skips first mount, focuses the
+  first `h1` inside `main`, falls back to `main` itself) mounted once in `src/app/layout.tsx`
+  inside `Providers`, reads no store. Landing, login, signup, not-found: skip link plus `main`
+  landmark with `id`/`tabIndex`; landing `nav` labelled `Main navigation`. Onboarding duplicate
+  `role="main"` removed. All 16 bare `focus:outline-none` sites and their local `focus:ring-*`
+  companions removed, leaving the global rule as the only focus indicator (zero `focus:ring-*` and
+  zero `focus:outline-none` remain in src). Right-panel chat auto-scroll honors
+  `prefers-reduced-motion` and the `.reduce-motion` class. Verified: tsc exit 0, contrast
+  609/609 exit 0, lint unchanged at 5, build exit 0; generated CSS contains the skip-link,
+  focus-visible, and forced-colors rules; exported HTML contains the skip link and
+  `main-content` on index, home, login, onboarding, and 404.
 

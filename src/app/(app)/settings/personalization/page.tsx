@@ -107,7 +107,7 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-lg border border-input bg-background px-3 py-1.5 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+        className="rounded-lg border border-input bg-background px-3 py-1.5 text-sm text-foreground"
         aria-label={label}
       >
         {options.map((opt) => (

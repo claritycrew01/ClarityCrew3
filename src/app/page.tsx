@@ -304,6 +304,9 @@ function Footer() {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-lg">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-2">
@@ -312,7 +315,7 @@ export default function LandingPage() {
             </div>
             <span className="font-display text-lg font-bold text-foreground">ClarityCrew</span>
           </Link>
-          <nav className="hidden items-center gap-6 text-sm font-medium sm:flex">
+          <nav aria-label="Main navigation" className="hidden items-center gap-6 text-sm font-medium sm:flex">
             <Link href="/home/" className="text-muted-foreground transition-colors hover:text-foreground">
               Platform
             </Link>
@@ -335,11 +338,13 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <HeroSection />
-      <FeaturesSection />
-      <SubjectsSection />
-      <AccessibilitySection />
-      <CTASection />
+      <main id="main-content" tabIndex={-1}>
+        <HeroSection />
+        <FeaturesSection />
+        <SubjectsSection />
+        <AccessibilitySection />
+        <CTASection />
+      </main>
       <Footer />
     </div>
   );

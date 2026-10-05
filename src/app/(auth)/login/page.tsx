@@ -30,7 +30,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <main id="main-content" tabIndex={-1} className="grid min-h-screen lg:grid-cols-2">
       {/* Left branding pane */}
       <div className="hidden lg:flex flex-col items-center justify-center bg-muted/30 p-12">
         <div className="max-w-md text-center">
@@ -81,7 +85,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <div>
@@ -95,7 +99,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <button
@@ -126,6 +130,7 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
-    </div>
+      </main>
+    </>
   );
 }

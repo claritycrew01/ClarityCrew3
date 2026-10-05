@@ -134,7 +134,12 @@ export function RightPanel({ open }: { open: boolean }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const prefersReducedMotion =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      document.documentElement.classList.contains("reduce-motion");
+    messagesEndRef.current?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   }, [messages, isTyping]);
 
   useEffect(() => {
@@ -167,6 +172,7 @@ export function RightPanel({ open }: { open: boolean }) {
 
   return (
     <aside
+      id="tutor-panel"
       className={cn(
         "fixed top-[calc(var(--header-height)+0.5rem)] bottom-2 right-2 z-40",
         "flex flex-col rounded-2xl bg-background border border-border",
@@ -280,7 +286,7 @@ export function RightPanel({ open }: { open: boolean }) {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask a question..."
-                className="flex-1 rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                className="flex-1 rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
               <button
                 onClick={() => handleSend()}

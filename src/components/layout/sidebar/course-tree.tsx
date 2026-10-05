@@ -168,6 +168,7 @@ export function CourseTree({ collapsed }: { collapsed: boolean }) {
 
   return (
     <aside
+      id="course-tree"
       className={cn(
         "fixed top-[calc(var(--header-height)+0.5rem)] bottom-2 left-2 z-40",
         "flex flex-col rounded-2xl bg-sidebar-bg text-sidebar-foreground",

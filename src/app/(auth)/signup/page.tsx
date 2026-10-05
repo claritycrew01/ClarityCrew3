@@ -32,7 +32,11 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <main id="main-content" tabIndex={-1} className="grid min-h-screen lg:grid-cols-2">
       {/* Left branding pane */}
       <div className="hidden lg:flex flex-col items-center justify-center bg-muted/30 p-12">
         <div className="max-w-md text-center">
@@ -83,7 +87,7 @@ export default function SignupPage() {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   required
-                  className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
                 />
               </div>
               <div>
@@ -95,7 +99,7 @@ export default function SignupPage() {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             </div>
@@ -110,7 +114,7 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <div>
@@ -125,7 +129,7 @@ export default function SignupPage() {
                 placeholder="••••••••"
                 required
                 minLength={6}
-                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                className="flex h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <button
@@ -152,6 +156,7 @@ export default function SignupPage() {
           </p>
         </div>
       </div>
-    </div>
+      </main>
+    </>
   );
 }

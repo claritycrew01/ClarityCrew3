@@ -15,6 +15,9 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="relative min-h-screen bg-background">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <Header />
 
       {/* Left Sidebar — Course Tree */}
@@ -31,6 +34,8 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       {/* Main Content Canvas */}
       <main
+        id="main-content"
+        tabIndex={-1}
         className="pt-[calc(var(--header-height)+0.5rem)] pb-2 px-2 transition-all duration-300 ease-in-out"
         style={{
           marginLeft: sidebarCollapsed ? "0.5rem" : "calc(var(--sidebar-width) + 0.5rem)",
