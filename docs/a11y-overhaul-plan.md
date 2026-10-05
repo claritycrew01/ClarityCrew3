@@ -909,3 +909,24 @@ No axe runner (Q5). The user runs a manual axe extension pass.
   headlines absent, all four new headlines present, no `/subjects/mathematics/` link, no
   Notifications entry in the settings export, and no "Open source" in the footer. The src dash
   inventory is now 148 occurrences confined to the four `src/data` files reserved for Phase 8B.
+- Phase 8B: DONE, approved via the shown diff. Files: `src/data/subjects.ts` (105 occurrences),
+  `src/data/flashcards.ts` (25), `src/data/quizzes.ts` (16), `src/data/videos.ts` (2); 148
+  em/en dashes across 86 lines. Scope was punctuation replacement only per Q7. The mechanical
+  rule (141 sites) converts U+2014 and U+2013 to ASCII hyphen: spaced clause dashes become
+  ` - ` (for example `opposite operations - addition becomes subtraction` and the
+  `Functions - Advanced` titles), and en dash ranges become `10-25` and `2020-2024`. Seven
+  dashes were handled by four hand fixes where a labeled glyph would have become false after
+  conversion: the punctuation lesson paragraph now reads `Dashes: both em dashes and en dashes
+  add emphasis, set off interruptions, or indicate ranges.`, its simplifiedBody reads
+  `Dashes add emphasis or set off extra information.`, the flashcard answer reads `An em dash
+  sets off interruptions. A hyphen joins compound modifiers.`, and the quiz explanation reads
+  `Em dashes add emphasis, set off parenthetical information, or indicate an interruption.` No
+  other wording changed. Non dash unicode (`r²`, `≈`, `Δ`, curly quotes) was left untouched.
+  The proposal was generated in a temp copy (repo untouched), reviewed as a 270 line site by
+  site old/new listing plus paragraph level pairs for the two long lesson body lines, and
+  applied only after that approval. Verification: tsc exit 0, lint exit 0, contrast 609/609
+  exit 0, build exit 0; the full `src` tree now scans at zero em/en dashes (156 at Phase 6,
+  148 after Phase 8, 0 now), the exported `out` HTML tree also scans at zero, lesson body copy
+  still renders (linear equations export probe finds `slope-intercept`), and the converted
+  simplifiedBody string is confirmed present in source (that line is client toggled, so it is
+  not in prerendered HTML).

@@ -549,7 +549,7 @@ export const QUIZZES: QuizData[] = [
           { id: "bo-q2-c", text: "Metallic bond", isCorrect: false },
           { id: "bo-q2-d", text: "Nonpolar covalent bond", isCorrect: false },
         ],
-        explanation: "Water has polar covalent bonds — oxygen shares electrons unequally with hydrogen, creating partial charges.",
+        explanation: "Water has polar covalent bonds - oxygen shares electrons unequally with hydrogen, creating partial charges.",
       },
     ],
   },
@@ -802,7 +802,7 @@ export const QUIZZES: QuizData[] = [
   {
     id: "math-functions-advanced-quiz",
     lessonId: "functions-advanced",
-    title: "Functions — Advanced Quiz",
+    title: "Functions - Advanced Quiz",
     description: "Test your understanding of domain, range, composition, and inverses.",
     questions: [
       {
@@ -962,7 +962,7 @@ export const QUIZZES: QuizData[] = [
           { id: "rg-q3-c", text: "A third variable (hot weather) increases both", isCorrect: true },
           { id: "rg-q3-d", text: "The correlation is a coincidence", isCorrect: false },
         ],
-        explanation: "Hot weather causes both more swimming and more ice cream purchases — a lurking variable creates the correlation without direct causation.",
+        explanation: "Hot weather causes both more swimming and more ice cream purchases - a lurking variable creates the correlation without direct causation.",
       },
       {
         id: "rg-q4",
@@ -1014,7 +1014,7 @@ export const QUIZZES: QuizData[] = [
           { id: "sci-evol-q2-c", text: "A bird migrating for the first time due to cold weather", isCorrect: false },
           { id: "sci-evol-q2-d", text: "A student getting better at math through practice", isCorrect: false },
         ],
-        explanation: "An adaptation is an inherited trait that helps organisms survive in their environment. A cactus's waxy skin is a structural adaptation that reduces water loss — it evolved through natural selection, not learned behavior.",
+        explanation: "An adaptation is an inherited trait that helps organisms survive in their environment. A cactus's waxy skin is a structural adaptation that reduces water loss - it evolved through natural selection, not learned behavior.",
       },
       {
         id: "sci-evol-q3",
@@ -1036,7 +1036,7 @@ export const QUIZZES: QuizData[] = [
           { id: "sci-evol-q4-c", text: "Comparative anatomy (homologous structures)", isCorrect: true },
           { id: "sci-evol-q4-d", text: "Embryological evidence", isCorrect: false },
         ],
-        explanation: "Homologous structures — like the similar bone patterns in a human arm, whale flipper, and bat wing — are evidence of common ancestry through comparative anatomy.",
+        explanation: "Homologous structures - like the similar bone patterns in a human arm, whale flipper, and bat wing - are evidence of common ancestry through comparative anatomy.",
       },
       {
         id: "sci-evol-q5",
@@ -1047,7 +1047,7 @@ export const QUIZZES: QuizData[] = [
           { id: "sci-evol-q5-c", text: "Individuals must intentionally choose to mutate", isCorrect: true },
           { id: "sci-evol-q5-d", text: "More offspring are produced than can survive", isCorrect: false },
         ],
-        explanation: "Natural selection requires variation, heritability, and overproduction of offspring. Mutations are random — organisms do not choose to mutate.",
+        explanation: "Natural selection requires variation, heritability, and overproduction of offspring. Mutations are random - organisms do not choose to mutate.",
       },
     ],
   },
@@ -1088,7 +1088,7 @@ export const QUIZZES: QuizData[] = [
           { id: "sci-cb-q3-c", text: "An ionic attraction between atoms", isCorrect: false },
           { id: "sci-cb-q3-d", text: "A hydrogen bond between molecules", isCorrect: false },
         ],
-        explanation: "Each line in a Lewis structure represents one shared pair of electrons — a single covalent bond.",
+        explanation: "Each line in a Lewis structure represents one shared pair of electrons - a single covalent bond.",
       },
       {
         id: "sci-cb-q4",
@@ -1140,7 +1140,7 @@ export const QUIZZES: QuizData[] = [
           { id: "sci-energy-q2-c", text: "Energy can only be transformed from one form to another, not created or destroyed", isCorrect: true },
           { id: "sci-energy-q2-d", text: "Energy always decreases over time", isCorrect: false },
         ],
-        explanation: "The law of conservation of energy states that energy cannot be created or destroyed — it can only be transformed from one form to another.",
+        explanation: "The law of conservation of energy states that energy cannot be created or destroyed - it can only be transformed from one form to another.",
       },
       {
         id: "sci-energy-q3",
@@ -1203,7 +1203,7 @@ export const QUIZZES: QuizData[] = [
           { id: "sci-wave-q2-c", text: "The energy of the wave (loudness for sound, brightness for light)", isCorrect: true },
           { id: "sci-wave-q2-d", text: "The frequency of the wave", isCorrect: false },
         ],
-        explanation: "Amplitude is the maximum displacement from rest. Greater amplitude means more energy — a louder sound or brighter light.",
+        explanation: "Amplitude is the maximum displacement from rest. Greater amplitude means more energy - a louder sound or brighter light.",
       },
       {
         id: "sci-wave-q3",
@@ -1362,7 +1362,7 @@ export const QUIZZES: QuizData[] = [
           { id: "pu-q5-c", text: "To add emphasis or set off interruptions", isCorrect: true },
           { id: "pu-q5-d", text: "To connect two related sentences", isCorrect: false },
         ],
-        explanation: "Em dashes (—) add emphasis, set off parenthetical information, or indicate an interruption.",
+        explanation: "Em dashes add emphasis, set off parenthetical information, or indicate an interruption.",
       },
     ],
   },
@@ -1414,7 +1414,7 @@ export const QUIZZES: QuizData[] = [
           { id: "la-q4-c", text: "Verbal irony", isCorrect: false },
           { id: "la-q4-d", text: "A theme statement", isCorrect: false },
         ],
-        explanation: "The green light is a symbol — a concrete object representing abstract ideas.",
+        explanation: "The green light is a symbol - a concrete object representing abstract ideas.",
       },
       {
         id: "la-q5",
@@ -1466,7 +1466,7 @@ export const QUIZZES: QuizData[] = [
           { id: "vs-q3-c", text: "Retrospect", isCorrect: true },
           { id: "vs-q3-d", text: "Predict", isCorrect: false },
         ],
-        explanation: "Retrospect means 'looking back' — 'retro' means back and 'spect' means to look.",
+        explanation: "Retrospect means 'looking back' - 'retro' means back and 'spect' means to look.",
       },
       {
         id: "vs-q4",
@@ -1474,7 +1474,7 @@ export const QUIZZES: QuizData[] = [
         options: [
           { id: "vs-q4-a", text: "They have identical meanings", isCorrect: false },
           { id: "vs-q4-b", text: "They differ in denotation but not connotation", isCorrect: false },
-          { id: "vs-q4-c", text: "They share a denotation but have different connotations — 'thrifty' is positive, 'cheap' is negative", isCorrect: true },
+          { id: "vs-q4-c", text: "They share a denotation but have different connotations - 'thrifty' is positive, 'cheap' is negative", isCorrect: true },
           { id: "vs-q4-d", text: "They differ only in spelling", isCorrect: false },
         ],
         explanation: "Both words denote being careful with money, but their connotations differ significantly.",
@@ -1551,7 +1551,7 @@ export const QUIZZES: QuizData[] = [
           { id: "pw-q5-c", text: "The thesis statement", isCorrect: true },
           { id: "pw-q5-d", text: "The conclusion", isCorrect: false },
         ],
-        explanation: "Every body paragraph must support the thesis — the central argument of the essay.",
+        explanation: "Every body paragraph must support the thesis - the central argument of the essay.",
       },
     ],
   },
@@ -1592,7 +1592,7 @@ export const QUIZZES: QuizData[] = [
           { id: "rp-q3-c", text: "It is too long", isCorrect: false },
           { id: "rp-q3-d", text: "It adds too many details", isCorrect: false },
         ],
-        explanation: "This is 'patchwriting' — superficially changing a few words while keeping the same structure.",
+        explanation: "This is 'patchwriting' - superficially changing a few words while keeping the same structure.",
       },
       {
         id: "rp-q4",

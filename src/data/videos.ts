@@ -291,7 +291,7 @@ export const VIDEOS: VideoEntry[] = [
     youtubeId: "3klMM9BkW5o",
     title: "How to Use Rhetoric to Get What You Want",
     channel: "TED-Ed",
-    description: "Learn the art of rhetoric — ethos, pathos, and logos — to make your writing and speaking more persuasive.",
+    description: "Learn the art of rhetoric - ethos, pathos, and logos - to make your writing and speaking more persuasive.",
   },
   {
     id: "english-research-papers",
