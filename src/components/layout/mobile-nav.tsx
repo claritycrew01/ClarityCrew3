@@ -34,7 +34,7 @@ export function MobileNav() {
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            <item.icon className="h-5 w-5" />
+            <item.icon className="h-5 w-5" aria-hidden="true" />
             {item.label}
           </Link>
         );

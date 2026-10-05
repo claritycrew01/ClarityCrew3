@@ -123,6 +123,10 @@ function generateTutorResponse(userMessage: string, pathname: string): string {
   return "I can help with math, science, and English topics. Try asking about a specific concept, or navigate to a lesson and ask me to explain something from it.";
 }
 
+function tutorTypingDelay(): number {
+  return 600 + Math.random() * 500;
+}
+
 export function RightPanel({ open }: { open: boolean }) {
   const toggleRightPanel = useUIStore((s) => s.toggleRightPanel);
   const messages = useTutorStore((s) => s.messages);
@@ -219,7 +223,7 @@ export function RightPanel({ open }: { open: boolean }) {
     setTimeout(() => {
       setTyping(false);
       addTutorMessage(generateTutorResponse(trimmed, pathname));
-    }, 600 + Math.random() * 500);
+    }, tutorTypingDelay());
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -235,7 +239,7 @@ export function RightPanel({ open }: { open: boolean }) {
       aria-label="AI tutor"
       className={cn(
         "fixed top-[calc(var(--header-height)+0.5rem)] bottom-2 right-2 z-40",
-        "flex flex-col rounded-2xl bg-background border border-border",
+        "flex flex-col rounded-md bg-background border border-border",
         "overflow-hidden transition-all duration-300 ease-in-out",
         open
           ? "w-[var(--right-panel-width-expanded)]"
@@ -246,19 +250,19 @@ export function RightPanel({ open }: { open: boolean }) {
         <div className="flex flex-col items-center py-4 gap-2">
           <button
             onClick={toggleRightPanel}
-            className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Open AI tutor"
             aria-expanded={false}
           >
-            <PanelRightOpen className="h-5 w-5" />
+            <PanelRightOpen className="h-5 w-5" aria-hidden="true" />
           </button>
           <button
             onClick={toggleRightPanel}
-            className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             aria-label="Chat with tutor"
             aria-expanded={false}
           >
-            <Sparkles className="h-5 w-5" />
+            <Sparkles className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
       )}
@@ -267,25 +271,25 @@ export function RightPanel({ open }: { open: boolean }) {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between border-b border-border px-3 py-2.5">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-skill-blue-text" />
+              <Sparkles className="h-4 w-4 text-skill-blue-text" aria-hidden="true" />
               <span className="text-sm font-semibold text-foreground">AI Tutor</span>
             </div>
             <div className="flex items-center gap-1">
               {messages.length > 0 && (
                 <button
                   onClick={clearConversation}
-                  className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   aria-label="Clear conversation"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
               )}
               <button
                 onClick={toggleRightPanel}
-                className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 aria-label="Close panel"
               >
-                <PanelRightClose className="h-4 w-4" />
+                <PanelRightClose className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -293,7 +297,7 @@ export function RightPanel({ open }: { open: boolean }) {
           <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3">
             {messages.length === 0 && !isTyping && (
               <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <Sparkles className="h-8 w-8 text-muted-foreground mb-3" />
+                <Sparkles className="h-8 w-8 text-muted-foreground mb-3" aria-hidden="true" />
                 <p className="text-sm font-medium text-foreground mb-1">Ask me anything</p>
                 <p className="text-xs text-muted-foreground">
                   I can help with math, science, English, study tips, and more. Navigate to a lesson for contextual help.
@@ -303,7 +307,7 @@ export function RightPanel({ open }: { open: boolean }) {
                     <button
                       key={q}
                       onClick={() => handleSend(q)}
-                      className="rounded-full border border-border bg-muted/50 px-3 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-muted/50 px-3 py-1 text-[11px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                     >
                       {q}
                     </button>
@@ -358,7 +362,7 @@ export function RightPanel({ open }: { open: boolean }) {
                 onKeyDown={handleKeyDown}
                 placeholder="Ask a question..."
                 aria-label="Ask the AI tutor a question"
-                className="flex-1 rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
+                className="flex-1 min-h-11 rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground"
               />
               {showVoiceMic && (
                 <button
@@ -367,22 +371,22 @@ export function RightPanel({ open }: { open: boolean }) {
                   aria-pressed={voiceListening}
                   aria-label={voiceListening ? "Stop dictation" : "Start dictation"}
                   className={cn(
-                    "shrink-0 rounded-lg border border-border p-2 transition-colors",
+                    "shrink-0 inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-border p-2 transition-colors",
                     voiceListening
                       ? "bg-skill-blue/10 text-skill-blue-text border-skill-blue/30"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
-                  <Mic className="h-4 w-4" />
+                  <Mic className="h-4 w-4" aria-hidden="true" />
                 </button>
               )}
               <button
                 onClick={() => handleSend()}
                 disabled={!input.trim()}
-                className="rounded-lg bg-skill-blue-solid p-2 text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-md bg-skill-blue-solid p-2 text-skill-blue-on-solid transition-colors hover:bg-skill-blue/90 disabled:opacity-40 disabled:cursor-not-allowed"
                 aria-label="Send message"
               >
-                <Send className="h-4 w-4" />
+                <Send className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
             {showVoiceNote && (

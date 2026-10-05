@@ -98,7 +98,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
           aria-current={currentPath === node.href.replace(/\/$/, "") ? "page" : undefined}
           aria-disabled={node.locked || undefined}
           className={cn(
-            "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
+            "flex min-h-11 w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
             "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             node.locked
               ? "text-sidebar-foreground pointer-events-none"
@@ -124,7 +124,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
           aria-expanded={hasChildren ? expanded : undefined}
           aria-controls={hasChildren ? `tree-group-${node.id}` : undefined}
           className={cn(
-            "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
+            "flex min-h-11 w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors",
             "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             node.locked
               ? "text-sidebar-foreground"
@@ -180,7 +180,7 @@ export function CourseTree({ collapsed }: { collapsed: boolean }) {
       aria-label="Course tree"
       className={cn(
         "fixed top-[calc(var(--header-height)+0.5rem)] bottom-2 left-2 z-40",
-        "flex flex-col rounded-2xl bg-sidebar-bg text-sidebar-foreground",
+        "flex flex-col rounded-md bg-sidebar-bg text-sidebar-foreground",
         "overflow-hidden transition-all duration-300 ease-in-out",
         collapsed ? "w-0 opacity-0 pointer-events-none" : "w-[var(--sidebar-width)] opacity-100"
       )}

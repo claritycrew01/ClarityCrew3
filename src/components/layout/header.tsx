@@ -47,7 +47,7 @@ export function Header() {
       <div className="flex items-center gap-3">
         <button
           onClick={toggleSidebar}
-          className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
           aria-label="Toggle sidebar"
           aria-expanded={!sidebarCollapsed}
           aria-controls="course-tree"
@@ -90,7 +90,7 @@ export function Header() {
       <div className="flex items-center gap-2">
         <button
           onClick={toggleRightPanel}
-          className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label="Toggle AI tutor"
           aria-expanded={rightPanelOpen}
           aria-controls="tutor-panel"
@@ -105,7 +105,7 @@ export function Header() {
             </span>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="flex min-h-11 items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label="Log out"
             >
               <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
@@ -115,7 +115,7 @@ export function Header() {
         ) : (
           <Link
             href="/login/"
-            className="rounded-full bg-cta-orange px-5 py-2 text-sm font-bold text-cta-orange-on-solid transition-colors hover:bg-cta-orange-hover"
+            className="inline-flex min-h-11 items-center rounded-md bg-cta-orange px-5 py-2 text-sm font-bold text-cta-orange-on-solid transition-colors hover:bg-cta-orange-hover"
           >
             Get Started
           </Link>

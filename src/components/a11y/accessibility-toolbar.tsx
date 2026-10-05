@@ -100,7 +100,7 @@ export function AccessibilityToolbar() {
           aria-modal="true"
           aria-labelledby="quick-settings-title"
           tabIndex={-1}
-          className="mb-3 w-56 rounded-2xl border border-border bg-background p-3 shadow-xl animate-fade-in"
+          className="mb-3 w-56 rounded-md border border-border bg-background p-3 shadow-xl animate-fade-in"
         >
           <div className="mb-2 flex items-center justify-between">
             <span id="quick-settings-title" className="text-xs font-semibold text-foreground">
@@ -109,9 +109,9 @@ export function AccessibilityToolbar() {
             <button
               onClick={() => setOpen(false)}
               aria-label="Close quick settings"
-              className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             >
-              <X className="h-3 w-3" />
+              <X className="h-3 w-3" aria-hidden="true" />
             </button>
           </div>
           <div className="space-y-1">
@@ -121,13 +121,13 @@ export function AccessibilityToolbar() {
                 onClick={toggle.onClick}
                 aria-pressed={toggle.active}
                 className={cn(
-                  "flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs transition-colors",
+                  "flex min-h-11 w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs transition-colors",
                   toggle.active
                     ? "bg-skill-blue/10 text-skill-blue-text font-semibold"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
-                <toggle.icon className="h-3.5 w-3.5" />
+                <toggle.icon className="h-3.5 w-3.5" aria-hidden="true" />
                 {toggle.label}
               </button>
             ))}
@@ -135,7 +135,7 @@ export function AccessibilityToolbar() {
           <Link
             href="/settings/accessibility/"
             onClick={() => setOpen(false)}
-            className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg border border-border px-2.5 py-2 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="mt-2 flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg border border-border px-2.5 py-2 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             All Settings
           </Link>
@@ -146,7 +146,7 @@ export function AccessibilityToolbar() {
         ref={launcherRef}
         onClick={() => setOpen(!open)}
         className={cn(
-          "flex h-11 w-11 items-center justify-center rounded-full border border-border shadow-lg transition-all",
+          "flex h-11 w-11 items-center justify-center rounded-md border border-border shadow-lg transition-all",
           open
             ? "bg-skill-blue-solid text-skill-blue-on-solid border-skill-blue-solid"
             : "bg-background text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -155,7 +155,7 @@ export function AccessibilityToolbar() {
         aria-expanded={open}
         aria-controls="quick-settings-panel"
       >
-        <Accessibility className="h-5 w-5" />
+        <Accessibility className="h-5 w-5" aria-hidden="true" />
       </button>
     </div>
   );

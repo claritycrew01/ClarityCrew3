@@ -42,7 +42,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           marginRight: "calc(var(--right-panel-width-collapsed) + 0.5rem)",
         }}
       >
-        <div className="min-h-[calc(100vh-var(--header-height)-1rem)] rounded-2xl bg-card shadow-sm overflow-hidden py-6 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-[calc(100vh-var(--header-height)-1rem)] rounded-md bg-card shadow-sm overflow-hidden py-6 px-4 sm:px-6 lg:px-8">
           {children}
         </div>
       </main>

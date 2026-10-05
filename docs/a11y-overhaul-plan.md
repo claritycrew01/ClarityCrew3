@@ -464,12 +464,14 @@ fallback, and speech cancel on navigation.
 
 ### Phase 7: visual restyle
 
-Split into two checkpoints.
+Split into three checkpoints.
 
 **7A (shell):** `src/app/globals.css`, `src/components/layout/header.tsx`,
 `src/components/layout/mobile-nav.tsx`, `src/components/layout/right-panel.tsx`,
 `src/components/layout/sidebar/course-tree.tsx`,
-`src/components/a11y/accessibility-toolbar.tsx`, `src/components/video/video-player.tsx`.
+`src/components/a11y/accessibility-toolbar.tsx`, `src/components/video/video-player.tsx`,
+plus `src/components/layout/app-shell.tsx` (amended: its content canvas still used
+`rounded-2xl`, which the no-`rounded-2xl` grep gate requires to change, and it is a shell file).
 
 **7B-1 (landing, not-found, auth, onboarding):** `src/app/page.tsx`, `src/app/not-found.tsx`,
 `src/app/(auth)/login/page.tsx`, `src/app/(auth)/signup/page.tsx`,
