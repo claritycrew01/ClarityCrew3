@@ -93,3 +93,7 @@ docs/               Baseline audit, accessibility overhaul plan, keyboard walkth
 - [`docs/baseline-a11y-audit.md`](docs/baseline-a11y-audit.md) starting audit findings
 - [`docs/a11y-overhaul-plan.md`](docs/a11y-overhaul-plan.md) phased remediation plan and log
 - [`docs/a11y-walkthrough.md`](docs/a11y-walkthrough.md) manual keyboard walkthrough for QA
+
+## License
+
+[MIT](LICENSE). Copyright (c) 2026 claritycrew01.
